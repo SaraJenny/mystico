@@ -1,0 +1,35 @@
+﻿@model AccountRegisterVM
+
+
+@{
+	ViewBag.Title = "Skapa konto";
+}
+<h2>Skapa konto</h2>
+<form asp-controller="Account" asp-action="Register">
+
+	<label asp-for="FirstName"></label>
+	<input asp-for="FirstName" />
+	<span asp-validation-for="FirstName"></span>
+	
+	<label asp-for="LastName"></label>
+	<input asp-for="LastName" />
+	<span asp-validation-for="LastName"></span>
+	
+	<label asp-for="Email"></label>
+	<input asp-for="Email" />
+	<span asp-validation-for="Email"></span>
+
+	<label asp-for="Password"></label>
+	<input asp-for="Password" />
+	<span asp-validation-for="Password"></span>
+
+
+	<input type="submit" value="Skapa konto" />
+
+</form>
+
+@section scripts {
+	<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.0.min.js"></script>
+	<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
+	<script src="http://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>
+}
