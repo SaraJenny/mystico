@@ -12,7 +12,8 @@ namespace Grupp5.Controllers
 {
 	public class AccountController : Controller
 	{
-		UserManager<IdentityUser> userManager;
+        #region General
+        UserManager<IdentityUser> userManager;
 		SignInManager<IdentityUser> signInManager;
 		IdentityDbContext identityContext;
 
@@ -22,8 +23,10 @@ namespace Grupp5.Controllers
 			this.signInManager = signInManager;
 			this.identityContext = identityContext;
 		}
+#endregion
 
-		[HttpGet]
+        #region Login
+        [HttpGet]
 		public IActionResult Login()
 		{
 			//identityContext.Database.EnsureCreated();
@@ -47,11 +50,13 @@ namespace Grupp5.Controllers
 				return View(viewModel);
 			}
 
-			return RedirectToAction(nameof(EventController.Index), nameof(EventController).Replace("Controller", ""));
+			return RedirectToAction(nameof(SplitController.Index), nameof(SplitController).Replace("Controller", ""));
 
 		}
+        #endregion
 
-		[HttpGet]
+        #region Register
+        [HttpGet]
 		public IActionResult Register()
 		{
 			return View();
@@ -86,8 +91,16 @@ namespace Grupp5.Controllers
 
 			await signInManager.PasswordSignInAsync(user, viewModel.Password, false, false);
 
-			return RedirectToAction(nameof(EventController.Index), nameof(EventController).Replace("Controller", ""));
+			return RedirectToAction(nameof(SplitController.Index), nameof(SplitController).Replace("Controller", ""));
 		}
+        #endregion
 
-	}
+        #region Profile
+        [Authorize]
+        public IActionResult Profile()
+        {
+            return View();
+        }
+        #endregion
+    }
 }
