@@ -14,7 +14,7 @@ namespace Grupp5.Models.Entities
         public bool IsActive { get; set; }
         public int StandardCurrencyID { get; set; } //Kopplas till Valuta-klassen
 
-        public List<Person> participants { get; set; }
+        public List<User> participants { get; set; }
         public List<Expense> expenses { get; set; }
 
         //TODO metod för att sätta TotalCostPerEvent
