@@ -29,6 +29,7 @@ namespace Grupp5.Models.Entities
 
 		[Required(ErrorMessage = "Obligatoriskt fält")]
 		[Display(Name = "Upprepa lösenord")]
+		[DataType(DataType.Password)]
 		public string PasswordCheck { get; set; }
 	}
 }

@@ -187,24 +187,23 @@ input, select {
 	-webkit-border-radius: 2px;
 	-moz-border-radius: 2px;
 	border-radius: 2px;
+	font-family: 'Roboto', sans-serif;
 }
 
 	input[type="submit"] {
 		width: 100%;
 		background-color: #346E00;
-		color: #F5F7DC;
+		color: #fff;
 		border-color: #346E00;
 	}
 
 		input[type="submit"]:hover {
-			background-color: #49324b;
-			background-color: rgba(53, 28, 56, .9);
-			border-color: #351c38;
+			background-color: #295800;
+			border-color: #295800;
 		}
 
 select {
 	width: 100%;
-	font-family: 'Roboto', sans-serif;
 }
 
 label {
@@ -221,7 +220,7 @@ button {
 	display: block;
 	width: 100%;
 	background-color: #346E00;
-	color: #F5F7DC;
+	color: #fff;
 	padding: 1em 2%;
 	border: 1px solid #346E00;
 	margin-bottom: .75em;
@@ -230,6 +229,11 @@ button {
 	-moz-border-radius: 2px;
 	border-radius: 2px;
 }
+
+	button:hover {
+		background-color: #295800;
+		border-color: #295800;
+	}
 
 
 
@@ -245,6 +249,11 @@ PLUS-FOOTER
 	background-color: #F5F7DC;
 	width: 100%;
 }
+
+	#addExpenseFooter .fa {
+		color: #351c38;
+		font-size: 5em;
+	}
 
 #plus {
 	display: block;
@@ -274,6 +283,7 @@ TEXT
 
 a {
 	text-decoration: none;
+	color: #295800;
 }
 
 .field-validation-error {

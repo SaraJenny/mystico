@@ -5,9 +5,9 @@
 
 <form asp-controller="Split" asp-action="Expense">
 
-	@*<label asp-for="Name"></label>
-	<input asp-for="Name" />
-	<span asp-validation-for="Name"></span>
+	<label asp-for="SelectedEvent"></label>
+	<select asp-for="SelectedEvent" asp-items="Model.EventItem"></select>
+	<span asp-validation-for="SelectedEvent"></span>
 
 	<label asp-for="Description"></label>
 	<input asp-for="Description" />
@@ -15,7 +15,15 @@
 
 	<label asp-for="SelectedCurrency"></label>
 	<select asp-for="SelectedCurrency" asp-items="Model.CurrencyItem"></select>
-	<span asp-validation-for="SelectedCurrency"></span>*@
+	<span asp-validation-for="SelectedCurrency"></span>
+
+	<label asp-for="Amount"></label>
+	<input asp-for="Amount" />
+	<span asp-validation-for="Amount"></span>
+
+	<label asp-for="Date"></label>
+	<input asp-for="Date" />
+	<span asp-validation-for="Date"></span>
 
 	<input type="submit" value="Lägg till event" />
 
