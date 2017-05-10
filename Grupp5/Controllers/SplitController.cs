@@ -46,8 +46,25 @@ namespace Grupp5.Controllers
         #region Expense
         public IActionResult Expense()
         {
-            return View();
-        }
+			// TODO Hämta event från databasen
+			var viewModel = new SplitExpenseVM();
+			viewModel.EventItem = new SelectListItem[]
+			{
+				new SelectListItem { Text = "Londonresa", Value = "1"},
+				new SelectListItem { Text = "Maj 2017", Value = "2"}
+			};
+
+			// TODO Hämta valutor från databasen
+			viewModel.CurrencyItem = new SelectListItem[]
+			{
+				new SelectListItem { Text = "SEK", Value = "SEK"},
+				new SelectListItem { Text = "NOK", Value = "NOK"},
+				new SelectListItem { Text = "USD", Value = "USD"},
+				new SelectListItem { Text = "EUR", Value = "EUR"}
+			};
+
+			return View(viewModel);
+		}
         #endregion
 
         #region Index
