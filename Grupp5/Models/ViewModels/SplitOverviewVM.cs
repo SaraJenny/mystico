@@ -12,5 +12,7 @@ namespace Grupp5.Models.Entities
 		public int Total { get; set; }
 		public int MyTotal { get; set; }
 
+		//TODO Lägg till proppar för vem som är skyldig vad
+		//TODO Lägg till vänlista?
 	}
 }
