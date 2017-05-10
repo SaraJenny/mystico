@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Grupp5.Models.Entities;
 
 namespace Grupp5
 {
@@ -19,8 +20,11 @@ namespace Grupp5
         public void ConfigureServices(IServiceCollection services)
         {
 			var conString = @"Server=tcp:mystico.database.windows.net,1433;Initial Catalog=Mystico;Persist Security Info=False;User ID=grupp5;Password=Pillow123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
-			services.AddDbContext<IdentityDbContext>(o => o.UseSqlServer(conString));
-			services.AddIdentity<IdentityUser, IdentityRole>(o =>
+            services.AddDbContext<MysticoContext>(o => o.UseSqlServer(conString));
+            services.AddDbContext<IdentityDbContext>(o => o.UseSqlServer(conString));
+            
+
+            services.AddIdentity<IdentityUser, IdentityRole>(o =>
 			{
 				o.Password.RequiredLength = 5;
 				o.Password.RequireLowercase = false;
@@ -33,7 +37,7 @@ namespace Grupp5
 			.AddEntityFrameworkStores<IdentityDbContext>()
 			.AddDefaultTokenProviders();
 
-
+            
 			services.AddMvc();
 		}
 

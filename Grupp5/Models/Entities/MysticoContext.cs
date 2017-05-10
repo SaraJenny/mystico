@@ -18,12 +18,10 @@ namespace Grupp5.Models.Entities
         public virtual DbSet<Expense> Expense { get; set; }
         public virtual DbSet<ParticipantsInEvent> ParticipantsInEvent { get; set; }
         public virtual DbSet<PayersForExpense> PayersForExpense { get; set; }
+        public virtual DbSet<User> User { get; set; }
 
-		// Unable to generate entity type for table 'dbo.User'. Please see the warning messages.
 
-		//Scaffold-DbContext "Server=tcp:mystico.database.windows.net,1433;Initial Catalog=Mystico;Persist Security Info=False;User ID=grupp5;Password=Pillow123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir "Models/Entities" -Context "MysticoContext" -Force
-
-		protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AspNetRoleClaims>(entity =>
             {
@@ -146,8 +144,6 @@ namespace Grupp5.Models.Entities
 
             modelBuilder.Entity<Currency>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.CurrencyCode)
                     .IsRequired()
                     .HasColumnType("varchar(50)");
@@ -155,8 +151,6 @@ namespace Grupp5.Models.Entities
 
             modelBuilder.Entity<Event>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Description).HasColumnType("varchar(250)");
 
                 entity.Property(e => e.EventName)
@@ -172,8 +166,6 @@ namespace Grupp5.Models.Entities
 
             modelBuilder.Entity<Expense>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Amount).HasColumnType("money");
 
                 entity.Property(e => e.AmountInStandardCurrency).HasColumnType("money");
@@ -207,8 +199,6 @@ namespace Grupp5.Models.Entities
 
             modelBuilder.Entity<ParticipantsInEvent>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.UserId)
                     .IsRequired()
                     .HasMaxLength(450);
@@ -228,8 +218,6 @@ namespace Grupp5.Models.Entities
 
             modelBuilder.Entity<PayersForExpense>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.ObjectionDescription).HasColumnType("varchar(250)");
 
                 entity.Property(e => e.UserId)
@@ -247,6 +235,27 @@ namespace Grupp5.Models.Entities
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_PayersForExpense_ToUser");
+            });
+
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.Property(e => e.AspId)
+                    .IsRequired()
+                    .HasMaxLength(450);
+
+                entity.Property(e => e.FirstName)
+                    .IsRequired()
+                    .HasColumnType("varchar(50)");
+
+                entity.Property(e => e.LastName)
+                    .IsRequired()
+                    .HasColumnType("varchar(50)");
+
+                entity.HasOne(d => d.Asp)
+                    .WithMany(p => p.User)
+                    .HasForeignKey(d => d.AspId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .HasConstraintName("FK_User_ToAspNetUser");
             });
         }
     }

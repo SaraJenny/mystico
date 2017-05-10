@@ -16,12 +16,14 @@ namespace Grupp5.Controllers
         UserManager<IdentityUser> userManager;
 		SignInManager<IdentityUser> signInManager;
 		IdentityDbContext identityContext;
+        MysticoContext mysticoContext;
 
-		public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IdentityDbContext identityContext)
+		public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IdentityDbContext identityContext, MysticoContext mysticoContext)
 		{
 			this.userManager = userManager;
 			this.signInManager = signInManager;
 			this.identityContext = identityContext;
+            this.mysticoContext = mysticoContext;
 		}
 #endregion
 
@@ -89,6 +91,8 @@ namespace Grupp5.Controllers
 				return View(viewModel);
 			}
 
+            mysticoContext.AddUser(user.Id, viewModel.FirstName, viewModel.LastName);
+
 			await signInManager.PasswordSignInAsync(user, viewModel.Password, false, false);
 
 			return RedirectToAction(nameof(SplitController.Index), nameof(SplitController).Replace("Controller", ""));
@@ -101,6 +105,18 @@ namespace Grupp5.Controllers
         {
             return View();
         }
+        #endregion
+
+        #region SignOut
+
+        [HttpGet]
+        public async Task<IActionResult> SignOut()
+        {
+            await signInManager.SignOutAsync();
+
+            return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).Replace("Controller", ""));
+        }
+
         #endregion
     }
 }
