@@ -250,6 +250,11 @@ PLUS-FOOTER
 	width: 100%;
 }
 
+	#addExpenseFooter .fa {
+		color: #351c38;
+		font-size: 5em;
+	}
+
 #plus {
 	display: block;
 	max-width: 100%;
@@ -278,6 +283,7 @@ TEXT
 
 a {
 	text-decoration: none;
+	color: #295800;
 }
 
 .field-validation-error {

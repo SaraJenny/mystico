@@ -1,1 +1,29 @@
-﻿Jag är split/overview
+﻿@model SplitOverviewVM
+@{ViewBag.Title = "Londonresa";}
+
+
+<h2>Londonresa</h2>
+
+<section>
+	<h3>Din status</h3>
+	<p>-567 kr</p>
+</section>
+<section>
+	<p>Total: 2387 kr</p>
+	<p>varav du betalat 298 kr</p>
+</section>
+<section>
+	<p>Vilka överföringar behöver göras ...</p>
+</section>
+<a asp-controller="" asp-action="">Lägg till vänner</a>
+<a asp-controller="" asp-action="">Sammanställning</a>
+
+@section addExpenseFooter {
+	<footer>
+		<div id="addExpenseFooter">
+			<a asp-controller="" asp-action="">
+				<img id="plus" src="~/img/plus_75.png" />
+			</a>
+		</div>
+	</footer>
+}
