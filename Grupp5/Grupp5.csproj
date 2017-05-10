@@ -18,5 +18,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="1.1.0" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\SplitModels\" />
+  </ItemGroup>
 
 </Project>
