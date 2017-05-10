@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Grupp5.Models.SplitModels
 {
-    public class Library
+    public static class Library
     {
-        static List<string> WhoOweWho(Event myEvent)
+        static public List<string> WhoOweWho(Event myEvent)
         {
-            var userCredits = new Dictionary<string, Decimal>();
+            var userCredits = new Dictionary<int, Decimal>();
 
             foreach (var participant in myEvent.ParticipantsInEvent)
             {
@@ -20,7 +20,7 @@ namespace Grupp5.Models.SplitModels
             foreach (var expense in myEvent.Expense)
             {
                 var amount = expense.Amount;
-                var purchaser = expense.Purchaser.Id;
+                var purchaser = expense.PurchaserId;
                 var payers = expense.PayersForExpense;
 
                 foreach (var payer in payers)
@@ -54,8 +54,9 @@ namespace Grupp5.Models.SplitModels
             }
 
             var transaction = new List<string>();
-            creditors.OrderByDescending(o => userCredits[o.UserId]).ToList();
-            debitors.OrderByDescending(d => userCredits[d.UserId]).ToList();
+
+            creditors = creditors.OrderByDescending(o => userCredits[o.UserId]).ToList();
+            debitors = debitors.OrderByDescending(d => userCredits[d.UserId]).ToList();
 
 
             foreach (var debitor in debitors)
@@ -66,16 +67,16 @@ namespace Grupp5.Models.SplitModels
                     {
                         var transferSum = Math.Round(userCredits[creditors[0].UserId], MidpointRounding.AwayFromZero);
 
-                        transaction.Add($"{debitor.User.UserName} ska överföra {transferSum} kr till {creditors[0].User.UserName}");
-                        userCredits[debitor.UserId] -= transferSum;
+                        transaction.Add($"{debitor.User.FirstName} ska överföra {transferSum} kr till {creditors[0].User.FirstName}");
+                        userCredits[debitor.UserId] -= userCredits[creditors[0].UserId];
                         creditors.Remove(creditors[0]);
                     }
                     else if (userCredits[debitor.UserId] < userCredits[creditors[0].UserId])
                     {
                         var transferSum = Math.Round(userCredits[debitor.UserId], MidpointRounding.AwayFromZero);
 
-                        transaction.Add($"{debitor.User.UserName} ska överföra {transferSum} kr till {creditors[0].User.UserName}");
-                        userCredits[creditors[0].UserId] -= transferSum;
+                        transaction.Add($"{debitor.User.FirstName} ska överföra {transferSum} kr till {creditors[0].User.FirstName}");
+                        userCredits[creditors[0].UserId] -= userCredits[debitor.UserId];
                         userCredits[debitor.UserId] = 0;
                         //debitors.Remove(debitor);
                     }
@@ -83,13 +84,13 @@ namespace Grupp5.Models.SplitModels
                     {
                         var transferSum = Math.Round(userCredits[debitor.UserId], MidpointRounding.AwayFromZero);
 
-                        transaction.Add($"{debitor.User.UserName} ska överföra {transferSum} kr till {creditors[0].User.UserName}");
+                        transaction.Add($"{debitor.User.FirstName} ska överföra {transferSum} kr till {creditors[0].User.FirstName}");
                         userCredits[debitor.UserId] = 0;
                         creditors.Remove(creditors[0]);
                         //debitors.Remove(debitor);
                     }
 
-                } while (userCredits[debitor.UserId] > 0);
+                } while (Math.Round(userCredits[debitor.UserId]) > 0);
             }
 
             return transaction;

@@ -10,9 +10,6 @@ namespace Grupp5.Models.Entities
             AspNetUserClaims = new HashSet<AspNetUserClaims>();
             AspNetUserLogins = new HashSet<AspNetUserLogins>();
             AspNetUserRoles = new HashSet<AspNetUserRoles>();
-            Expense = new HashSet<Expense>();
-            ParticipantsInEvent = new HashSet<ParticipantsInEvent>();
-            PayersForExpense = new HashSet<PayersForExpense>();
             User = new HashSet<User>();
         }
 
@@ -35,9 +32,6 @@ namespace Grupp5.Models.Entities
         public virtual ICollection<AspNetUserClaims> AspNetUserClaims { get; set; }
         public virtual ICollection<AspNetUserLogins> AspNetUserLogins { get; set; }
         public virtual ICollection<AspNetUserRoles> AspNetUserRoles { get; set; }
-        public virtual ICollection<Expense> Expense { get; set; }
-        public virtual ICollection<ParticipantsInEvent> ParticipantsInEvent { get; set; }
-        public virtual ICollection<PayersForExpense> PayersForExpense { get; set; }
         public virtual ICollection<User> User { get; set; }
     }
 }

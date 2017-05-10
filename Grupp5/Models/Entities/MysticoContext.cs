@@ -21,6 +21,7 @@ namespace Grupp5.Models.Entities
         public virtual DbSet<User> User { get; set; }
 
 
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AspNetRoleClaims>(entity =>
@@ -174,10 +175,6 @@ namespace Grupp5.Models.Entities
 
                 entity.Property(e => e.Description).HasColumnType("varchar(50)");
 
-                entity.Property(e => e.PurchaserId)
-                    .IsRequired()
-                    .HasMaxLength(450);
-
                 entity.HasOne(d => d.Currency)
                     .WithMany(p => p.Expense)
                     .HasForeignKey(d => d.CurrencyId)
@@ -199,10 +196,6 @@ namespace Grupp5.Models.Entities
 
             modelBuilder.Entity<ParticipantsInEvent>(entity =>
             {
-                entity.Property(e => e.UserId)
-                    .IsRequired()
-                    .HasMaxLength(450);
-
                 entity.HasOne(d => d.Event)
                     .WithMany(p => p.ParticipantsInEvent)
                     .HasForeignKey(d => d.EventId)
@@ -219,10 +212,6 @@ namespace Grupp5.Models.Entities
             modelBuilder.Entity<PayersForExpense>(entity =>
             {
                 entity.Property(e => e.ObjectionDescription).HasColumnType("varchar(250)");
-
-                entity.Property(e => e.UserId)
-                    .IsRequired()
-                    .HasMaxLength(450);
 
                 entity.HasOne(d => d.Expense)
                     .WithMany(p => p.PayersForExpense)

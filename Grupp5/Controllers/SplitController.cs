@@ -6,12 +6,20 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Grupp5.Models.Entities;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Grupp5.Models.SplitModels;
 
 namespace Grupp5.Controllers
 {
     [Authorize]
     public class SplitController : Controller
     {
+        MysticoContext mysticoContext;
+
+        public SplitController(MysticoContext mysticoContext)
+        {
+            this.mysticoContext = mysticoContext;
+        }
+
         #region Details
         public IActionResult Details()
         {
@@ -76,9 +84,23 @@ namespace Grupp5.Controllers
 
         #region Overview
 
-        public IActionResult Overview()
+        public IActionResult Overview(int id)
         {
-            return View();
+            //Kika på ID och hämta event
+            //Skicka Event till WhoOweWho()
+            //Printa ut resultat på view..
+            var thisEvent = mysticoContext.GetEventById(id);
+
+            var message = "";
+            var listMessage = Library.WhoOweWho(thisEvent);
+
+
+            foreach (var item in listMessage)
+            {
+                message += item;
+            }
+
+            return Content(message);
         }
         #endregion
 
