@@ -23,8 +23,8 @@ namespace Grupp5.Controllers
         public IActionResult Event()
         {
 			// TODO Hämta valutor från databasen
-			var model = new SplitEventVM();
-			model.CurrencyItem = new SelectListItem[]
+			var viewModel = new SplitEventVM();
+			viewModel.CurrencyItem = new SelectListItem[]
 			{
 				new SelectListItem { Text = "SEK", Value = "SEK"},
 				new SelectListItem { Text = "NOK", Value = "NOK"},
@@ -32,7 +32,7 @@ namespace Grupp5.Controllers
 				new SelectListItem { Text = "EUR", Value = "EUR"}
 			};
 
-			return View(model);
+			return View(viewModel);
         }
         #endregion
 
