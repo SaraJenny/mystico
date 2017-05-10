@@ -26,5 +26,9 @@ namespace Grupp5.Models.Entities
 		[DataType(DataType.Password)]
 		[MinLength(5, ErrorMessage = "Minst 5 tecken krävs")]
 		public string Password { get; set; }
+
+		[Required(ErrorMessage = "Obligatoriskt fält")]
+		[Display(Name = "Lösenord")]
+		public string PasswordCheck { get; set; }
 	}
 }
