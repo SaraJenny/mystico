@@ -70,7 +70,8 @@ body {
 
 header {
 	background-color: #351c38;
-	padding: 1em;
+	padding: .5em;
+	position: relative;
 }
 
 main {
@@ -96,7 +97,7 @@ footer {
 		line-height: 4em;
 	}
 
-/* Element som enbart ska vara synliga för screen readers */
+/* Döljer element visuellt samtidigt som skärmläsare kan läsa av dem */
 .hidden {
 	position: absolute;
 	left: -10000px;
@@ -105,6 +106,64 @@ footer {
 	height: 1px;
 	overflow: hidden;
 }
+
+
+
+
+
+
+
+/*****************************************************************************
+§MENY
+*****************************************************************************/
+#toggle-nav {
+	font-size: 4em;
+	position: absolute;
+	top: .1em;
+	right: .2em;
+	text-decoration: none;
+	color: #F5F7DC;
+}
+
+#mainmenu ul.active {
+	display: none;
+}
+
+#mainmenu ul {
+	width: 100%;
+	position: absolute;
+	top: 5em;
+	left: 0;
+	z-index: 1000;
+	background-color: #191919;
+}
+
+	#mainmenu ul li {
+		margin: .5em 0;
+		float: none;
+		display: block;
+	}
+
+		#mainmenu ul li:hover {
+			background-color: #00bcd4;
+		}
+
+		#mainmenu ul li:active {
+			background-color: #00bcd4;
+		}
+
+	#mainmenu ul a {
+		display: block;
+		color: #fff;
+		font-size: 1.2em;
+		padding: 2.5% 5%;
+	}
+
+/* Aktuell sida */
+.current a {
+	background-color: #4d4d4d;
+}
+
 
 
 
@@ -156,11 +215,28 @@ label {
 
 
 
+/******************
+PLUS-FOOTER
+******************/
+#addExpenseFooter {
+	position:fixed;
+	bottom: 0;
+	padding: .5em;
+	background-color: #F5F7DC;
+	width: 100%;
+}
+
+#plus {
+	display: block;
+	max-width: 100%;
+	margin: 0 auto;
+}
+
+
 
 /*********
 RUBRIKER
 **********/
-
 h2 {
 	font-size: 2em;
 	text-align: center;
@@ -175,6 +251,10 @@ h2 {
 /*********
 TEXT
 **********/
+
+a {
+	text-decoration: none;
+}
 
 .field-validation-error {
 	color: #710114;
