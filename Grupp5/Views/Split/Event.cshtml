@@ -1,1 +1,28 @@
-﻿Jag är split/event!
+﻿@{ViewBag.Title = "Lägg till event";}
+@model SplitEventVM
+
+<h2>Skapa konto</h2>
+
+<form asp-controller="Account" asp-action="Register">
+
+	<label asp-for="Name"></label>
+	<input asp-for="Name" />
+	<span asp-validation-for="Name"></span>
+
+	<label asp-for="Description"></label>
+	<input asp-for="Description" />
+	<span asp-validation-for="Description"></span>
+
+	<label asp-for="Currency"></label>
+	<input asp-for="Currency" />
+	<span asp-validation-for="Currency"></span>
+
+	<input type="submit" value="Lägg till event" />
+
+</form>
+
+@section scripts {
+	<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.0.min.js"></script>
+	<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
+	<script src="http://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>
+}
