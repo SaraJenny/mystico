@@ -13,7 +13,6 @@ namespace Grupp5.Models.Entities
 		[Display(Name = "Namn")]
 		public string Name { get; set; }
 
-//		[Required(ErrorMessage = "Obligatoriskt fält")]
 		[Display(Name = "Beskrivning")]
 		[DataType(DataType.MultilineText)]
 		public string Description { get; set; }

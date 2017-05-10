@@ -1,15 +1,22 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Grupp5.Models.Entities
+namespace Grupp5.Models.ViewModels
 {
-    public class AccountRegisterVM
+    public class SplitExpenseVM
     {
+		public SelectListItem[] CurrencyItem { get; set; }
+
 		[Required(ErrorMessage = "Obligatoriskt fält")]
-		[Display(Name = "Förnamn")]
+		[Display(Name = "Standardvaluta")]
+		public string SelectedCurrency { get; set; }
+
+		[Required(ErrorMessage = "Obligatoriskt fält")]
+		[Display(Name = "Event")]
 		public string FirstName { get; set; }
 
 		[Required(ErrorMessage = "Obligatoriskt fält")]
@@ -28,7 +35,7 @@ namespace Grupp5.Models.Entities
 		public string Password { get; set; }
 
 		[Required(ErrorMessage = "Obligatoriskt fält")]
-		[Display(Name = "Upprepa lösenord")]
+		[Display(Name = "Lösenord")]
 		public string PasswordCheck { get; set; }
 	}
 }

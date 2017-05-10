@@ -6,10 +6,8 @@
 
   <ItemGroup>
     <Content Include="wwwroot\css\style.css" />
-    <Content Include="wwwroot\img\logotype.png" />
     <Content Include="wwwroot\img\logo_175-white.png" />
     <Content Include="wwwroot\img\logo_175.png" />
-    <Content Include="wwwroot\img\plus_175.png" />
     <Content Include="wwwroot\img\plus_75.png" />
     <Content Include="wwwroot\img\plus_75x75.png" />
     <Content Include="wwwroot\js\script.js" />

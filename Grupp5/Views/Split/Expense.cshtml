@@ -1,1 +1,28 @@
-﻿jag är split/expense!
+﻿@{ViewBag.Title = "Lägg till utlägg";}
+@model SplitExpenseVM
+
+<h2>Lägg till utlägg</h2>
+
+<form asp-controller="Split" asp-action="Expense">
+
+	<label asp-for="Name"></label>
+	<input asp-for="Name" />
+	<span asp-validation-for="Name"></span>
+
+	<label asp-for="Description"></label>
+	<input asp-for="Description" />
+	<span asp-validation-for="Description"></span>
+
+	<label asp-for="SelectedCurrency"></label>
+	<select asp-for="SelectedCurrency" asp-items="Model.CurrencyItem"></select>
+	<span asp-validation-for="SelectedCurrency"></span>
+
+	<input type="submit" value="Lägg till event" />
+
+</form>
+
+@section scripts {
+	<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.0.min.js"></script>
+	<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
+	<script src="http://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>
+}
