@@ -1,1 +1,25 @@
-﻿Du är inloggad! Jag är split/index
+﻿@{ViewBag.Title = "Event";}
+@model AccountLoginVM
+
+<button>Lägg till event</button>
+
+<h2>Mina event</h2>
+
+<a asp-action="" asp-controller="">Event 1</a>
+
+
+
+@section addExpenseFooter {
+	<footer>
+		<div id="addExpenseFooter">
+			<a asp-controller="" asp-action="">
+				<img id="plus" src="~/img/plus_75.png" />
+			</a>
+		</div>
+	</footer>
+}
+
+@section scripts {
+	<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
+	<script src="http://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>
+}

@@ -8,17 +8,29 @@
 </head>
 <body>
 	<header>
-		<h1>PayMe</h1>
+		<h1 class="hidden">PayMe</h1>
 		<a asp-controller="Split" asp-action="Index">
-			<img src="#" alt="" />
+			<img src="~/img/logo_175-white.png" alt="" />
 		</a>
+		<a href="#" id="toggle-nav">&#9776;</a>
+		<nav id="mainmenu" class="sidenav">
+			<ul class="active">
+				<li>
+					<a asp-controller="" asp-action="">Hem</a>
+				</li>
+				<li>
+					<a asp-controller="Account" asp-action="Signout">Logga ut</a>
+				</li>
+			</ul>
+
+		</nav>
 	</header>
 	<main>
 		@RenderBody()
 	</main>
-	<footer>
-		<p>&copy;Eminenta Grupp 5</p>
-	</footer>
+	@RenderSection("addExpenseFooter", false)
+	<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.0.min.js"></script>
+	<script src="~/js/script.js"></script>
 	@RenderSection("scripts", false)
 </body>
 </html>

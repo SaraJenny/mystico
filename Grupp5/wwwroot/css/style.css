@@ -69,8 +69,9 @@ body {
 }
 
 header {
-	background-color: #ffffff;
-	padding: 1em;
+	background-color: #351c38;
+	padding: .5em;
+	position: relative;
 }
 
 main {
@@ -96,7 +97,7 @@ footer {
 		line-height: 4em;
 	}
 
-/* Element som enbart ska vara synliga för screen readers */
+/* Döljer element visuellt samtidigt som skärmläsare kan läsa av dem */
 .hidden {
 	position: absolute;
 	left: -10000px;
@@ -105,6 +106,64 @@ footer {
 	height: 1px;
 	overflow: hidden;
 }
+
+
+
+
+
+
+
+/*****************************************************************************
+§MENY
+*****************************************************************************/
+#toggle-nav {
+	font-size: 4em;
+	position: absolute;
+	top: .1em;
+	right: .2em;
+	text-decoration: none;
+	color: #F5F7DC;
+}
+
+#mainmenu ul.active {
+	display: none;
+}
+
+#mainmenu ul {
+	width: 100%;
+	position: absolute;
+	top: 5em;
+	left: 0;
+	z-index: 1000;
+	background-color: #191919;
+}
+
+	#mainmenu ul li {
+		margin: .5em 0;
+		float: none;
+		display: block;
+	}
+
+		#mainmenu ul li:hover {
+			background-color: #351c38;
+		}
+
+		#mainmenu ul li:active {
+			background-color: #351c38;
+		}
+
+	#mainmenu ul a {
+		display: block;
+		color: #fff;
+		font-size: 1.2em;
+		padding: 2.5% 5%;
+	}
+
+/* Aktuell sida */
+.current a {
+	background-color: #4d4d4d;
+}
+
 
 
 
@@ -118,12 +177,12 @@ form {
 	margin: 0 auto;
 }
 
-input {
+input, select {
 	display: block;
 	width: 96%;
 	padding: 1em 2%;
-	border: 1px solid #346E00;
-	margin-bottom: 1em;
+	border: 1px solid #351c38;
+	margin-bottom: .75em;
 	font-size: 1em;
 	-webkit-border-radius: 2px;
 	-moz-border-radius: 2px;
@@ -132,33 +191,72 @@ input {
 
 	input[type="submit"] {
 		width: 100%;
-		background-color: #351c38;
-		font-weight: 700;
-		color: #fff;
-		border-color: #351c38;
+		background-color: #346E00;
+		color: #F5F7DC;
+		border-color: #346E00;
 	}
+
+		input[type="submit"]:hover {
+			background-color: #49324b;
+			background-color: rgba(53, 28, 56, .9);
+			border-color: #351c38;
+		}
+
+select {
+	width: 100%;
+	font-family: 'Roboto', sans-serif;
+}
 
 label {
 	font-weight: 700;
 	display: block;
-	margin-bottom: .5em;
+	margin: 1.25em 0 .5em;
 }
 
+
+/******************
+BUTTON
+******************/
+button {
+	display: block;
+	width: 100%;
+	background-color: #346E00;
+	color: #F5F7DC;
+	padding: 1em 2%;
+	border: 1px solid #346E00;
+	margin-bottom: .75em;
+	font-size: 1em;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+}
+
+
+
+
+
+/******************
+PLUS-FOOTER
+******************/
+#addExpenseFooter {
+	position:fixed;
+	bottom: 0;
+	padding: .5em;
+	background-color: #F5F7DC;
+	width: 100%;
+}
+
+#plus {
+	display: block;
+	max-width: 100%;
+	margin: 0 auto;
+}
 
 
 
 /*********
 RUBRIKER
 **********/
-
-h1 {
-	font-size: 3em;
-	text-align: center;
-	font-weight: 700;
-	text-transform: uppercase;
-	color: #fff;
-}
-
 h2 {
 	font-size: 2em;
 	text-align: center;
@@ -174,8 +272,12 @@ h2 {
 TEXT
 **********/
 
+a {
+	text-decoration: none;
+}
+
 .field-validation-error {
-	color: #cf0606;
+	color: #710114;
 	display: block;
 	margin-bottom: 1em;
 }
