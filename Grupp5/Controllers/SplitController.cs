@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Grupp5.Models.Entities;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Grupp5.Controllers
 {
@@ -20,7 +22,17 @@ namespace Grupp5.Controllers
         #region Event
         public IActionResult Event()
         {
-            return View();
+			// TODO Hämta valutor från databasen
+			var model = new SplitEventVM();
+			model.CurrencyItem = new SelectListItem[]
+			{
+				new SelectListItem { Text = "SEK", Value = "SEK"},
+				new SelectListItem { Text = "NOK", Value = "NOK"},
+				new SelectListItem { Text = "USD", Value = "USD"},
+				new SelectListItem { Text = "EUR", Value = "EUR"}
+			};
+
+			return View(model);
         }
         #endregion
 
