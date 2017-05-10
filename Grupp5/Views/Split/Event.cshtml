@@ -13,9 +13,9 @@
 	<input asp-for="Description" />
 	<span asp-validation-for="Description"></span>
 
-	<label asp-for="Currency"></label>
-	<input asp-for="Currency" />
-	<span asp-validation-for="Currency"></span>
+	<label asp-for="SelectedCurrency"></label>
+	<select asp-for="SelectedCurrency" asp-items="Model.CurrencyItem"></select>
+	<span asp-validation-for="SelectedCurrency"></span>
 
 	<input type="submit" value="Lägg till event" />
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -17,10 +18,11 @@ namespace Grupp5.Models.Entities
 		[DataType(DataType.MultilineText)]
 		public string Description { get; set; }
 
-		// TODO Gör detta till en select
+		public SelectListItem[] CurrencyItem { get; set; }
+
 		[Required(ErrorMessage = "Obligatoriskt fält")]
 		[Display(Name = "Standardvaluta")]
-		public string Currency { get; set; }
+		public string SelectedCurrency { get; set; }
 
 		// TODO Lägg till vänner
 	}
