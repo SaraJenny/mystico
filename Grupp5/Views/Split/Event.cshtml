@@ -16,8 +16,8 @@
 	<select asp-for="SelectedCurrency" asp-items="Model.CurrencyItem"></select>
 	<span asp-validation-for="SelectedCurrency"></span>
 
-	<label asp-for="Friends"></label>
-	<input asp-for="Friends" />
+	<input type="text" id="friendsTextBox"/>
+	<input type="hidden" asp-for="FriendIds" />
 
 	<div class="friend-box">
 		<ul class="friend-list">
