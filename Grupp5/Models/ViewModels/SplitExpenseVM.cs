@@ -27,6 +27,7 @@ namespace Grupp5.Models.Entities
 
 		[Required(ErrorMessage = "Obligatoriskt fält")]
 		[Display(Name = "Belopp")]
+		[Range(0.0, double.MaxValue, ErrorMessage = "Ogiltigt belopp")]
 		public string Amount { get; set; }
 
 		[Required(ErrorMessage = "Obligatoriskt fält")]

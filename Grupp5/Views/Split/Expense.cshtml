@@ -19,13 +19,18 @@
 
 	<label asp-for="Amount"></label>
 	<input asp-for="Amount" />
-	<span asp-validation-for="Amount"></span>
+	<span asp-validation-for="Amount" id="amountError"></span>
 
 	<label asp-for="Date"></label>
 	<input asp-for="Date" value="@Model.Date" />
 	<span asp-validation-for="Date"></span>
 
-	<input type="submit" value="Lägg till event" />
+	@*@foreach (var item in Model.Pa)
+	{
+
+	}*@
+
+	<input type="submit" value="Lägg till event" id="addExpenseButton" />
 
 </form>
 
