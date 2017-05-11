@@ -85,6 +85,18 @@ namespace Grupp5.Models.Entities
             return newEvent;
         }
 
+        internal List<User> GetUsersByEventId(int id)
+        {
+            var participants = ParticipantsInEvent.Where(e => e.EventId == id).ToList();
+            var users = new List<User>();
+
+            foreach (var participant in participants)
+            {
+                users.Add(User.Where(u => u.Id == participant.UserId).First());
+            }
+            return users;
+        }
+
         public void AddParticipantsToEvent(List<int> friends, int eventId, int currentUserId)
         {
             ParticipantsInEvent.Add(new ParticipantsInEvent
