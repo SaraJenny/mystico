@@ -33,5 +33,7 @@ namespace Grupp5.Models.Entities
 		[Display(Name = "Datum")]
 		[DataType(DataType.Date)]
 		public string Date { get; set; }
-	}
+
+        public List<PayerVM> Payers { get; set; }
+    }
 }

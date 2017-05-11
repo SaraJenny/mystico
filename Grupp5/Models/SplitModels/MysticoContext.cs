@@ -80,7 +80,7 @@ namespace Grupp5.Models.Entities
             ParticipantsInEvent.Add(new ParticipantsInEvent
             {
                 EventId = eventId,
-                UserId = currentUserId,                              
+                UserId = currentUserId,
             });
 
             foreach (var userId in friends)
@@ -107,6 +107,47 @@ namespace Grupp5.Models.Entities
         public User GetUserByAspUserId(string id)
         {
             return User.Where(u => u.AspId == id).First();
+        }
+
+        internal int CreateExpense(SplitExpenseVM viewModel, int currentUserId)
+        {
+            var newExpense = new Expense()
+            {
+
+                Amount = Convert.ToDecimal(viewModel.Amount),
+                Description = viewModel.Description,
+                CurrencyId = Convert.ToInt32(viewModel.SelectedCurrency),
+                Date = Convert.ToDateTime(viewModel.Date),
+                PurchaserId = currentUserId,
+                EventId = Convert.ToInt32(viewModel.SelectedEvent),
+                AmountInStandardCurrency = Convert.ToDecimal(viewModel.Amount) //TODO valutaomvandling
+
+            };
+
+            Expense.Add(newExpense);
+            SaveChanges();
+            return newExpense.Id;
+
+        }
+
+        internal void CreatePayerForExpense(List<PayerVM> payers, int expenseId)
+        {
+            foreach (var payer in payers)
+            {
+                if (payer.IsSelected)
+                {
+                    PayersForExpense.Add(new PayersForExpense
+                    {
+
+                        ExpenseId = expenseId,
+                        UserId = payer.Id,
+                        Objection = false
+
+                    });
+                }
+            }
+
+            SaveChanges();
         }
     }
 }

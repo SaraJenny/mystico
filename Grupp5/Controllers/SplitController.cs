@@ -55,10 +55,10 @@ namespace Grupp5.Controllers
             var myUser = await userManager.GetUserAsync(HttpContext.User);
             User user = mysticoContext.GetUserByAspUserId(myUser.Id);
 
-			var FriendIds = new List<int> { 12, 11, 13 };
-			//var FriendIds = viewModel.FriendIds.Split(',');
+            var FriendIds = new List<int> { 12, 11, 13 };
+            //var FriendIds = viewModel.FriendIds.Split(',');
 
-			mysticoContext.AddParticipantsToEvent(FriendIds, newEvent.Id, user.Id);
+            mysticoContext.AddParticipantsToEvent(FriendIds, newEvent.Id, user.Id);
 
             return RedirectToAction(nameof(SplitController.Overview), nameof(SplitController).Replace("Controller", ""), new { id = newEvent.Id });
         }
@@ -85,6 +85,8 @@ namespace Grupp5.Controllers
             //Hämta valutor från databasen
             List<Currency> allCurrencies = mysticoContext.GetAllCurrencies();
 
+            //TODO Add participants as payerVM(i en lista)
+
             var viewModel = new SplitExpenseVM();
             viewModel.CurrencyItem = Library.ConvertCurrencyToSelectListItem(allCurrencies);
             viewModel.EventItem = Library.ConvertEventToSelectListItem(myEvents);
@@ -94,18 +96,19 @@ namespace Grupp5.Controllers
         }
 
         [HttpPost]
-        public IActionResult Expense(SplitExpenseVM viewModel)
+        public async Task<IActionResult> Expense(SplitExpenseVM viewModel)
         {
             if (!ModelState.IsValid)
                 return View(viewModel);
 
-            //Add Expense och få tillbaka id
-            //add payers for expense (inkl. adder??)
-            //save changes to database
+            var myUser = await userManager.GetUserAsync(HttpContext.User);
+            User user = mysticoContext.GetUserByAspUserId(myUser.Id);
 
+            var expenseId = mysticoContext.CreateExpense(viewModel, user.Id);
 
-            //OBS HÅRDKODAT ID i slutet av redirect
-            return RedirectToAction(nameof(SplitController.Overview), nameof(SplitController).Replace("Controller", ""), new { id = 3 });
+            mysticoContext.CreatePayerForExpense(viewModel.Payers, expenseId);
+
+            return RedirectToAction(nameof(SplitController.Overview), nameof(SplitController).Replace("Controller", ""), new { id = viewModel.SelectedEvent });
         }
         #endregion
 
