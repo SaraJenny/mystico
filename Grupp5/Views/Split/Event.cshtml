@@ -11,11 +11,19 @@
 
 	<label asp-for="Description"></label>
 	<input asp-for="Description" />
-	<span asp-validation-for="Description"></span>
 
 	<label asp-for="SelectedCurrency"></label>
 	<select asp-for="SelectedCurrency" asp-items="Model.CurrencyItem"></select>
 	<span asp-validation-for="SelectedCurrency"></span>
+
+	
+
+	<div class="friend-box">
+		<ul class="friend-list">
+			<li>Johanna Kallin</li>
+			<li>Alex Arana</li>
+		</ul>
+	</div>
 
 	<input type="submit" value="Lägg till event" />
 
