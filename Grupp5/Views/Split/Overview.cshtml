@@ -1,13 +1,22 @@
 ﻿@model SplitOverviewVM
 @{ViewBag.Title = Model.EventName;}
 
-<h2>Londonresa</h2>
+<h2>@Model.EventName</h2>
 
 <section class="status">
 	@*<h3>Din status</h3>*@
-	<div class="minus circle">@*//TODO om mindre än 0 => class="minus", annars class="plus" *@
-		<span class="focus">@Model.MyStatus kr</span>
-	</div>
+	@if (Model.MyStatus < 0)
+	{
+		<div class="minus circle">
+			<span class="focus">@Model.MyStatus kr</span>
+		</div>
+	}
+	else
+	{
+		<div class="plus circle">
+			<span class="focus">+ @Model.MyStatus kr</span>
+		</div>
+	}
 </section>
 <section class="status total">
 	<h3>Total kostnad</h3>
