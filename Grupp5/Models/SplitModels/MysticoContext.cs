@@ -57,7 +57,13 @@ namespace Grupp5.Models.Entities
 
         public List<Event> GetEventsByUserId (int id)
         {
-            return ParticipantsInEvent.Where(p => p.UserId == id).Select(p => p.Event).ToList();       
+            var myEvents = ParticipantsInEvent.Where(p => p.UserId == id).Select(p => p.Event).ToList();
+            return myEvents;  
+        }
+
+        public User GetUserByAspUserId(string id)
+        {
+            return User.Where(u => u.AspId == id).First();
         }
     }
 }

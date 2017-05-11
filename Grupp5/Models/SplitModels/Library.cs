@@ -96,5 +96,17 @@ namespace Grupp5.Models.SplitModels
             return transaction;
 
         }
+
+        static public SplitIndexVM[] ConvertToSplitIndexVMArray (List<Event> events)
+        {
+            var myList = new List<SplitIndexVM>();
+
+            foreach (var item in events)
+            {
+                myList.Add(new SplitIndexVM() {Id = item.Id, EventName = item.EventName });               
+            }
+
+            return myList.ToArray();
+        }
     }
 }
