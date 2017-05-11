@@ -33,5 +33,26 @@ namespace Grupp5.Models.Entities
                 Debug.Write(x.Message);
             }
         }
+
+        public Event GetEventById(int id)
+        {
+            var myEvent = Event.Where(e => e.Id == id).First();
+
+            myEvent.ParticipantsInEvent = ParticipantsInEvent.Where(p => p.EventId == myEvent.Id).ToList();
+
+            myEvent.Expense = Expense.Where(e => e.EventId == myEvent.Id).ToList();
+
+            foreach (var expense in myEvent.Expense)
+            {
+                expense.PayersForExpense = PayersForExpense.Where(p => p.ExpenseId == expense.Id).ToList();
+            }
+
+            foreach (var person in myEvent.ParticipantsInEvent)
+            {
+                person.User = User.Where(u => u.Id == person.UserId).First();
+            }
+            
+            return myEvent;
+        }
     }
 }
