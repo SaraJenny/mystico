@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Grupp5.Models.SplitModels
 {
@@ -95,6 +96,18 @@ namespace Grupp5.Models.SplitModels
 
             return transaction;
 
+        }
+
+        static public SelectListItem[] ConvertCurrencyToSplitEventVMCurrencyItem(List<Currency> allCurrencies)
+        {
+            var theList = new List<SelectListItem>();
+
+            foreach (var item in allCurrencies)
+            {
+                theList.Add(new SelectListItem() { Text = item.CurrencyCode, Value = item.Id.ToString() });
+            }
+
+            return theList.ToArray();
         }
 
         static public SplitIndexVM[] ConvertToSplitIndexVMArray (List<Event> events)

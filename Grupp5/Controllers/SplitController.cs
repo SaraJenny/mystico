@@ -35,19 +35,30 @@ namespace Grupp5.Controllers
         #endregion
 
         #region Event
+        [HttpGet]
         public IActionResult Event()
         {
-			// TODO Hämta valutor från databasen
 			var viewModel = new SplitEventVM();
-			viewModel.CurrencyItem = new SelectListItem[]
-			{
-				new SelectListItem { Text = "SEK", Value = "SEK"},
-				new SelectListItem { Text = "NOK", Value = "NOK"},
-				new SelectListItem { Text = "USD", Value = "USD"},
-				new SelectListItem { Text = "EUR", Value = "EUR"}
-			};
+            List<Currency> allCurrencies = mysticoContext.GetAllCurrencies();
+            viewModel.CurrencyItem = Library.ConvertCurrencyToSplitEventVMCurrencyItem(allCurrencies);
 
 			return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Event(SplitEventVM viewModel)
+        {
+            if (!ModelState.IsValid)
+                return View(viewModel);
+
+            //Skapa event
+            //Add participantsInEvent (även current user..)
+            //Kolla att allt gick bra och save changes mot databas
+
+            //TA BORT SEN
+            return Content("Yey!");
+
+            //return RedirectToAction(nameof(SplitController.Overview(myEvent.Id)), nameof(SplitController).Replace("Controller", ""));
         }
         #endregion
 
