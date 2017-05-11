@@ -16,12 +16,13 @@
 	<select asp-for="SelectedCurrency" asp-items="Model.CurrencyItem"></select>
 	<span asp-validation-for="SelectedCurrency"></span>
 
-	
+	<label asp-for="Friends"></label>
+	<input asp-for="Friends" />
 
 	<div class="friend-box">
 		<ul class="friend-list">
-			<li>Johanna Kallin</li>
-			<li>Alex Arana</li>
+			@*<li>Johanna Kallin</li>
+			<li>Alex Arana</li>*@
 		</ul>
 	</div>
 
