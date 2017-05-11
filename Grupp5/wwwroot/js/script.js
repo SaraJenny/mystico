@@ -43,4 +43,33 @@
 		$('#FriendIds').val(idString);
 		console.log(idString)
 	});
+
+	/*
+	SPLIT/EXPENSE (LÄGG TILL UTLÄGG)
+	*/
+	if ($('#splitExpense').length > 0) {
+		getFriendsByEvent();
+	}
+	$('#SelectedEvent').change(function () {
+		getFriendsByEvent();
+	});
+
+
+	function getFriendsByEvent() {
+		var eventId = $('#SelectedEvent').val();
+
+		$.ajax({
+			url: "/Json/GetUsersByEventId",
+			type: "GET",
+			data: {
+				id: eventId
+			},
+			success: function (result) {
+				console.log(result)
+			}
+		});
+
+		console.log("Hämta vänner")
+		console.log(eventId)
+	}
 });
