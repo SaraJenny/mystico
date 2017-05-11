@@ -61,7 +61,7 @@ namespace Grupp5.Controllers
             //Add participantsInEvent (även current user..)
             //Kolla att allt gick bra och save changes mot databas
 
-            //return RedirectToAction(nameof(SplitController.Overview(newEvent.Id)), nameof(SplitController).Replace("Controller", ""));
+            return RedirectToAction(nameof(SplitController.Overview), nameof(SplitController).Replace("Controller", ""));
         }
         #endregion
 
