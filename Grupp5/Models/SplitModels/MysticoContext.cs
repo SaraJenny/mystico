@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Grupp5.Models.Entities
 {
-    public partial class MysticoContext: DbContext
+    public partial class MysticoContext : DbContext
     {
-        public MysticoContext(DbContextOptions<MysticoContext> options) : base (options)
+        public MysticoContext(DbContextOptions<MysticoContext> options) : base(options)
         {
-            
+
         }
 
         public void AddUser(string id, string firstName, string lastName)
@@ -51,7 +51,7 @@ namespace Grupp5.Models.Entities
             {
                 person.User = User.Where(u => u.Id == person.UserId).First();
             }
-            
+
             return myEvent;
         }
 
@@ -60,10 +60,45 @@ namespace Grupp5.Models.Entities
             return Currency.ToList();
         }
 
-        public List<Event> GetEventsByUserId (int id)
+        public Event CreateEvent(SplitEventVM viewModel)
+        {
+
+            var newEvent = new Event();
+            newEvent.EventName = viewModel.Name;
+            newEvent.Description = viewModel.Description;
+            newEvent.IsActive = true;
+            newEvent.StandardCurrencyId = Convert.ToInt32(viewModel.SelectedCurrency);
+
+            Event.Add(newEvent);
+            SaveChanges();
+
+            return newEvent;
+        }
+
+        public void AddParticipantsToEvent(List<int> friends, int eventId, int currentUserId)
+        {
+            ParticipantsInEvent.Add(new ParticipantsInEvent
+            {
+                EventId = eventId,
+                UserId = currentUserId,                              
+            });
+
+            foreach (var userId in friends)
+            {
+                ParticipantsInEvent.Add(new ParticipantsInEvent
+                {
+                    EventId = eventId,
+                    UserId = userId,
+                });
+            };
+
+            SaveChanges();
+        }
+
+        public List<Event> GetEventsByUserId(int id)
         {
             var myEvents = ParticipantsInEvent.Where(p => p.UserId == id).Select(p => p.Event).ToList();
-            return myEvents;  
+            return myEvents;
         }
 
         public User GetUserByAspUserId(string id)
