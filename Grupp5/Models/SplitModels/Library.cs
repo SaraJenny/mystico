@@ -79,6 +79,23 @@ namespace Grupp5.Models.SplitModels
 
         }
 
+        internal static List<UserVM> ConvertUsersToUsersVM(List<User> users)
+        {
+            var userVMlist = new List<UserVM>();
+
+            foreach (var person in users)
+            {
+                userVMlist.Add(new UserVM
+                {
+                    Id = person.Id,
+                    FirstName = person.FirstName,
+                    LastName = person.LastName
+                });
+            }
+
+            return userVMlist;
+        }
+
         private static Dictionary<int, decimal> CreateDictionaryForUserCredits(Event myEvent)
         {
             var userCredits = new Dictionary<int, Decimal>();

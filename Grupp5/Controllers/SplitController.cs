@@ -85,8 +85,6 @@ namespace Grupp5.Controllers
             //Hämta valutor från databasen
             List<Currency> allCurrencies = mysticoContext.GetAllCurrencies();
 
-            //TODO Add participants as payerVM(i en lista)
-
             var viewModel = new SplitExpenseVM();
             viewModel.CurrencyItem = Library.ConvertCurrencyToSelectListItem(allCurrencies);
             viewModel.EventItem = Library.ConvertEventToSelectListItem(myEvents);

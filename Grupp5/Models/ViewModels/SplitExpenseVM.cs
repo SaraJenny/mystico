@@ -34,6 +34,6 @@ namespace Grupp5.Models.Entities
 		[DataType(DataType.Date)]
 		public string Date { get; set; }
 
-        public List<PayerVM> Payers { get; set; }
+        public List<UserVM> Payers { get; set; }
     }
 }

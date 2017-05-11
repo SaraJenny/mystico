@@ -55,6 +55,16 @@ namespace Grupp5.Models.Entities
             return myEvent;
         }
 
+        internal List<User> GetAllUsers()
+        {
+            return User.ToList();
+        }
+
+        internal List<User> GetAllUsersExceptMe(int id)
+        {
+            return User.Where(u => u.Id != id).ToList();
+        }
+
         public List<Currency> GetAllCurrencies()
         {
             return Currency.ToList();
@@ -130,7 +140,7 @@ namespace Grupp5.Models.Entities
 
         }
 
-        internal void CreatePayerForExpense(List<PayerVM> payers, int expenseId)
+        internal void CreatePayerForExpense(List<UserVM> payers, int expenseId)
         {
             foreach (var payer in payers)
             {
