@@ -38,27 +38,30 @@ namespace Grupp5.Controllers
         [HttpGet]
         public IActionResult Event()
         {
-			var viewModel = new SplitEventVM();
+            var viewModel = new SplitEventVM();
             List<Currency> allCurrencies = mysticoContext.GetAllCurrencies();
             viewModel.CurrencyItem = Library.ConvertCurrencyToSplitEventVMCurrencyItem(allCurrencies);
 
-			return View(viewModel);
+            return View(viewModel);
         }
 
         [HttpPost]
-        public IActionResult Event(SplitEventVM viewModel)
+        public async Task<IActionResult> Event(SplitEventVM viewModel)
         {
             if (!ModelState.IsValid)
                 return View(viewModel);
 
-            //Skapa event
+
+            Event newEvent = mysticoContext.CreateEvent(viewModel);
+            var myUser = await userManager.GetUserAsync(HttpContext.User);
+            User user = mysticoContext.GetUserByAspUserId(myUser.Id);
+
+
+            mysticoContext.AddParticipantsToEvent(viewModel.Friends, newEvent.Id, user.Id);
             //Add participantsInEvent (även current user..)
             //Kolla att allt gick bra och save changes mot databas
 
-            //TA BORT SEN
-            return Content("Yey!");
-
-            //return RedirectToAction(nameof(SplitController.Overview(myEvent.Id)), nameof(SplitController).Replace("Controller", ""));
+            //return RedirectToAction(nameof(SplitController.Overview(newEvent.Id)), nameof(SplitController).Replace("Controller", ""));
         }
         #endregion
 
@@ -72,25 +75,25 @@ namespace Grupp5.Controllers
         #region Expense
         public IActionResult Expense()
         {
-			// TODO Hämta event från databasen
-			var viewModel = new SplitExpenseVM();
-			viewModel.EventItem = new SelectListItem[]
-			{
-				new SelectListItem { Text = "Londonresa", Value = "1"},
-				new SelectListItem { Text = "Maj 2017", Value = "2"}
-			};
+            // TODO Hämta event från databasen
+            var viewModel = new SplitExpenseVM();
+            viewModel.EventItem = new SelectListItem[]
+            {
+                new SelectListItem { Text = "Londonresa", Value = "1"},
+                new SelectListItem { Text = "Maj 2017", Value = "2"}
+            };
 
-			// TODO Hämta valutor från databasen
-			viewModel.CurrencyItem = new SelectListItem[]
-			{
-				new SelectListItem { Text = "SEK", Value = "SEK"},
-				new SelectListItem { Text = "NOK", Value = "NOK"},
-				new SelectListItem { Text = "USD", Value = "USD"},
-				new SelectListItem { Text = "EUR", Value = "EUR"}
-			};
+            // TODO Hämta valutor från databasen
+            viewModel.CurrencyItem = new SelectListItem[]
+            {
+                new SelectListItem { Text = "SEK", Value = "SEK"},
+                new SelectListItem { Text = "NOK", Value = "NOK"},
+                new SelectListItem { Text = "USD", Value = "USD"},
+                new SelectListItem { Text = "EUR", Value = "EUR"}
+            };
 
-			return View(viewModel);
-		}
+            return View(viewModel);
+        }
         #endregion
 
         #region Index
@@ -100,7 +103,7 @@ namespace Grupp5.Controllers
             User user = mysticoContext.GetUserByAspUserId(myUser.Id);
             var myEvents = mysticoContext.GetEventsByUserId(user.Id);
             var mySplitIndexVm = Library.ConvertToSplitIndexVMArray(myEvents);
-            
+
             return View(mySplitIndexVm);
         }
         #endregion
@@ -109,22 +112,22 @@ namespace Grupp5.Controllers
 
         public IActionResult Overview() // TODO lägg till int id som parameter
         {
-			//Kika på ID och hämta event
-			//Skicka Event till WhoOweWho()
-			//Printa ut resultat på view..
-			//var thisEvent = mysticoContext.GetEventById(id);
+            //Kika på ID och hämta event
+            //Skicka Event till WhoOweWho()
+            //Printa ut resultat på view..
+            //var thisEvent = mysticoContext.GetEventById(id);
 
-			//var message = "";
-			//var listMessage = Library.WhoOweWho(thisEvent);
+            //var message = "";
+            //var listMessage = Library.WhoOweWho(thisEvent);
 
 
-			//foreach (var item in listMessage)
-			//{
-			//    message += item;
-			//}
+            //foreach (var item in listMessage)
+            //{
+            //    message += item;
+            //}
 
-			//return Content(message);
-			return View();
+            //return Content(message);
+            return View();
         }
         #endregion
 
