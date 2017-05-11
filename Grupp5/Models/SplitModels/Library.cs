@@ -150,7 +150,7 @@ namespace Grupp5.Models.SplitModels
             return Convert.ToInt32(Math.Round(dictionary[userId], MidpointRounding.AwayFromZero));
         }
 
-        static public SelectListItem[] ConvertCurrencyToSplitEventVMCurrencyItem(List<Currency> allCurrencies)
+        static public SelectListItem[] ConvertCurrencyToSelectListItem(List<Currency> allCurrencies)
         {
             var theList = new List<SelectListItem>();
 
@@ -172,6 +172,17 @@ namespace Grupp5.Models.SplitModels
             }
 
             return myList.ToArray();
+        }
+
+        internal static SelectListItem[] ConvertEventToSelectListItem(List<Event> myEvents)
+        {
+            var eventItems = new List<SelectListItem>();
+            foreach (var xEvent in myEvents)
+            {
+                eventItems.Add(new SelectListItem { Text = xEvent.EventName, Value = xEvent.Id.ToString() });
+            }
+
+            return eventItems.ToArray();
         }
     }
 }

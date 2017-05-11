@@ -40,7 +40,7 @@ namespace Grupp5.Controllers
         {
             var viewModel = new SplitEventVM();
             List<Currency> allCurrencies = mysticoContext.GetAllCurrencies();
-            viewModel.CurrencyItem = Library.ConvertCurrencyToSplitEventVMCurrencyItem(allCurrencies);
+            viewModel.CurrencyItem = Library.ConvertCurrencyToSelectListItem(allCurrencies);
 
             return View(viewModel);
         }
@@ -59,7 +59,7 @@ namespace Grupp5.Controllers
 
             mysticoContext.AddParticipantsToEvent(viewModel.Friends, newEvent.Id, user.Id);
 
-            return RedirectToAction(nameof(SplitController.Overview), nameof(SplitController).Replace("Controller", ""),new {id = newEvent.Id });
+            return RedirectToAction(nameof(SplitController.Overview), nameof(SplitController).Replace("Controller", ""), new { id = newEvent.Id });
         }
         #endregion
 
@@ -71,26 +71,40 @@ namespace Grupp5.Controllers
         #endregion
 
         #region Expense
-        public IActionResult Expense()
+        [HttpGet]
+        public async Task<IActionResult> Expense()
         {
-            // TODO Hämta event från databasen
-            var viewModel = new SplitExpenseVM();
-            viewModel.EventItem = new SelectListItem[]
-            {
-                new SelectListItem { Text = "Londonresa", Value = "1"},
-                new SelectListItem { Text = "Maj 2017", Value = "2"}
-            };
+            //Hämta currentUser
+            var myUser = await userManager.GetUserAsync(HttpContext.User);
+            User currentUser = mysticoContext.GetUserByAspUserId(myUser.Id);
 
-            // TODO Hämta valutor från databasen
-            viewModel.CurrencyItem = new SelectListItem[]
-            {
-                new SelectListItem { Text = "SEK", Value = "SEK"},
-                new SelectListItem { Text = "NOK", Value = "NOK"},
-                new SelectListItem { Text = "USD", Value = "USD"},
-                new SelectListItem { Text = "EUR", Value = "EUR"}
-            };
+            //Hämta event från databasen som currentUser är med i...
+            var myEvents = mysticoContext.GetEventsByUserId(currentUser.Id);
+
+            //Hämta valutor från databasen
+            List<Currency> allCurrencies = mysticoContext.GetAllCurrencies();
+
+            var viewModel = new SplitExpenseVM();
+            viewModel.CurrencyItem = Library.ConvertCurrencyToSelectListItem(allCurrencies);
+            viewModel.EventItem = Library.ConvertEventToSelectListItem(myEvents);
+            viewModel.Date = DateTime.Today.ToString().Replace(" 00:00:00", "");
 
             return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Expense(SplitExpenseVM viewModel)
+        {
+            if (!ModelState.IsValid)
+                return View(viewModel);
+
+            //Add Expense och få tillbaka id
+            //add payers for expense (inkl. adder??)
+            //save changes to database
+
+
+            //OBS HÅRDKODAT ID i slutet av redirect
+            return RedirectToAction(nameof(SplitController.Overview), nameof(SplitController).Replace("Controller", ""), new { id = 3 });
         }
         #endregion
 
@@ -135,8 +149,7 @@ namespace Grupp5.Controllers
                 MyTotal = Library.GetUserTotalById(thisEvent, user.Id),
                 Total = Library.GetTotalCostForEvent(thisEvent)
             };
-            
- 
+
             return View(viewModel);
         }
         #endregion
