@@ -15,7 +15,7 @@ namespace Grupp5.Controllers
 {
     public class JsonController : Controller
     {
-
+        #region General
         UserManager<IdentityUser> userManager;
         IdentityDbContext identityContext;
         MysticoContext mysticoContext;
@@ -26,7 +26,9 @@ namespace Grupp5.Controllers
             this.identityContext = identityContext;
             this.mysticoContext = mysticoContext;
         }
+        #endregion
 
+        #region GetAllUsers
         public List<UserVM> GetAllUsers()
         {
             //Add participants as userVM(as Json)
@@ -35,8 +37,9 @@ namespace Grupp5.Controllers
 
             return userVMs;
         }
+        #endregion
 
-
+        #region GetAllUsersExceptMe
         public async Task<IActionResult> GetAllUsersExceptMe()
         {
             //Send all users except current user
@@ -48,5 +51,19 @@ namespace Grupp5.Controllers
 
             return Json(JsonConvert.SerializeObject(userVMs));
         }
+        #endregion
+
+        #region GetUsersByEventId
+
+        public List<UserVM> GetUsersByEventId(int id)
+        {
+            List<User> users = mysticoContext.GetUsersByEventId(id);
+            List<UserVM> userVMs = Library.ConvertUsersToUsersVM(users);
+
+            return userVMs;
+        }
+
+        #endregion
+
     }
 }

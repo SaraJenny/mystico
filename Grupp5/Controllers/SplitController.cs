@@ -16,6 +16,7 @@ namespace Grupp5.Controllers
     [Authorize]
     public class SplitController : Controller
     {
+        #region General (context + constructor)
         UserManager<IdentityUser> userManager;
         IdentityDbContext identityContext;
         MysticoContext mysticoContext;
@@ -26,6 +27,7 @@ namespace Grupp5.Controllers
             this.identityContext = identityContext;
             this.mysticoContext = mysticoContext;
         }
+#endregion
 
         #region Details
         public IActionResult Details()
