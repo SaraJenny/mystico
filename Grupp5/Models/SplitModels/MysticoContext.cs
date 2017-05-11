@@ -171,5 +171,13 @@ namespace Grupp5.Models.Entities
 
             SaveChanges();
         }
+
+        internal bool CheckIfUserIsParticipant(int userId, int eventId)
+        {
+            if (ParticipantsInEvent.Where(p => p.UserId == userId && p.EventId == eventId).Count() > 0)
+                return true;
+            else
+                return false;
+        }
     }
 }
