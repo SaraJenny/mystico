@@ -23,6 +23,8 @@ namespace Grupp5.Models.Entities
 		[Display(Name = "Standardvaluta")]
 		public string SelectedCurrency { get; set; }
 
-		// TODO Lägg till vänner
+		// TODO Lägg till vänner efter namn
+		[Display(Name = "Vänner")]
+		public List<int> Friends { get; set; }
 	}
 }

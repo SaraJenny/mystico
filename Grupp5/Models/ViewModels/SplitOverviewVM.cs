@@ -11,8 +11,7 @@ namespace Grupp5.Models.Entities
 		public int MyStatus { get; set; }
 		public int Total { get; set; }
 		public int MyTotal { get; set; }
-
-		//TODO Lägg till proppar för vem som är skyldig vad
-		//TODO Lägg till vänlista?
+		public List<string> TransactionsCommittedToMe  { get; set; }
+		public List<string> TransactionsWithoutMe { get; set; }
 	}
 }
