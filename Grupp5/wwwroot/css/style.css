@@ -250,9 +250,9 @@ PLUS-FOOTER
 	padding: .5em;
 	background-color: #F5F7DC;
 	width: 100%;
-	-webkit-box-shadow: 0px -2px 5px 0px rgba(53,28,56,1);
-	-moz-box-shadow: 0px -2px 5px 0px rgba(53,28,56,1);
-	box-shadow: 0px -2px 5px 0px rgba(53,28,56,1);
+	-webkit-box-shadow: 0 -2px 5px 0 rgba(53,28,56,1);
+	-moz-box-shadow: 0 -2px 5px 0 rgba(53,28,56,1);
+	box-shadow: 0 -2px 5px 0 rgba(53,28,56,1);
 }
 
 	#addExpenseFooter .fa {

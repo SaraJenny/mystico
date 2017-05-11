@@ -12,8 +12,9 @@
 	LÄGG TILL VÄNNER
 	*/
 	var string = "";
+	var idString = "";
 
-	$('#Friends').keypress(function (e) {
+	$('#friendsTextBox').keypress(function (e) {
 		// töm vänboxen
 		$('.friend-box').html("");
 		string += e.originalEvent.key;
@@ -25,9 +26,21 @@
 			},
 			success: function (result) {
 				for (var i = 0; i < result.length; i++) {
-					$('.friend-box').append('<p>Id: ' + result[i].id + '</p><p>Namn: ' + result[i].firstName + ' ' + result[i].lastName + '</p><p>E-post: ' + result[i].email + '</p>');
+					$('.friend-box').append('<p class="friend" id="' + result[i].id + '">' + result[i].firstName + ' ' + result[i].lastName + '</p>');
 				}
 			}
 		});
+	});
+
+	$('body').on('click', '.friend', function (e) {
+		var id = e.target.id;
+		if (idString === "") {
+			idString = id;
+		}
+		else {
+			idString += ',' + id;
+		}
+		$('#FriendIds').val(idString);
+		console.log(idString)
 	});
 });

@@ -16,14 +16,11 @@
 	<select asp-for="SelectedCurrency" asp-items="Model.CurrencyItem"></select>
 	<span asp-validation-for="SelectedCurrency"></span>
 
+	<label for="friendsTextBox">Vänner</label>
 	<input type="text" id="friendsTextBox"/>
 	<input type="hidden" asp-for="FriendIds" />
 
 	<div class="friend-box">
-		<ul class="friend-list">
-			@*<li>Johanna Kallin</li>
-			<li>Alex Arana</li>*@
-		</ul>
 	</div>
 
 	<input type="submit" value="Lägg till event" />
