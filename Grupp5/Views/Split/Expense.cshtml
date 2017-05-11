@@ -1,6 +1,7 @@
 ﻿@{ViewBag.Title = "Lägg till utlägg";}
 @model SplitExpenseVM
 
+<div id="splitExpense"></div>
 <h2>Lägg till utlägg</h2>
 
 <form asp-controller="Split" asp-action="Expense">
@@ -25,9 +26,9 @@
 	<input asp-for="Date" value="@Model.Date" />
 	<span asp-validation-for="Date"></span>
 
-	@*@foreach (var item in Model.Pa)
+	@*@foreach (var payer in Model.Payers)
 	{
-
+		<input type="checkbox" name="payerList" value="@payer.FirstName @payer.LastName" checked />
 	}*@
 
 	<input type="submit" value="Lägg till event" id="addExpenseButton" />
