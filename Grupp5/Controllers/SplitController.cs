@@ -78,6 +78,12 @@ namespace Grupp5.Controllers
         #region Index
         public IActionResult Index()
         {
+            //Get all events by userId
+            //omvandla events till split/indexVM
+            //retunera view med array av splitindexVM
+
+            mysticoContext.GetEventsByUserId(11);
+
             return View();
         }
         #endregion

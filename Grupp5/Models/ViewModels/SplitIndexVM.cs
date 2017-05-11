@@ -10,6 +10,8 @@ namespace Grupp5.Models.Entities
 		public int Id { get; set; }
 		public string EventName { get; set; }
 
+
+
 		// I vyn vill vi ha en lista av SplitIndexVM
 	}
 }
