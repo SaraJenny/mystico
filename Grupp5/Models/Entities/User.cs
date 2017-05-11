@@ -20,6 +20,5 @@ namespace Grupp5.Models.Entities
         public virtual ICollection<Expense> Expense { get; set; }
         public virtual ICollection<ParticipantsInEvent> ParticipantsInEvent { get; set; }
         public virtual ICollection<PayersForExpense> PayersForExpense { get; set; }
-        public virtual AspNetUsers Asp { get; set; }
     }
 }
