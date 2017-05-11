@@ -90,23 +90,24 @@ namespace Grupp5.Controllers
 
         #region Overview
 
-        public IActionResult Overview(int id)
+        public IActionResult Overview() // TODO lägg till int id som parameter
         {
-            //Kika på ID och hämta event
-            //Skicka Event till WhoOweWho()
-            //Printa ut resultat på view..
-            var thisEvent = mysticoContext.GetEventById(id);
+			//Kika på ID och hämta event
+			//Skicka Event till WhoOweWho()
+			//Printa ut resultat på view..
+			//var thisEvent = mysticoContext.GetEventById(id);
 
-            var message = "";
-            var listMessage = Library.WhoOweWho(thisEvent);
+			//var message = "";
+			//var listMessage = Library.WhoOweWho(thisEvent);
 
 
-            foreach (var item in listMessage)
-            {
-                message += item;
-            }
+			//foreach (var item in listMessage)
+			//{
+			//    message += item;
+			//}
 
-            return Content(message);
+			//return Content(message);
+			return View();
         }
         #endregion
 

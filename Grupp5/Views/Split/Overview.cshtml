@@ -3,12 +3,13 @@
 
 <h2>Londonresa</h2>
 
-<section>
+<section class="status">
 	<h3>Din status</h3>
-	<p>-567 kr</p>
+	<div class="focus minus circle">-567 kr</div> @*//TODO om mindre än 0 => class="minus", annars class="plus" *@
 </section>
-<section>
-	<p>Total: 2387 kr</p>
+<section class="status">
+	<h3>Total kostnad</h3>
+	<p class="focus">2387 kr</p>
 	<p>varav du ska betala 598 kr</p>
 </section>
 <section>
@@ -21,7 +22,7 @@
 	<footer>
 		<div id="addExpenseFooter">
 			<a asp-controller="" asp-action="">
-				<img id="plus" src="~/img/plus_75.png" />
+				<img id="plusSign" src="~/img/plus_75.png" />
 			</a>
 		</div>
 	</footer>
