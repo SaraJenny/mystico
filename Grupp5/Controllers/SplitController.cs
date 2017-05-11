@@ -7,16 +7,23 @@ using Microsoft.AspNetCore.Authorization;
 using Grupp5.Models.Entities;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Grupp5.Models.SplitModels;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace Grupp5.Controllers
 {
     [Authorize]
     public class SplitController : Controller
     {
+        UserManager<IdentityUser> userManager;
+        IdentityDbContext identityContext;
         MysticoContext mysticoContext;
 
-        public SplitController(MysticoContext mysticoContext)
+        public SplitController(UserManager<IdentityUser> userManager, IdentityDbContext identityContext, MysticoContext mysticoContext)
         {
+            this.userManager = userManager;
+            this.identityContext = identityContext;
             this.mysticoContext = mysticoContext;
         }
 
@@ -76,15 +83,14 @@ namespace Grupp5.Controllers
         #endregion
 
         #region Index
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            //Get all events by userId
-            //omvandla events till split/indexVM
-            //retunera view med array av splitindexVM
-
-            mysticoContext.GetEventsByUserId(11);
-
-            return View();
+            var myUser = await userManager.GetUserAsync(HttpContext.User);
+            User user = mysticoContext.GetUserByAspUserId(myUser.Id);
+            var myEvents = mysticoContext.GetEventsByUserId(user.Id);
+            var mySplitIndexVm = Library.ConvertToSplitIndexVMArray(myEvents);
+            
+            return View(mySplitIndexVm);
         }
         #endregion
 
