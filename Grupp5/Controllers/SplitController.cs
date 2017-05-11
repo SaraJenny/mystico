@@ -51,17 +51,15 @@ namespace Grupp5.Controllers
             if (!ModelState.IsValid)
                 return View(viewModel);
 
-
             Event newEvent = mysticoContext.CreateEvent(viewModel);
             var myUser = await userManager.GetUserAsync(HttpContext.User);
             User user = mysticoContext.GetUserByAspUserId(myUser.Id);
 
+            viewModel.Friends = new List<int> { 12, 11, 13 };
 
             mysticoContext.AddParticipantsToEvent(viewModel.Friends, newEvent.Id, user.Id);
-            //Add participantsInEvent (även current user..)
-            //Kolla att allt gick bra och save changes mot databas
 
-            return RedirectToAction(nameof(SplitController.Overview), nameof(SplitController).Replace("Controller", ""));
+            return RedirectToAction(nameof(SplitController.Overview), nameof(SplitController).Replace("Controller", ""),new {id = newEvent.Id });
         }
         #endregion
 
@@ -110,24 +108,36 @@ namespace Grupp5.Controllers
 
         #region Overview
 
-        public IActionResult Overview() // TODO lägg till int id som parameter
+        public async Task<IActionResult> Overview(int id) // TODO lägg till int id som parameter
         {
-            //Kika på ID och hämta event
-            //Skicka Event till WhoOweWho()
-            //Printa ut resultat på view..
-            //var thisEvent = mysticoContext.GetEventById(id);
+            var myUser = await userManager.GetUserAsync(HttpContext.User);
+            User user = mysticoContext.GetUserByAspUserId(myUser.Id);
 
-            //var message = "";
-            //var listMessage = Library.WhoOweWho(thisEvent);
+            var thisEvent = mysticoContext.GetEventById(id);
 
+            var listMessage = Library.WhoOweWho(thisEvent);
+            var myTransactions = new List<string>();
+            var restTransactions = new List<string>();
+            foreach (var item in listMessage)
+            {
+                if (item.Contains(user.FirstName))
+                    myTransactions.Add(item);
+                else
+                    restTransactions.Add(item);
+            }
 
-            //foreach (var item in listMessage)
-            //{
-            //    message += item;
-            //}
-
-            //return Content(message);
-            return View();
+            var viewModel = new SplitOverviewVM()
+            {
+                TransactionsCommittedToMe = myTransactions,
+                TransactionsWithoutMe = restTransactions,
+                EventName = thisEvent.EventName,
+                MyStatus = Library.GetUserStatusById(thisEvent, user.Id),
+                MyTotal = Library.GetUserTotalById(thisEvent, user.Id),
+                Total = Library.GetTotalCostForEvent(thisEvent)
+            };
+            
+ 
+            return View(viewModel);
         }
         #endregion
 

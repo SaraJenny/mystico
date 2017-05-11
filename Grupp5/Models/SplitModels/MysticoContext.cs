@@ -85,11 +85,14 @@ namespace Grupp5.Models.Entities
 
             foreach (var userId in friends)
             {
-                ParticipantsInEvent.Add(new ParticipantsInEvent
+                if (userId != currentUserId)
                 {
-                    EventId = eventId,
-                    UserId = userId,
-                });
+                    ParticipantsInEvent.Add(new ParticipantsInEvent
+                    {
+                        EventId = eventId,
+                        UserId = userId,
+                    });
+                }
             };
 
             SaveChanges();
