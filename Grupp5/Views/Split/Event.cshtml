@@ -6,11 +6,11 @@
 <form asp-controller="Split" asp-action="Event">
 
 	<label asp-for="Name"></label>
-	<input asp-for="Name" />
+	<input asp-for="Name" placeholder="ex. Party på Ritz, Italienresa, Yoga-retreat ..." />
 	<span asp-validation-for="Name"></span>
 
 	<label asp-for="Description"></label>
-	<input asp-for="Description" />
+	<input asp-for="Description" placeholder="(Frivilligt)" />
 
 	<label asp-for="SelectedCurrency"></label>
 	<select asp-for="SelectedCurrency" asp-items="Model.CurrencyItem"></select>
@@ -18,7 +18,7 @@
 
 	<label for="friendsTextBox">Vänner</label>
 	<div class="friend-box" id="choosenFriends"></div>
-	<input type="text" id="friendsTextBox"/>
+	<input type="text" id="friendsTextBox" placeholder="Sök efter vänner" />
 	<input type="hidden" asp-for="FriendIds" />
 
 	<div class="friend-box" id="friend-box"></div>

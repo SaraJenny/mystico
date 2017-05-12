@@ -6,12 +6,12 @@
 <form asp-controller="Account" asp-action="Login">
 
 	<label asp-for="Email"></label>
-	<input asp-for="Email" />
+	<input asp-for="Email" placeholder="E-post" />
 	<span asp-validation-for="Email"></span>
 
 
 	<label asp-for="Password"></label>
-	<input asp-for="Password" />
+	<input asp-for="Password" placeholder="Lösenord" />
 	<span asp-validation-for="Password"></span>
 
 	<input type="submit" value="Logga in" />
