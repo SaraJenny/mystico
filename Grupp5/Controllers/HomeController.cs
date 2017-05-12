@@ -23,18 +23,5 @@ namespace Grupp5.Controllers
         }
 		#endregion
 
-		public List<Temp> Temp(string id)
-		{
-			// TODO hämta vänner som matchar string id
-
-			var viewModel = new List<Temp>
-			{
-				new Temp { Id = 1, FirstName = "Kalle", LastName = "Kula", Email = "kalle@kula.se" },
-				new Temp { Id = 2, FirstName = "Mimmi", LastName = "Mus", Email = "mimmi@mus.se" },
-				new Temp { Id = 3, FirstName = "Musse", LastName = "Pigg", Email = "musse@pigg.se" },
-			};
-
-			return viewModel;
-		}
 	}
 }
