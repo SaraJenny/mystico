@@ -127,7 +127,7 @@ footer {
 	line-height: 1em;
 }
 
-#mainmenu ul.active {
+#mainmenu .active {
 	display: none;
 }
 
@@ -372,17 +372,9 @@ SPLIT/EVENT
 ADD FRIENDS
 ************************/
 
-.friend-box {
-	
+.friend:hover {
+	text-decoration: none;
 }
-
-.friend {
-	
-}
-
-	.friend:hover {
-		text-decoration: none;
-	}
 
 .not-choosen {
 	display: block;

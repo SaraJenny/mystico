@@ -8,6 +8,11 @@
 		$(this).toggleClass('active');
 		$('#mainmenu ul').toggleClass('active');
 	});
+	/* Döljer menyn vid klick på huvudsidan */
+	$('main').click(function () {
+		$('#toggle-nav').addClass('active');
+		$('#mainmenu ul').addClass('active');
+	});
 	/*
 	LÄGG TILL VÄNNER
 	*/
