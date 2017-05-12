@@ -373,9 +373,7 @@ ADD FRIENDS
 ************************/
 
 .friend-box {
-	border: 1px solid #351c38;
-	padding: .5em;
-	margin-bottom: 1em;
+	
 }
 
 .friend {
@@ -402,6 +400,8 @@ ADD FRIENDS
 	color: #fff;
 	padding: 4%;
 	background-color: #351c38;
+	display: inline-block;
+	margin: 0 2% 2% 0;
 }
 
 	.choosen:hover {
