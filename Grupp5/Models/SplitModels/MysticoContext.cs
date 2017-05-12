@@ -106,9 +106,9 @@ namespace Grupp5.Models.Entities
             {
                 chosenIds = chosen.Split(',').ToList();
             }
-            catch (Exception x)
+            catch
             {
-                Console.WriteLine(x.Message);
+                throw;
             }
 
             var users = new List<User>();
@@ -128,22 +128,24 @@ namespace Grupp5.Models.Entities
             return users;
         }
 
-        public void AddParticipantsToEvent(List<int> friends, int eventId, int currentUserId)
+        public void AddParticipantsToEvent(string friends, int eventId, int currentUserId)
         {
+           var FriendIds = friends.Split(',');
+
             ParticipantsInEvent.Add(new ParticipantsInEvent
             {
                 EventId = eventId,
                 UserId = currentUserId,
             });
 
-            foreach (var userId in friends)
+            foreach (var userId in FriendIds)
             {
-                if (userId != currentUserId)
+                if (Convert.ToInt32(userId) != currentUserId)
                 {
                     ParticipantsInEvent.Add(new ParticipantsInEvent
                     {
                         EventId = eventId,
-                        UserId = userId,
+                        UserId = Convert.ToInt32(userId)
                     });
                 }
             };
