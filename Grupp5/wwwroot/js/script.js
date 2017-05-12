@@ -75,7 +75,7 @@
 		}
 		$('#FriendIds').val(idString);
 		//Ta bort vännen från valda vänner till sökrutan
-		$('#' + id).detach().appendTo('#friend-box');
+		$('#' + id).remove();
 		// ta bort klass och lägg till en annan
 		$('#' + id).removeClass('choosen').addClass('not-choosen');
 	});
