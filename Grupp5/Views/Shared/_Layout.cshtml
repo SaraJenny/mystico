@@ -30,12 +30,18 @@
 				<li>
 					<a asp-controller="Split" asp-action="Search">Sök event</a>
 				</li>
-				<li>
-					<a asp-controller="Account" asp-action="Login">Logga in</a>
-				</li>
-				<li>
-					<a asp-controller="Account" asp-action="Signout">Logga ut</a>
-				</li>
+				@if (User.Identity.IsAuthenticated)
+				{
+					<li>
+						<a asp-controller="Account" asp-action="Signout">Logga ut</a>
+					</li>
+				}
+				else
+				{
+					<li>
+						<a asp-controller="Account" asp-action="Login">Logga in</a>
+					</li>
+				}
 			</ul>
 		</nav>
 	</header>
