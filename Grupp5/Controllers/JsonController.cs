@@ -40,7 +40,7 @@ namespace Grupp5.Controllers
         #endregion
 
         #region GetAllUsersExceptMe
-        public async Task<IActionResult> GetAllUsersExceptMe()
+        public async Task<List<UserVM>> GetAllUsersExceptMe()
         {
             //Send all users except current user
             var myUser = await userManager.GetUserAsync(HttpContext.User);
@@ -49,7 +49,7 @@ namespace Grupp5.Controllers
             var users = mysticoContext.GetAllUsersExceptMe(user.Id);
             List<UserVM> userVMs = Library.ConvertUsersToUsersVM(users);
 
-            return Json(JsonConvert.SerializeObject(userVMs));
+            return userVMs;
         }
         #endregion
 
