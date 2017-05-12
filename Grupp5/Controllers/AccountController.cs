@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Grupp5.Models.Entities;
-using Grupp5.Models.ViewModels;
 
 namespace Grupp5.Controllers
 {
