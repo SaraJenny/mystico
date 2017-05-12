@@ -98,6 +98,26 @@ namespace Grupp5.Models.Entities
             return users;
         }
 
+        internal List<User> SearchUserExceptMe(int id, string search, string chosen)
+        {
+            var chosenIds = chosen.Split(',');
+            var users = new List<User>();
+
+            //OM search matchar med User.Name osv... (firstname, lastname, email)
+            var userMatching = User.Where(u => u.FirstName.Contains(search) || u.LastName.Contains(search) || u.Email.Contains(search)).ToList();
+
+            foreach (var user in userMatching)
+            {
+                //KOlla så att id inte matcher med mitt id & chosenId..
+                //OM BÅDA stämmer (check på första, ej på andra) => Lägg till i users
+                if (user.Id != id && 
+                    chosenIds.Where(u => Convert.ToInt32(u) == user.Id).Count() == 0)
+                    users.Add(user);
+            }
+
+            return users;
+        }
+
         public void AddParticipantsToEvent(List<int> friends, int eventId, int currentUserId)
         {
             ParticipantsInEvent.Add(new ParticipantsInEvent
