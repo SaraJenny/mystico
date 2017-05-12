@@ -11,27 +11,27 @@ namespace Grupp5.Models.Entities
     {
 		public SelectListItem[] EventItem { get; set; }
 
-		[Required(ErrorMessage = "Obligatoriskt fält")]
+		[Required(ErrorMessage = "Event saknas")]
 		[Display(Name = "Event")]
 		public string SelectedEvent { get; set; }
 
-		[Required(ErrorMessage = "Obligatoriskt fält")]
+		[Required(ErrorMessage = "Beskrivning saknas")]
 		[Display(Name = "Beskrivning")]
 		public string Description { get; set; }
 
 		public SelectListItem[] CurrencyItem { get; set; }
 
-		[Required(ErrorMessage = "Obligatoriskt fält")]
+		[Required(ErrorMessage = "Valuta saknas")]
 		[Display(Name = "Valuta")]
 		public string SelectedCurrency { get; set; }
 
-		[Required(ErrorMessage = "Obligatoriskt fält")]
+		[Required(ErrorMessage = "Belopp saknas")]
 		[Display(Name = "Belopp")]
 		[Range(0.0, double.MaxValue, ErrorMessage = "Ogiltigt belopp")]
 		public string Amount { get; set; }
 
-		[Required(ErrorMessage = "Obligatoriskt fält")]
-		[Display(Name = "Datum")]
+		[Required(ErrorMessage = "Betalningsdatum saknas")]
+		[Display(Name = "Betalningsdatum")]
 		[DataType(DataType.Date)]
 		public string Date { get; set; }
 

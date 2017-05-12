@@ -9,7 +9,7 @@ namespace Grupp5.Models.Entities
 {
     public class SplitEventVM
     {
-		[Required(ErrorMessage = "Obligatoriskt fält")]
+		[Required(ErrorMessage = "Namn saknas")]
 		[Display(Name = "Namn")]
 		public string Name { get; set; }
 
@@ -19,11 +19,10 @@ namespace Grupp5.Models.Entities
 
 		public SelectListItem[] CurrencyItem { get; set; }
 
-		[Required(ErrorMessage = "Obligatoriskt fält")]
+		[Required(ErrorMessage = "Standardvaluta saknas")]
 		[Display(Name = "Standardvaluta")]
 		public string SelectedCurrency { get; set; }
 
-		// TODO Lägg till vänner efter namn
 		public string FriendIds { get; set; }
 	}
 }

@@ -8,12 +8,12 @@ namespace Grupp5.Models.Entities
 {
     public class AccountLoginVM
     {
-		[Required(ErrorMessage = "Obligatoriskt fält")]
+		[Required(ErrorMessage = "E-post saknas")]
 		[Display(Name = "E-post")]
 		public string Email { get; set; }
 
 
-		[Required(ErrorMessage = "Obligatoriskt fält")]
+		[Required(ErrorMessage = "Lösenord saknas")]
 		[Display(Name = "Lösenord")]
 		[DataType(DataType.Password)]
 		public string Password { get; set; }
