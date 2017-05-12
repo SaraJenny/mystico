@@ -57,10 +57,8 @@ namespace Grupp5.Controllers
             var myUser = await userManager.GetUserAsync(HttpContext.User);
             User user = mysticoContext.GetUserByAspUserId(myUser.Id);
 
-            var FriendIds = new List<int> { 12, 11, 13 };
-            //var FriendIds = viewModel.FriendIds.Split(',');
 
-            mysticoContext.AddParticipantsToEvent(FriendIds, newEvent.Id, user.Id);
+            mysticoContext.AddParticipantsToEvent(viewModel.FriendIds, newEvent.Id, user.Id);
 
             return RedirectToAction(nameof(SplitController.Overview), nameof(SplitController).Replace("Controller", ""), new { id = newEvent.Id });
         }
