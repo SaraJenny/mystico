@@ -13,7 +13,7 @@ namespace Grupp5.Models.Entities
         public virtual DbSet<PayersForExpense> PayersForExpense { get; set; }
         public virtual DbSet<User> User { get; set; }
 
-
+   
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -117,6 +117,10 @@ namespace Grupp5.Models.Entities
                 entity.Property(e => e.AspId)
                     .IsRequired()
                     .HasMaxLength(450);
+
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasMaxLength(256);
 
                 entity.Property(e => e.FirstName)
                     .IsRequired()

@@ -16,6 +16,7 @@ namespace Grupp5.Models.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public int Id { get; set; }
+        public string Email { get; set; }
 
         public virtual ICollection<Expense> Expense { get; set; }
         public virtual ICollection<ParticipantsInEvent> ParticipantsInEvent { get; set; }

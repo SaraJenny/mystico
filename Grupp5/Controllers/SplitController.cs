@@ -106,7 +106,7 @@ namespace Grupp5.Controllers
 
             var expenseId = mysticoContext.CreateExpense(viewModel, user.Id);
 
-            mysticoContext.CreatePayerForExpense(viewModel.Payers, expenseId);
+            mysticoContext.CreatePayerForExpense(viewModel.FriendIds, expenseId);
 
             return RedirectToAction(nameof(SplitController.Overview), nameof(SplitController).Replace("Controller", ""), new { id = viewModel.SelectedEvent });
         }

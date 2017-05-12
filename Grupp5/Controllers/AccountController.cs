@@ -91,7 +91,7 @@ namespace Grupp5.Controllers
 				return View(viewModel);
 			}
 
-            mysticoContext.AddUser(user.Id, viewModel.FirstName, viewModel.LastName);
+            mysticoContext.AddUser(user.Id, viewModel.FirstName, viewModel.LastName, viewModel.Email);
 
 			await signInManager.PasswordSignInAsync(user, viewModel.Password, false, false);
 

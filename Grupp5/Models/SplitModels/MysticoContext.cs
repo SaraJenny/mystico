@@ -15,7 +15,7 @@ namespace Grupp5.Models.Entities
 
         }
 
-        public void AddUser(string id, string firstName, string lastName)
+        public void AddUser(string id, string firstName, string lastName, string email)
         {
             try
             {
@@ -23,7 +23,8 @@ namespace Grupp5.Models.Entities
                 {
                     AspId = id,
                     FirstName = firstName,
-                    LastName = lastName
+                    LastName = lastName,
+                    Email = email
                 });
 
                 SaveChanges();
@@ -53,7 +54,7 @@ namespace Grupp5.Models.Entities
             }
 
             return myEvent;
-        }
+        }   
 
         internal List<User> GetAllUsers()
         {
@@ -152,21 +153,18 @@ namespace Grupp5.Models.Entities
 
         }
 
-        internal void CreatePayerForExpense(List<UserVM> payers, int expenseId)
+        internal void CreatePayerForExpense(string payerIds, int expenseId)
         {
-            foreach (var payer in payers)
+            var splitpayers = payerIds.Split(',');
+
+            foreach (var payerId in splitpayers)
             {
-                if (payer.IsSelected)
-                {
                     PayersForExpense.Add(new PayersForExpense
                     {
-
                         ExpenseId = expenseId,
-                        UserId = payer.Id,
+                        UserId = Convert.ToInt32(payerId),
                         Objection = false
-
-                    });
-                }
+                    }); 
             }
 
             SaveChanges();
