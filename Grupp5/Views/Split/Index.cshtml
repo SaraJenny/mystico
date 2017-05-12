@@ -1,7 +1,7 @@
 ﻿@{ViewBag.Title = "Event";}
 @model SplitIndexVM[]
 
-<button asp-controller="Split" asp-action="Event">Lägg till event</button>
+<a class="button" asp-controller="Split" asp-action="Event">Lägg till event</a>
 
 <h2>Mina event</h2>
 @foreach (SplitIndexVM item in Model)
@@ -12,7 +12,7 @@
 @section addExpenseFooter {
 	<footer>
 		<div id="addExpenseFooter">
-			<a asp-controller="" asp-action="">
+			<a asp-controller="Split" asp-action="Expense">
 				<img id="plusSign" src="~/img/plus_75.png" />
 			</a>
 		</div>
