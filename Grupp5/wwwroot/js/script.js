@@ -13,13 +13,17 @@
 	*/
 	var string = "";
 	var idString = "";
+	var eventIdString = "";
 
+	/*
+	SPLIT/EVENT
+	*/
 	$('#friendsTextBox').keypress(function (e) {
 		// töm vänboxen
 		$('.friend-box').html("");
 		string += e.originalEvent.key;
 		$.ajax({
-			url: "/Home/Temp",
+			url: "/Json/GetAllUsersExceptMe",
 			type: "GET",
 			data: {
 				id: string
@@ -45,17 +49,9 @@
 	});
 
 	/*
-	SPLIT/EXPENSE (LÄGG TILL UTLÄGG)
+	SPLIT/EXPENSE
 	*/
 	if ($('#splitExpense').length > 0) {
-		getFriendsByEvent();
-	}
-	$('#SelectedEvent').change(function () {
-		getFriendsByEvent();
-	});
-
-
-	function getFriendsByEvent() {
 		var eventId = $('#SelectedEvent').val();
 
 		$.ajax({
@@ -65,11 +61,43 @@
 				id: eventId
 			},
 			success: function (result) {
-				console.log(result)
+				for (var i = 0; i < result.length; i++) {
+					$('#friendListBox').append('<input type="checkbox" name="payerList" value="' + result[i].id + '" checked />' + result[i].firstName + ' ' + result[i].lastName);
+					if (eventIdString === "") {
+						eventIdString = result[i].id;
+					}
+					else {
+						eventIdString += ',' + result[i].id;
+					}
+				}
+				$('#FriendIds').val(eventIdString);
 			}
 		});
 
-		console.log("Hämta vänner")
-		console.log(eventId)
 	}
+	$('#SelectedEvent').change(function () {
+		$('#friendListBox').html("");
+		var eventId = $('#SelectedEvent').val();
+		eventIdString = "";
+
+		$.ajax({
+			url: "/Json/GetUsersByEventId",
+			type: "GET",
+			data: {
+				id: eventId
+			},
+			success: function (result) {
+				for (var i = 0; i < result.length; i++) {
+					$('#friendListBox').append('<input type="checkbox" name="payerList" value="' + result[i].id + '" checked />' + result[i].firstName + ' ' + result[i].lastName);
+					if (eventIdString === "") {
+						eventIdString = result[i].id;
+					}
+					else {
+						eventIdString += ',' + result[i].id;
+					}
+				}
+				$('#FriendIds').val(eventIdString);
+			}
+		});
+	});
 });

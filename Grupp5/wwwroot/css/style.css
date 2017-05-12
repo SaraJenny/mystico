@@ -204,6 +204,11 @@ input, select {
 			border-color: #295800;
 		}
 
+	input[type="checkbox"] {
+		display: inline-block;
+		width: auto;
+	}
+
 select {
 	width: 100%;
 }
@@ -292,9 +297,9 @@ a {
 	color: #295800;
 }
 
-a:hover {
-	text-decoration: underline;
-}
+	a:hover {
+		text-decoration: underline;
+	}
 
 .field-validation-error {
 	color: #710114;

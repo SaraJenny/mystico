@@ -26,10 +26,9 @@
 	<input asp-for="Date" value="@Model.Date" />
 	<span asp-validation-for="Date"></span>
 
-	@*@foreach (var payer in Model.Payers)
-	{
-		<input type="checkbox" name="payerList" value="@payer.FirstName @payer.LastName" checked />
-	}*@
+	<div id="friendListBox"></div>
+
+	<input type="hidden" asp-for="FriendIds" />
 
 	<input type="submit" value="Lägg till event" id="addExpenseButton" />
 
