@@ -377,3 +377,33 @@ ADD FRIENDS
 	padding: .5em;
 	margin-bottom: 1em;
 }
+
+.friend {
+	
+}
+
+	.friend:hover {
+		text-decoration: none;
+	}
+
+.not-choosen {
+	display: block;
+	margin-bottom: .5em;
+}
+
+	.not-choosen:hover {
+		text-decoration: underline;
+	}
+
+.choosen {
+	-moz-border-radius: 25px;
+	-webkit-border-radius: 25px;
+	border-radius: 25px;
+	color: #fff;
+	padding: 4%;
+	background-color: #351c38;
+}
+
+	.choosen:hover {
+		background-color: #710114;
+	}
