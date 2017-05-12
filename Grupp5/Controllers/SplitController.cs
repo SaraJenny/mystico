@@ -30,9 +30,14 @@ namespace Grupp5.Controllers
 #endregion
 
         #region Details
-        public IActionResult Details()
+        [HttpGet]
+        public IActionResult Details(int id)
         {
-            return View();
+            var expenses = mysticoContext.GetExpensesByEvent(id);
+            var objections = mysticoContext.GetObjectionsInEvent(id);
+            List<SplitDetailsVM> viewModel = Library.ConvertExpenseToSplitDetailsVM(expenses, objections);
+
+            return View(viewModel);
         }
         #endregion
 

@@ -1,1 +1,6 @@
-﻿jag är split/details!
+﻿@model List<SplitDetailsVM>
+
+@foreach (var item in Model)
+{
+    <p>@item.expenseInformation</p>
+}

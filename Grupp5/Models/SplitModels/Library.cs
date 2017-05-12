@@ -79,128 +79,160 @@ namespace Grupp5.Models.SplitModels
 
         }
 
-        internal static List<UserVM> ConvertUsersToUsersVM(List<User> users)
+        internal static List<SplitDetailsVM> ConvertExpenseToSplitDetailsVM(List<Expense> expenses, List<PayersForExpense> objections)
         {
-            var userVMlist = new List<UserVM>();
-
-            foreach (var person in users)
+            var expensesVM = new List<SplitDetailsVM>();
+            foreach (var item in expenses)
             {
-                userVMlist.Add(new UserVM
+                var payerNames = "";
+                foreach (var payer in item.PayersForExpense)
                 {
-                    Id = person.Id,
-                    FirstName = person.FirstName,
-                    LastName = person.LastName,
-                    Email = person.Email
-                });
-            }
-
-            return userVMlist;
-        }
-
-        private static Dictionary<int, decimal> CreateDictionaryForUserCredits(Event myEvent)
-        {
-            var userCredits = new Dictionary<int, Decimal>();
-
-            foreach (var participant in myEvent.ParticipantsInEvent)
-            {
-                userCredits.Add(participant.UserId, 0);
-            }
-
-            foreach (var expense in myEvent.Expense)
-            {
-                var amount = expense.Amount;
-                var purchaser = expense.PurchaserId;
-                var payers = expense.PayersForExpense;
-
-                foreach (var payer in payers)
-                {
-                    var debt = (amount / payers.Count);
-                    if (payer.UserId == purchaser)
-                    {
-                        var userId = myEvent.ParticipantsInEvent.Where(p => p.UserId == payer.UserId).First().UserId;
-                        userCredits[userId] += (amount - debt);
-                    }
-                    else
-                    {
-                        var userId = myEvent.ParticipantsInEvent.Where(p => p.UserId == payer.UserId).First().UserId;
-                        userCredits[userId] -= debt;
-                    }
+                    payerNames += $"{payer.User.FirstName}, ";
                 }
-            }
+                payerNames.TrimEnd(' ');
+                payerNames.TrimEnd(',');
 
-            return userCredits;
-        }
-
-        private static Dictionary<int, decimal> CreateDictionaryForUserTotals(Event myEvent)
-        {
-            var userTotals = new Dictionary<int, Decimal>();
-
-            foreach (var participant in myEvent.ParticipantsInEvent)
-            {
-                userTotals.Add(participant.UserId, 0);
-            }
-
-            foreach (var expense in myEvent.Expense)
-            {
-                var amount = expense.Amount;
-                var payers = expense.PayersForExpense;
-
-                foreach (var payer in payers)
+                var objection = objections.Where(o => o.ExpenseId == item.Id).FirstOrDefault();
+                SplitDetailsVM expense = new SplitDetailsVM();
+                expense.expenseInformation = $"" +
+                    $"{item.Purchaser.FirstName} har lagt ut " +
+                    $"{Math.Round(item.Amount, 2, MidpointRounding.AwayFromZero)} {item.Currency.CurrencyCode} " +
+                    $"för {item.Description} som " +
+                    $"{payerNames} ska betala för";
+                if (objection != null)
                 {
-                    var debt = (amount / payers.Count);
-                    var userId = myEvent.ParticipantsInEvent.Where(p => p.UserId == payer.UserId).First().UserId;
-                    userTotals[userId] += debt;
+                    expense.objectionExists = objection.Objection;
+                    expense.objectionMessage = objection.ObjectionDescription;
                 }
-            }
+                expensesVM.Add(expense);
 
-            return userTotals;
+        }
+            return expensesVM;
+            
         }
 
-        static public int GetUserTotalById(Event myEvent, int userId)
-        {
-            var dictionary = CreateDictionaryForUserTotals(myEvent);
-            return Convert.ToInt32(Math.Round(dictionary[userId],MidpointRounding.AwayFromZero));
-        }
+    internal static List<UserVM> ConvertUsersToUsersVM(List<User> users)
+    {
+        var userVMlist = new List<UserVM>();
 
-        static public int GetUserStatusById(Event myEvent, int userId)
+        foreach (var person in users)
         {
-            var dictionary = CreateDictionaryForUserCredits(myEvent);
-            return Convert.ToInt32(Math.Round(dictionary[userId], MidpointRounding.AwayFromZero));
-        }
-
-        static public SelectListItem[] ConvertCurrencyToSelectListItem(List<Currency> allCurrencies)
-        {
-            var theList = new List<SelectListItem>();
-
-            foreach (var item in allCurrencies)
+            userVMlist.Add(new UserVM
             {
-                theList.Add(new SelectListItem() { Text = item.CurrencyCode, Value = item.Id.ToString() });
-            }
-
-            return theList.ToArray();
+                Id = person.Id,
+                FirstName = person.FirstName,
+                LastName = person.LastName,
+                Email = person.Email
+            });
         }
 
-        static public SplitIndexVM[] ConvertToSplitIndexVMArray(List<Event> events)
-        {
-            var myList = new List<SplitIndexVM>();
-
-            foreach (var item in events)
-            {
-                myList.Add(new SplitIndexVM() { Id = item.Id, EventName = item.EventName });
-            }
-
-            return myList.ToArray();
-        }
-
-        internal static SelectListItem[] ConvertEventToSelectListItem(List<Event> myEvents)
-        {
-            var eventItems = new List<SelectListItem>();
-            foreach (var xEvent in myEvents)
-            {
-                eventItems.Add(new SelectListItem { Text = xEvent.EventName, Value = xEvent.Id.ToString() });
-            }
-
-            return eventItems.ToArray();
-        }
+        return userVMlist;
     }
+
+    private static Dictionary<int, decimal> CreateDictionaryForUserCredits(Event myEvent)
+    {
+        var userCredits = new Dictionary<int, Decimal>();
+
+        foreach (var participant in myEvent.ParticipantsInEvent)
+        {
+            userCredits.Add(participant.UserId, 0);
+        }
+
+        foreach (var expense in myEvent.Expense)
+        {
+            var amount = expense.Amount;
+            var purchaser = expense.PurchaserId;
+            var payers = expense.PayersForExpense;
+
+            foreach (var payer in payers)
+            {
+                var debt = (amount / payers.Count);
+                if (payer.UserId == purchaser)
+                {
+                    var userId = myEvent.ParticipantsInEvent.Where(p => p.UserId == payer.UserId).First().UserId;
+                    userCredits[userId] += (amount - debt);
+                }
+                else
+                {
+                    var userId = myEvent.ParticipantsInEvent.Where(p => p.UserId == payer.UserId).First().UserId;
+                    userCredits[userId] -= debt;
+                }
+            }
+        }
+
+        return userCredits;
+    }
+
+    private static Dictionary<int, decimal> CreateDictionaryForUserTotals(Event myEvent)
+    {
+        var userTotals = new Dictionary<int, Decimal>();
+
+        foreach (var participant in myEvent.ParticipantsInEvent)
+        {
+            userTotals.Add(participant.UserId, 0);
+        }
+
+        foreach (var expense in myEvent.Expense)
+        {
+            var amount = expense.Amount;
+            var payers = expense.PayersForExpense;
+
+            foreach (var payer in payers)
+            {
+                var debt = (amount / payers.Count);
+                var userId = myEvent.ParticipantsInEvent.Where(p => p.UserId == payer.UserId).First().UserId;
+                userTotals[userId] += debt;
+            }
+        }
+
+        return userTotals;
+    }
+
+    static public int GetUserTotalById(Event myEvent, int userId)
+    {
+        var dictionary = CreateDictionaryForUserTotals(myEvent);
+        return Convert.ToInt32(Math.Round(dictionary[userId], MidpointRounding.AwayFromZero));
+    }
+
+    static public int GetUserStatusById(Event myEvent, int userId)
+    {
+        var dictionary = CreateDictionaryForUserCredits(myEvent);
+        return Convert.ToInt32(Math.Round(dictionary[userId], MidpointRounding.AwayFromZero));
+    }
+
+    static public SelectListItem[] ConvertCurrencyToSelectListItem(List<Currency> allCurrencies)
+    {
+        var theList = new List<SelectListItem>();
+
+        foreach (var item in allCurrencies)
+        {
+            theList.Add(new SelectListItem() { Text = item.CurrencyCode, Value = item.Id.ToString() });
+        }
+
+        return theList.ToArray();
+    }
+
+    static public SplitIndexVM[] ConvertToSplitIndexVMArray(List<Event> events)
+    {
+        var myList = new List<SplitIndexVM>();
+
+        foreach (var item in events)
+        {
+            myList.Add(new SplitIndexVM() { Id = item.Id, EventName = item.EventName });
+        }
+
+        return myList.ToArray();
+    }
+
+    internal static SelectListItem[] ConvertEventToSelectListItem(List<Event> myEvents)
+    {
+        var eventItems = new List<SelectListItem>();
+        foreach (var xEvent in myEvents)
+        {
+            eventItems.Add(new SelectListItem { Text = xEvent.EventName, Value = xEvent.Id.ToString() });
+        }
+
+        return eventItems.ToArray();
+    }
+}
 }

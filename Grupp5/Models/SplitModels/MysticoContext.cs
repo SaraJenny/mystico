@@ -56,6 +56,27 @@ namespace Grupp5.Models.Entities
             return myEvent;
         }
 
+        internal List<PayersForExpense> GetObjectionsInEvent(int id)
+        {
+            return PayersForExpense.Where(p => p.Expense.EventId == id && p.Objection == true).ToList();
+        }
+
+        internal List<Expense> GetExpensesByEvent(int eventId)
+        {
+            var expenses = Expense.Where(e => e.EventId == eventId).ToList();
+            foreach (var item in expenses)
+            {
+                item.PayersForExpense = PayersForExpense.Where(p => p.ExpenseId == item.Id).ToList();
+                foreach (var payer in item.PayersForExpense)
+                {
+                    payer.User = User.Where(u => u.Id == payer.UserId).First();
+                }
+                item.Currency = Currency.Where(c => c.Id == item.CurrencyId).First();
+            }
+           
+            return expenses;
+        }
+
         internal List<User> GetAllUsers()
         {
             return User.ToList();
