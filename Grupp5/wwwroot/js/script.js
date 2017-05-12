@@ -12,8 +12,8 @@
 	LÄGG TILL VÄNNER
 	*/
 	var string = "";
-	var idString = "";
-	var eventIdString = "";
+	var idString = ""; // SPLIT/EVENT
+	var userIdString = ""; // SPLIT/EXPENSE
 
 	/*
 	SPLIT/EVENT
@@ -62,23 +62,24 @@
 			},
 			success: function (result) {
 				for (var i = 0; i < result.length; i++) {
-					$('#friendListBox').append('<input type="checkbox" name="payerList" value="' + result[i].id + '" checked />' + result[i].firstName + ' ' + result[i].lastName);
-					if (eventIdString === "") {
-						eventIdString = result[i].id;
+					$('#friendListBox').append('<input class="friendCheckbox" type="checkbox" name="payerList" value="' + result[i].id + '" checked />' + result[i].firstName + ' ' + result[i].lastName);
+					if (userIdString === "") {
+						userIdString = result[i].id;
 					}
 					else {
-						eventIdString += ',' + result[i].id;
+						userIdString += ',' + result[i].id;
 					}
 				}
-				$('#FriendIds').val(eventIdString);
+				$('#FriendIds').val(userIdString);
 			}
 		});
 
 	}
+	/* Sker då användaren ändrar valt event */
 	$('#SelectedEvent').change(function () {
 		$('#friendListBox').html("");
 		var eventId = $('#SelectedEvent').val();
-		eventIdString = "";
+		userIdString = "";
 
 		$.ajax({
 			url: "/Json/GetUsersByEventId",
@@ -88,16 +89,46 @@
 			},
 			success: function (result) {
 				for (var i = 0; i < result.length; i++) {
-					$('#friendListBox').append('<input type="checkbox" name="payerList" value="' + result[i].id + '" checked />' + result[i].firstName + ' ' + result[i].lastName);
-					if (eventIdString === "") {
-						eventIdString = result[i].id;
+					$('#friendListBox').append('<input class="friendCheckbox" type="checkbox" name="payerList" value="' + result[i].id + '" checked />' + result[i].firstName + ' ' + result[i].lastName);
+					if (userIdString === "") {
+						userIdString = result[i].id;
 					}
 					else {
-						eventIdString += ',' + result[i].id;
+						userIdString += ',' + result[i].id;
 					}
 				}
-				$('#FriendIds').val(eventIdString);
+				$('#FriendIds').val(userIdString);
 			}
 		});
 	});
+	/* Sker då användaren bockar av/i vänner */
+	$('body').on('change', '.friendCheckbox', function () {
+		var userId = $(this).val();
+		var isChecked = $(this).prop('checked');
+		userIdString = $('#FriendIds').val();
+		console.log(userId)
+		console.log(userIdString)
+
+		if (isChecked) {
+			if (userIdString === '') {
+				userIdString = userId;
+			}
+			else {
+				userIdString += ',' + userId;
+			}
+		}
+		else {
+			if (userIdString.includes(',' + userId)) {
+				userIdString = userIdString.replace(',' + userId, '');
+			}
+			else if (userIdString.includes(userId + ',')) {
+				userIdString = userIdString.replace(userId + ',', '');
+			}
+			else {
+				userIdString = userIdString.replace(userId, '');
+			}
+		}
+		$('#FriendIds').val(userIdString);
+	});
+
 });
