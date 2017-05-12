@@ -20,7 +20,7 @@
 	*/
 	$('#friendsTextBox').keypress(function (e) {
 		// töm vänboxen
-		$('.friend-box').html("");
+		$('#friend-box').html("");
 		string += e.originalEvent.key;
 		$.ajax({
 			url: "/Json/GetAllUsersExceptMe",
@@ -30,14 +30,15 @@
 			},
 			success: function (result) {
 				for (var i = 0; i < result.length; i++) {
-					$('.friend-box').append('<p class="friend" id="' + result[i].id + '">' + result[i].firstName + ' ' + result[i].lastName + '</p>');
+					$('#friend-box').append('<a href="#" class="friend not-choosen" id="' + result[i].id + '">' + result[i].firstName + ' ' + result[i].lastName + '</a>');
 				}
 			}
 		});
 	});
-
-	$('body').on('click', '.friend', function (e) {
+	/* Klick på en väns namn bland de sökta */
+	$('body').on('click', '.not-choosen', function (e) {
 		var id = e.target.id;
+		// Lägg till userId i hiddenfältet
 		if (idString === "") {
 			idString = id;
 		}
@@ -45,7 +46,34 @@
 			idString += ',' + id;
 		}
 		$('#FriendIds').val(idString);
-		console.log(idString)
+		//Flytta vännen från sökrutan till valda vänner
+		$('#' + id).detach().appendTo('#choosenFriends');
+		// ta bort klass och lägg till en annan
+		$('#' + id).removeClass('not-choosen').addClass('choosen');
+	});
+
+	/* Ta bort en väns namn bland de utvalda */
+	$('body').on('click', '.choosen', function (e) {
+		var id = e.target.id;
+		idString = $('#FriendIds').val();
+		// Ta bort id i hiddenfältet
+		if (idString.includes(',' + id)) {
+			console.log(", id")
+			idString = idString.replace(',' + id, '');
+		}
+		else if (idString.includes(id + ',')) {
+			console.log("id,")
+			idString = idString.replace(id + ',', '');
+		}
+		else {
+			idString = idString.replace(id, '');
+			console.log("id")
+		}
+		$('#FriendIds').val(idString);
+		//Ta bort vännen från valda vänner till sökrutan
+		$('#' + id).detach().appendTo('#friend-box');
+		// ta bort klass och lägg till en annan
+		$('#' + id).removeClass('choosen').addClass('not-choosen');
 	});
 
 	/*
@@ -106,8 +134,6 @@
 		var userId = $(this).val();
 		var isChecked = $(this).prop('checked');
 		userIdString = $('#FriendIds').val();
-		console.log(userId)
-		console.log(userIdString)
 
 		if (isChecked) {
 			if (userIdString === '') {

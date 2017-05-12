@@ -30,6 +30,7 @@ namespace Grupp5.Models.Entities
 		[Required(ErrorMessage = "Obligatoriskt fält")]
 		[Display(Name = "Upprepa lösenord")]
 		[DataType(DataType.Password)]
+		[Compare("Password", ErrorMessage = "Lösenorden överensstämmer inte")]
 		public string PasswordCheck { get; set; }
 	}
 }
