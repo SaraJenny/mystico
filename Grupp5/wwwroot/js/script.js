@@ -18,12 +18,11 @@
 	/*
 	SPLIT/EVENT
 	*/
-	$('#friendsTextBox').keypress(function (e) {
+	$('#friendsTextBox').on('input', function (e) {
 		// töm vänboxen
 		$('#friend-box').html("");
-		string += e.originalEvent.key;
-		var chosenFriendIds = 11; //$('#FriendIds').val();
-		console.log(chosenFriendIds)
+		string = $('#friendsTextBox').val();
+		var chosenFriendIds = $('#FriendIds').val();
 
 		$.ajax({
 			url: "/Json/SearchUserExceptMe",
@@ -54,6 +53,10 @@
 		$('#' + id).detach().appendTo('#choosenFriends');
 		// ta bort klass och lägg till en annan
 		$('#' + id).removeClass('not-choosen').addClass('choosen');
+		// töm textboxen
+		$('#friendsTextBox').val('');
+		// töm vänboxen
+		$('#friend-box').html("");
 	});
 
 	/* Ta bort en väns namn bland de utvalda */
