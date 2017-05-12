@@ -36,5 +36,6 @@ namespace Grupp5.Models.ViewModels
         [Compare("Password", ErrorMessage = "Lösenorden överensstämmer inte")]
         public string PasswordCheck { get; set; }
 
+        public string Message { get; set; } = "";
     }
 }
