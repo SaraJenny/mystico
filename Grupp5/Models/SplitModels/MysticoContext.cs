@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Grupp5.Models.ViewModels;
 
 namespace Grupp5.Models.Entities
 {
@@ -149,6 +150,15 @@ namespace Grupp5.Models.Entities
                     });
                 }
             };
+
+            SaveChanges();
+        }
+
+        public void UpdateUserProfile(AccountProfileVM viewModel, User user)
+        {
+            user.FirstName = viewModel.FirstName;
+            user.LastName = viewModel.LastName;
+            user.Email = viewModel.Email;
 
             SaveChanges();
         }
