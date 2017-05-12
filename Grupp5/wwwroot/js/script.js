@@ -165,5 +165,17 @@
 		}
 		$('#FriendIds').val(userIdString);
 	});
-
+	/*
+	PROFILE
+	*/
+	// Visa lösenordsformuläret
+	$('#updatePassword').click(function () {
+		$('#passwordForm').toggle();
+		if ($('#updatePassword').text() === 'Uppdatera lösenord') {
+			$('#updatePassword').text('Dölj lösenordsformulär');
+		}
+		else {
+			$('#updatePassword').text('Uppdatera lösenord');
+		}
+	});
 });

@@ -17,18 +17,21 @@
 	<input asp-for="Email" placeholder="E-post" />
 	<span asp-validation-for="Email"></span>
 
-	<label asp-for="CurrentPassword"></label>
-	<input asp-for="CurrentPassword" placeholder="Nuvarande lösenord" />
-	<span asp-validation-for="CurrentPassword"></span>
+	<a id="updatePassword" href="#">Uppdatera lösenord</a>
 
-	<label asp-for="Password"></label>
-	<input asp-for="Password" placeholder="Lösenord" />
-	<span asp-validation-for="Password"></span>
+	<div id="passwordForm">
+		<label asp-for="CurrentPassword"></label>
+		<input asp-for="CurrentPassword" placeholder="Nuvarande lösenord" />
+		<span asp-validation-for="CurrentPassword"></span>
 
-	<label asp-for="PasswordCheck"></label>
-	<input asp-for="PasswordCheck" placeholder="Lösenord" />
-	<span asp-validation-for="PasswordCheck"></span>
+		<label asp-for="Password"></label>
+		<input asp-for="Password" placeholder="Lösenord" />
+		<span asp-validation-for="Password"></span>
 
+		<label asp-for="PasswordCheck"></label>
+		<input asp-for="PasswordCheck" placeholder="Lösenord" />
+		<span asp-validation-for="PasswordCheck"></span>
+	</div>
 	<input type="submit" value="Uppdatera" />
 
 	<p>@Model.Message</p>

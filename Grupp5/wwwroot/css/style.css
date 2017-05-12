@@ -399,3 +399,17 @@ ADD FRIENDS
 	.choosen:hover {
 		background-color: #710114;
 	}
+
+
+/************************
+PROFILE
+************************/
+#updatePassword {
+	display: block;
+	text-align: right;
+	margin-bottom: 1em;
+}
+
+#passwordForm {
+	display: none;
+}
