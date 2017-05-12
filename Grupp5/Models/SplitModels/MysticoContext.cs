@@ -54,7 +54,7 @@ namespace Grupp5.Models.Entities
             }
 
             return myEvent;
-        }   
+        }
 
         internal List<User> GetAllUsers()
         {
@@ -100,7 +100,17 @@ namespace Grupp5.Models.Entities
 
         internal List<User> SearchUserExceptMe(int id, string search, string chosen)
         {
-            var chosenIds = chosen.Split(',');
+            List<string> chosenIds = new List<string>();
+
+            try
+            {
+                chosenIds = chosen.Split(',').ToList();
+            }
+            catch (Exception x)
+            {
+                Console.WriteLine(x.Message);
+            }
+
             var users = new List<User>();
 
             //OM search matchar med User.Name osv... (firstname, lastname, email)
@@ -110,7 +120,7 @@ namespace Grupp5.Models.Entities
             {
                 //KOlla så att id inte matcher med mitt id & chosenId..
                 //OM BÅDA stämmer (check på första, ej på andra) => Lägg till i users
-                if (user.Id != id && 
+                if (user.Id != id &&
                     chosenIds.Where(u => Convert.ToInt32(u) == user.Id).Count() == 0)
                     users.Add(user);
             }
@@ -179,12 +189,12 @@ namespace Grupp5.Models.Entities
 
             foreach (var payerId in splitpayers)
             {
-                    PayersForExpense.Add(new PayersForExpense
-                    {
-                        ExpenseId = expenseId,
-                        UserId = Convert.ToInt32(payerId),
-                        Objection = false
-                    }); 
+                PayersForExpense.Add(new PayersForExpense
+                {
+                    ExpenseId = expenseId,
+                    UserId = Convert.ToInt32(payerId),
+                    Objection = false
+                });
             }
 
             SaveChanges();
