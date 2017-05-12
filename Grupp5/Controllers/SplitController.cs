@@ -131,6 +131,9 @@ namespace Grupp5.Controllers
             var myUser = await userManager.GetUserAsync(HttpContext.User);
             User user = mysticoContext.GetUserByAspUserId(myUser.Id);
 
+            if(mysticoContext.CheckIfUserIsParticipant(user.Id, id) == false)
+                return RedirectToAction(nameof(SplitController.Index), nameof(SplitController).Replace("Controller", ""));
+
             var thisEvent = mysticoContext.GetEventById(id);
 
             var listMessage = Library.WhoOweWho(thisEvent);
