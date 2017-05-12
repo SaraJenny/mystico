@@ -1,1 +1,40 @@
-﻿Jag är account/profile!
+﻿@{ViewBag.Title = "Min profil";}
+@model AccountProfileVM
+
+<h2>Min profil</h2>
+
+<form asp-controller="Account" asp-action="Profile">
+
+	<label asp-for="FirstName"></label>
+	<input asp-for="FirstName" placeholder="Förnamn" />
+	<span asp-validation-for="FirstName"></span>
+
+	<label asp-for="LastName"></label>
+	<input asp-for="LastName" placeholder="Efternamn" />
+	<span asp-validation-for="LastName"></span>
+
+	<label asp-for="Email"></label>
+	<input asp-for="Email" placeholder="E-post" />
+	<span asp-validation-for="Email"></span>
+
+	<label asp-for="CurrentPassword"></label>
+	<input asp-for="CurrentPassword" placeholder="Nuvarande lösenord" />
+	<span asp-validation-for="CurrentPassword"></span>
+
+	<label asp-for="Password"></label>
+	<input asp-for="Password" placeholder="Lösenord" />
+	<span asp-validation-for="Password"></span>
+
+	<label asp-for="PasswordCheck"></label>
+	<input asp-for="PasswordCheck" placeholder="Lösenord" />
+	<span asp-validation-for="PasswordCheck"></span>
+
+	<input type="submit" value="Uppdatera" />
+
+</form>
+
+@section scripts {
+	<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.0.min.js"></script>
+	<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
+	<script src="http://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>
+}

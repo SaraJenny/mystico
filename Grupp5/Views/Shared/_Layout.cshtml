@@ -19,9 +19,6 @@
 					<a asp-controller="" asp-action="">Hem</a>
 				</li>
 				<li>
-					<a asp-controller="Account" asp-action="Profile">Min profil</a>
-				</li>
-				<li>
 					<a asp-controller="Split" asp-action="Event">Lägg till event</a>
 				</li>
 				<li>
@@ -29,6 +26,9 @@
 				</li>
 				<li>
 					<a asp-controller="Split" asp-action="Search">Sök event</a>
+				</li>
+				<li>
+					<a asp-controller="Account" asp-action="Profile">Min profil</a>
 				</li>
 				@if (User.Identity.IsAuthenticated)
 				{

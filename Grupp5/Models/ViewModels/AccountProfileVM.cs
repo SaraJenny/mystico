@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Grupp5.Models.ViewModels
+namespace Grupp5.Models.Entities
 {
     public class AccountProfileVM
     {
@@ -23,7 +23,6 @@ namespace Grupp5.Models.ViewModels
 
         [Display(Name = "Nuvarande lösenord")]
         [DataType(DataType.Password)]
-        [MinLength(5, ErrorMessage = "Minst 5 tecken krävs")]
         public string CurrentPassword { get; set; }
 
         [Display(Name = "Lösenord")]
