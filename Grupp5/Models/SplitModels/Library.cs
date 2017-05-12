@@ -89,7 +89,8 @@ namespace Grupp5.Models.SplitModels
                 {
                     Id = person.Id,
                     FirstName = person.FirstName,
-                    LastName = person.LastName
+                    LastName = person.LastName,
+                    Email = person.Email
                 });
             }
 
