@@ -22,11 +22,15 @@
 		// töm vänboxen
 		$('#friend-box').html("");
 		string += e.originalEvent.key;
+		var chosenFriendIds = $('#FriendIds').val();
+		console.log(chosenFriendIds)
+
 		$.ajax({
-			url: "/Json/GetAllUsersExceptMe",
+			url: "/Json/GetAllUsers",
 			type: "GET",
 			data: {
-				id: string
+				search: string,
+				chosen: chosenFriendIds
 			},
 			success: function (result) {
 				for (var i = 0; i < result.length; i++) {
