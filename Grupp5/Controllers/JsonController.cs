@@ -65,5 +65,18 @@ namespace Grupp5.Controllers
 
         #endregion
 
+        #region SearchUserExceptMe
+        public async Task<List<UserVM>> SearchUserExceptMe(string search, string chosen)
+        {
+            var myUser = await userManager.GetUserAsync(HttpContext.User);
+            User user = mysticoContext.GetUserByAspUserId(myUser.Id);
+
+            var users = mysticoContext.SearchUserExceptMe(user.Id, search, chosen);
+            List<UserVM> userVMs = Library.ConvertUsersToUsersVM(users);
+
+            return userVMs;
+        }
+#endregion
+
     }
 }
