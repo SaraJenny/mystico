@@ -65,16 +65,13 @@
 		idString = $('#FriendIds').val();
 		// Ta bort id i hiddenfältet
 		if (idString.includes(',' + id)) {
-			console.log(", id")
 			idString = idString.replace(',' + id, '');
 		}
 		else if (idString.includes(id + ',')) {
-			console.log("id,")
 			idString = idString.replace(id + ',', '');
 		}
 		else {
 			idString = idString.replace(id, '');
-			console.log("id")
 		}
 		$('#FriendIds').val(idString);
 		//Ta bort vännen från valda vänner till sökrutan

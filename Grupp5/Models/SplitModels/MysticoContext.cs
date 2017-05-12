@@ -106,9 +106,9 @@ namespace Grupp5.Models.Entities
             {
                 chosenIds = chosen.Split(',').ToList();
             }
-            catch
+            catch(Exception ex)
             {
-                throw;
+				Console.WriteLine(ex);
             }
 
             var users = new List<User>();
