@@ -4,7 +4,6 @@
 <h2>@Model.EventName</h2>
 
 <section class="status">
-	@*<h3>Din status</h3>*@
 	@if (Model.MyStatus < 0)
 	{
 		<div class="minus circle">
@@ -21,7 +20,7 @@
 <section class="status total">
 	<h3>Total kostnad</h3>
 	<p class="">@Model.Total kr</p>
-	<p>varav du ska betala @Model.MyTotal kr</p>
+	<p>varav din kostnad är @Model.MyTotal kr</p>
 </section>
 <section>
 	@foreach (var item in Model.TransactionsCommittedToMe)
