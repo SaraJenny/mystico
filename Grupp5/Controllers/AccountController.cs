@@ -129,6 +129,8 @@ namespace Grupp5.Controllers
             var myUser = await userManager.GetUserAsync(HttpContext.User);
             User user = mysticoContext.GetUserByAspUserId(myUser.Id);
 
+            try
+            { 
             mysticoContext.UpdateUserProfile(viewModel, user);
 
             var resultUserName = await userManager.SetUserNameAsync(myUser, viewModel.Email);
@@ -138,8 +140,19 @@ namespace Grupp5.Controllers
                 var resultPassWord = await userManager.ChangePasswordAsync(myUser, viewModel.CurrentPassword, viewModel.Password);
             }
 
-
-            return View();
+            viewModel.Message = "Du har uppdaterat din profil";
+            }
+            catch
+            {
+                viewModel.Message = "Knas!";
+            }
+            finally
+            {
+                viewModel.Password = "";
+                viewModel.CurrentPassword = "";
+                viewModel.PasswordCheck = "";
+            }
+            return View(viewModel);
         }
         #endregion
 

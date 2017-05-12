@@ -35,5 +35,6 @@ namespace Grupp5.Models.Entities
         [Compare("Password", ErrorMessage = "Lösenorden överensstämmer inte")]
         public string PasswordCheck { get; set; }
 
+        public string Message { get; set; } = "";
     }
 }
