@@ -3,7 +3,7 @@
 
 <a class="button" asp-controller="Split" asp-action="Event">Lägg till event</a>
 
-<h2>Mina event</h2>
+<h2 class="eventHeading">Mina event</h2>
 @foreach (SplitIndexVM item in Model)
 {
 	<a class="button" asp-controller="Split" asp-action="Overview" asp-route-id="@item.Id">@item.EventName</a>

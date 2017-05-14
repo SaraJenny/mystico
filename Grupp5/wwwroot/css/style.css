@@ -288,13 +288,18 @@ h2 {
 	color: #351c38;
 }
 
+/* h2 split/index */
+.eventHeading {
+	margin-top: 1em;
+}
+
+
 
 
 
 /*********
 TEXT
 **********/
-
 a {
 	text-decoration: none;
 	color: #295800;
@@ -390,7 +395,7 @@ ADD FRIENDS
 	-webkit-border-radius: 25px;
 	border-radius: 25px;
 	color: #fff;
-	padding: 4%;
+	padding: 4% 6%;
 	background-color: #351c38;
 	display: inline-block;
 	margin: 0 2% 2% 0;
@@ -400,6 +405,12 @@ ADD FRIENDS
 		background-color: #710114;
 	}
 
+.deleteX {
+	position: relative;
+	top: -.7em;
+	left: 7%;
+	color: #c2bac3;
+}
 
 /************************
 PROFILE

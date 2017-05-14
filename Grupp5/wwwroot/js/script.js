@@ -54,8 +54,8 @@
 			idString += ',' + id;
 		}
 		$('#FriendIds').val(idString);
-		//Flytta vännen från sökrutan till valda vänner
-		$('#' + id).detach().appendTo('#choosenFriends');
+		//Flytta vännen från sökrutan till valda vänner + lägg till kryss till namnet
+		$('#' + id).detach().appendTo('#choosenFriends').append('<span class="deleteX">x</span>');
 		// ta bort klass och lägg till en annan
 		$('#' + id).removeClass('not-choosen').addClass('choosen');
 		// töm textboxen
