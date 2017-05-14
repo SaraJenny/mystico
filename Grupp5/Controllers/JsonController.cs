@@ -8,13 +8,16 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Grupp5.Models.Entities;
 using Grupp5.Models.SplitModels;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Grupp5.Controllers
 {
+    [Authorize]
     public class JsonController : Controller
     {
+    
         #region General
         UserManager<IdentityUser> userManager;
         IdentityDbContext identityContext;
