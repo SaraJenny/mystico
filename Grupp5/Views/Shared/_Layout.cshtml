@@ -15,9 +15,18 @@
 		<a href="#" id="toggle-nav">&#9776;</a>
 		<nav id="mainmenu" class="sidenav">
 			<ul class="active">
-				<li>
-					<a asp-controller="" asp-action="">Hem</a>
-				</li>
+				@if (User.Identity.IsAuthenticated)
+				{
+					<li>
+						<a asp-controller="Split" asp-action="Index">Hem</a>
+					</li>
+				}
+				else
+				{
+					<li>
+						<a asp-controller="Home" asp-action="Index">Hem</a>
+					</li>
+				}
 				<li>
 					<a asp-controller="Split" asp-action="Event">Lägg till event</a>
 				</li>
