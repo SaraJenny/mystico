@@ -99,7 +99,7 @@
 			},
 			success: function (result) {
 				for (var i = 0; i < result.length; i++) {
-					$('#friendListBox').append('<input class="friendCheckbox" type="checkbox" name="payerList" value="' + result[i].id + '" checked />' + result[i].firstName + ' ' + result[i].lastName);
+					$('#friendListBox').append('<div><input class="friendCheckbox" type="checkbox" name="payerList" value="' + result[i].id + '" checked />' + result[i].firstName + ' ' + result[i].lastName + '</div>');
 					if (userIdString === "") {
 						userIdString = result[i].id;
 					}
