@@ -25,8 +25,9 @@
 <section>
 	@foreach (var item in Model.TransactionsCommittedToMe)
 	{
-		<p>@item</p>
+		<p>@item.DebitorFirstName ska överföra @item.Amount SEK till @item.CreditorFirstName</p>
 	}
+    @*TODO uppdatera valuta till ej hårdkodat värde*@
 </section>
 <a asp-controller="" asp-action="">Lägg till vänner</a>
 <a asp-controller="" asp-action="">Sammanställning</a>

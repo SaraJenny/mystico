@@ -139,12 +139,13 @@ namespace Grupp5.Controllers
 
             var thisEvent = mysticoContext.GetEventById(id);
 
-            var listMessage = Library.WhoOweWho(thisEvent);
-            var myTransactions = new List<string>();
-            var restTransactions = new List<string>();
-            foreach (var item in listMessage)
+            var transactions = Library.WhoOweWho(thisEvent);
+            var transactionsVM = Library.ConvertWhoOwesWho(transactions);
+            var myTransactions = new List<WhoOwesWhoVM>();
+            var restTransactions = new List<WhoOwesWhoVM>();
+            foreach (var item in transactionsVM)
             {
-                if (item.Contains(user.FirstName))
+                if (item.DebitorId == user.Id || item.CreditorId == user.Id)
                     myTransactions.Add(item);
                 else
                     restTransactions.Add(item);

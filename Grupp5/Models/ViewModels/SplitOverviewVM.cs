@@ -11,7 +11,7 @@ namespace Grupp5.Models.Entities
 		public int MyStatus { get; set; }
 		public int Total { get; set; }
 		public int MyTotal { get; set; }
-		public List<string> TransactionsCommittedToMe  { get; set; }
-		public List<string> TransactionsWithoutMe { get; set; }
+		public List<WhoOwesWhoVM> TransactionsCommittedToMe  { get; set; }
+		public List<WhoOwesWhoVM> TransactionsWithoutMe { get; set; }
 	}
 }

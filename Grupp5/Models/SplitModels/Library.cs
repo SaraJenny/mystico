@@ -9,7 +9,7 @@ namespace Grupp5.Models.SplitModels
 {
     public static class Library
     {
-        static public int GetTotalCostForEvent(Event myEvent)
+    static public int GetTotalCostForEvent(Event myEvent)
         {
             decimal amount = 0;
             foreach (var expense in myEvent.Expense)
@@ -20,66 +20,67 @@ namespace Grupp5.Models.SplitModels
             return Convert.ToInt32(Math.Round(amount, MidpointRounding.AwayFromZero));
         }
 
-        static public List<string> WhoOweWho(Event myEvent)
+    static public List<WhoOwesWho> WhoOweWho(Event myEvent)
         {
             Dictionary<int, decimal> userCredits = CreateDictionaryForUserCredits(myEvent);
 
-            var creditors = new List<ParticipantsInEvent>();
-            var debitors = new List<ParticipantsInEvent>();
-
+            var creditors = new List<User>();
+            var debitors = new List<User>();
+            
             foreach (var person in myEvent.ParticipantsInEvent)
             {
+                
                 if (userCredits[person.UserId] < 0)
                 {
                     userCredits[person.UserId] = Math.Abs(userCredits[person.UserId]);
-                    debitors.Add(person);
+                    debitors.Add(person.User);
                 }
                 else if (userCredits[person.UserId] > 0)
-                    creditors.Add(person);
+                    creditors.Add(person.User);
             }
 
-            var transaction = new List<string>();
+            var transaction = new List<WhoOwesWho>();
 
-            creditors = creditors.OrderByDescending(o => userCredits[o.UserId]).ToList();
-            debitors = debitors.OrderByDescending(d => userCredits[d.UserId]).ToList();
+            creditors = creditors.OrderByDescending(o => userCredits[o.Id]).ToList();
+            debitors = debitors.OrderByDescending(d => userCredits[d.Id]).ToList();
 
             foreach (var debitor in debitors)
             {
                 do
                 {
-                    if (userCredits[debitor.UserId] > userCredits[creditors[0].UserId])
+                    if (userCredits[debitor.Id] > userCredits[creditors[0].Id])
                     {
-                        var transferSum = Math.Round(userCredits[creditors[0].UserId], MidpointRounding.AwayFromZero);
+                        var transferSum = Math.Round(userCredits[creditors[0].Id], MidpointRounding.AwayFromZero);
 
-                        transaction.Add($"{debitor.User.FirstName} ska överföra {transferSum} kr till {creditors[0].User.FirstName}");
-                        userCredits[debitor.UserId] -= userCredits[creditors[0].UserId];
+                        transaction.Add(new WhoOwesWho { Debitor = debitor, Creditor = creditors[0], Amount = userCredits[creditors[0].Id] });
+                        userCredits[debitor.Id] -= userCredits[creditors[0].Id];
                         creditors.Remove(creditors[0]);
                     }
-                    else if (userCredits[debitor.UserId] < userCredits[creditors[0].UserId])
+                    else if (userCredits[debitor.Id] < userCredits[creditors[0].Id])
                     {
-                        var transferSum = Math.Round(userCredits[debitor.UserId], MidpointRounding.AwayFromZero);
+                        var transferSum = Math.Round(userCredits[debitor.Id], MidpointRounding.AwayFromZero);
 
-                        transaction.Add($"{debitor.User.FirstName} ska överföra {transferSum} kr till {creditors[0].User.FirstName}");
-                        userCredits[creditors[0].UserId] -= userCredits[debitor.UserId];
-                        userCredits[debitor.UserId] = 0;
+                        transaction.Add(new WhoOwesWho { Debitor = debitor, Creditor = creditors[0], Amount = userCredits[debitor.Id] });
+                        userCredits[creditors[0].Id] -= userCredits[debitor.Id];
+                        userCredits[debitor.Id] = 0;
                     }
                     else
                     {
-                        var transferSum = Math.Round(userCredits[debitor.UserId], MidpointRounding.AwayFromZero);
+                        var transferSum = Math.Round(userCredits[debitor.Id], MidpointRounding.AwayFromZero);
 
-                        transaction.Add($"{debitor.User.FirstName} ska överföra {transferSum} kr till {creditors[0].User.FirstName}");
-                        userCredits[debitor.UserId] = 0;
+                        transaction.Add(new WhoOwesWho { Debitor = debitor, Creditor = creditors[0], Amount = userCredits[debitor.Id] });
+                        userCredits[debitor.Id] = 0;
                         creditors.Remove(creditors[0]);
                     }
 
-                } while (Math.Round(userCredits[debitor.UserId]) > 0);
+                } while (Math.Round(userCredits[debitor.Id]) > 0);
             }
 
             return transaction;
 
         }
 
-        internal static List<SplitDetailsVM> ConvertExpenseToSplitDetailsVM(List<Expense> expenses, List<PayersForExpense> objections)
+    internal static List<SplitDetailsVM> ConvertExpenseToSplitDetailsVM(List<Expense> expenses, List<PayersForExpense> objections)
         {
             var expensesVM = new List<SplitDetailsVM>();
             foreach (var item in expenses)
@@ -234,5 +235,28 @@ namespace Grupp5.Models.SplitModels
 
         return eventItems.ToArray();
     }
+
+    internal static List<WhoOwesWhoVM> ConvertWhoOwesWho(List<WhoOwesWho> transactions)
+        {
+            List<WhoOwesWhoVM> transactionsVM = new List<WhoOwesWhoVM>();
+
+            foreach (var item in transactions)
+            {
+                transactionsVM.Add(new WhoOwesWhoVM
+                {
+                    Amount = Convert.ToInt32(item.Amount),
+                    DebitorId = item.Debitor.Id,
+                    DebitorFirstName = item.Debitor.FirstName,
+                    DebitorLastName = item.Debitor.LastName,
+                    DebitorEmail = item.Debitor.Email,
+                    CreditorId = item.Creditor.Id,
+                    CreditorFirstName = item.Creditor.FirstName,
+                    CreditorLastName = item.Creditor.LastName,
+                    CreditorEmail = item.Creditor.Email
+                });
+            }
+
+            return transactionsVM;
+        }
 }
 }
