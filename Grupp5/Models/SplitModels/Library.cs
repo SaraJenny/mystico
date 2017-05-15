@@ -213,13 +213,13 @@ namespace Grupp5.Models.SplitModels
         return theList.ToArray();
     }
 
-    static public SplitIndexVM[] ConvertToSplitIndexVMArray(List<Event> events)
+    static public ListOfEventsVM[] ConvertToListOfEventsVMArray(List<Event> events)
     {
-        var myList = new List<SplitIndexVM>();
+        var myList = new List<ListOfEventsVM>();
 
         foreach (var item in events)
         {
-            myList.Add(new SplitIndexVM() { Id = item.Id, EventName = item.EventName });
+            myList.Add(new ListOfEventsVM() { Id = item.Id, EventName = item.EventName });
         }
 
         return myList.ToArray();

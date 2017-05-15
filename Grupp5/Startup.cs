@@ -33,6 +33,8 @@ namespace Grupp5
 				o.Password.RequireDigit = false;
 				o.User.RequireUniqueEmail = true;
 				o.Cookies.ApplicationCookie.LoginPath = "/Account/Login";
+				o.Cookies.ApplicationCookie.LogoutPath = "/Account/SignOut";
+
 			})
 			.AddEntityFrameworkStores<IdentityDbContext>()
 			.AddDefaultTokenProviders();
