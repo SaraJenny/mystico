@@ -33,12 +33,11 @@
         }
         @*TODO uppdatera valuta till ej hårdkodat värde*@
     </section>
-    <form id="addFriendsBox" asp-controller="Split" asp-action="Overview">
+    <form id="addFriendsBox" eventid="@Model.EventId" asp-controller="Split" asp-action="Overview">
         <label for="friendsTextBox">Vänner</label>
         <div class="friend-box" id="choosenFriends"></div>
         <input type="text" id="friendsTextBox" placeholder="Sök efter vänner" />
         <input type="hidden" asp-for="FriendIds" />
-		<input type="hidden" asp-for="EventId" />
 
         <div class="friend-box" id="friend-box"></div>
         <input type="submit" value="Lägg till vänner" />
