@@ -7,14 +7,16 @@
     @foreach (var item in Model)
     {
         <div class="expenseBox">
-            <p>
-                @item.expenseInfo.PurchaserFirstName har köpt @item.expenseInfo.ExpenseDescription för @item.expenseInfo.Amount kr som 
-                @foreach (var payer in item.expenseInfo.payers)
-                {
-                    @payer.FirstName ;
-                }
-                ska betala för.
-            </p>
+			<h3>@item.expenseInfo.ExpenseDescription</h3>
+			<h4>Köpare</h4>
+			<p>@item.expenseInfo.PurchaserFirstName</p>
+			<h4>Deltagare</h4>
+			<ul>
+				@foreach (var payer in item.expenseInfo.payers)
+				{
+					<li>@payer.FirstName</li>
+				}
+			</ul>
         </div>
     }
 </section>

@@ -31,7 +31,7 @@
 
 		// Om sökningen görs på redan inlagt event (split/overview eller split/updateEvent)
 		if ($('.addFriendsBox').length > 0) {
-			var eventId = $('#addFriendsBox').attr('eventid');
+			var eventId = $('.addFriendsBox').attr('eventid');
 			console.log(eventId)
 			$.ajax({
 				url: "/Json/SearchAllUsersExceptAlreadyParticipantsAndChosen",
