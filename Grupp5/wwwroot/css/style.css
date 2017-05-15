@@ -481,6 +481,18 @@ ADD FRIENDS
 		background-color: #710114;
 	}
 
+.participant {
+	margin-bottom: .5em;
+	-moz-border-radius: 25px;
+	-webkit-border-radius: 25px;
+	border-radius: 25px;
+	color: #fff;
+	padding: 4% 6%;
+	background-color: #4d4d4d;
+	display: inline-block;
+	margin: 0 2% 2% 0;
+}
+
 .deleteX {
 	position: relative;
 	top: -.7em;

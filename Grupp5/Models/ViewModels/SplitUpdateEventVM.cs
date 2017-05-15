@@ -9,7 +9,9 @@ namespace Grupp5.Models.Entities
 {
     public class SplitUpdateEventVM
     {
-        [Required(ErrorMessage = "Namn saknas")]
+		public int EventId { get; set; }
+
+		[Required(ErrorMessage = "Namn saknas")]
         [Display(Name = "Namn")]
         public string Name { get; set; }
 
