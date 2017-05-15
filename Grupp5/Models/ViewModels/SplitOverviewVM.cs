@@ -7,7 +7,8 @@ namespace Grupp5.Models.Entities
 {
     public class SplitOverviewVM
     {
-		public string EventName { get; set; }
+        public bool EventIsActive { get; set; }
+        public string EventName { get; set; }
 		public int MyStatus { get; set; }
 		public int Total { get; set; }
 		public int MyTotal { get; set; }

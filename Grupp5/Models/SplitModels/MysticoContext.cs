@@ -183,9 +183,15 @@ namespace Grupp5.Models.Entities
             SaveChanges();
         }
 
-        public List<Event> GetEventsByUserId(int id)
+        public List<Event> GetActiveEventsByUserId(int id)
         {
-            var myEvents = ParticipantsInEvent.Where(p => p.UserId == id).Select(p => p.Event).ToList();
+            var myEvents = ParticipantsInEvent.Where(p => p.UserId == id && p.Event.IsActive == true).Select(p => p.Event).ToList();
+            return myEvents;
+        }
+
+        public List<Event> GetInactiveEventsByUserId(int id)
+        {
+            var myEvents = ParticipantsInEvent.Where(p => p.UserId == id && p.Event.IsActive == false).Select(p => p.Event).ToList();
             return myEvents;
         }
 

@@ -31,8 +31,14 @@ namespace Grupp5.Controllers
 
         #region Details
         [HttpGet]
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
+            var myUser = await userManager.GetUserAsync(HttpContext.User);
+            User user = mysticoContext.GetUserByAspUserId(myUser.Id);
+
+            if (mysticoContext.CheckIfUserIsParticipant(user.Id, id) == false)
+                return RedirectToAction(nameof(SplitController.Index), nameof(SplitController).Replace("Controller", ""));
+
             var expenses = mysticoContext.GetExpensesByEvent(id);
             var objections = mysticoContext.GetObjectionsInEvent(id);
             List<SplitDetailsVM> viewModel = Library.ConvertExpenseToSplitDetailsVM(expenses, objections);
@@ -70,9 +76,15 @@ namespace Grupp5.Controllers
         #endregion
 
         #region EventHistory
-        public IActionResult EventHistory()
+        public async Task<IActionResult> EventHistory()
         {
-            return View();
+
+            var myUser = await userManager.GetUserAsync(HttpContext.User);
+            User user = mysticoContext.GetUserByAspUserId(myUser.Id);
+            var myEvents = mysticoContext.GetInactiveEventsByUserId(user.Id);
+            var myListofEvents = Library.ConvertToListOfEventsVMArray(myEvents);
+
+            return View(myListofEvents);
         }
         #endregion
 
@@ -85,7 +97,7 @@ namespace Grupp5.Controllers
             User currentUser = mysticoContext.GetUserByAspUserId(myUser.Id);
 
             //Hämta event från databasen som currentUser är med i...
-            var myEvents = mysticoContext.GetEventsByUserId(currentUser.Id);
+            var myEvents = mysticoContext.GetActiveEventsByUserId(currentUser.Id);
 
             //Hämta valutor från databasen
             List<Currency> allCurrencies = mysticoContext.GetAllCurrencies();
@@ -120,10 +132,10 @@ namespace Grupp5.Controllers
         {
             var myUser = await userManager.GetUserAsync(HttpContext.User);
             User user = mysticoContext.GetUserByAspUserId(myUser.Id);
-            var myEvents = mysticoContext.GetEventsByUserId(user.Id);
-            var mySplitIndexVm = Library.ConvertToSplitIndexVMArray(myEvents);
+            var myEvents = mysticoContext.GetActiveEventsByUserId(user.Id);
+            var myListOfEvents = Library.ConvertToListOfEventsVMArray(myEvents);
 
-            return View(mySplitIndexVm);
+            return View(myListOfEvents);
         }
         #endregion
 
@@ -158,7 +170,9 @@ namespace Grupp5.Controllers
                 EventName = thisEvent.EventName,
                 MyStatus = Library.GetUserStatusById(thisEvent, user.Id),
                 MyTotal = Library.GetUserTotalById(thisEvent, user.Id),
-                Total = Library.GetTotalCostForEvent(thisEvent)
+                Total = Library.GetTotalCostForEvent(thisEvent),
+                EventIsActive = thisEvent.IsActive
+                
             };
 
             return View(viewModel);

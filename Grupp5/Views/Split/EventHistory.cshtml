@@ -1,1 +1,9 @@
-﻿Jag är split/eventhistory
+﻿@model ListOfEventsVM[]
+
+
+
+<h2 class="eventHeading">Mina historiska event</h2>
+@foreach (ListOfEventsVM item in Model)
+{
+    <a class="button" asp-controller="Split" asp-action="Overview" asp-route-id="@item.Id">@item.EventName</a>
+}
