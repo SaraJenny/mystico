@@ -421,6 +421,14 @@ ADD FRIENDS
 
 
 
+/************************
+SPLIT/DETAILS
+************************/
+.expenseBox {
+	margin-bottom: 1em;
+	border-bottom: 1px solid #351c38;
+	padding-bottom: .5em;
+}
 
 
 
