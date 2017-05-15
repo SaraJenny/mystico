@@ -23,14 +23,24 @@
 	<p>varav din kostnad är @Model.MyTotal kr</p>
 </section>
 <section>
+	<h3>Överföringar</h3>
 	@foreach (var item in Model.TransactionsCommittedToMe)
 	{
 		<p>@item.DebitorFirstName ska överföra @item.Amount SEK till @item.CreditorFirstName</p>
 	}
     @*TODO uppdatera valuta till ej hårdkodat värde*@
 </section>
-<a asp-controller="" asp-action="">Lägg till vänner</a>
-<a asp-controller="" asp-action="">Sammanställning</a>
+<form id="addFriendsBox" asp-controller="Split" asp-action="Overview">
+	<label for="friendsTextBox">Vänner</label>
+	<div class="friend-box" id="choosenFriends"></div>
+	<input type="text" id="friendsTextBox" placeholder="Sök efter vänner" />
+	<input type="hidden" asp-for="FriendIds" />
+
+	<div class="friend-box" id="friend-box"></div>
+	<input type="submit" value="Lägg till vänner" />
+</form>
+<a class="button" id="addFriendsButton" href="#">Lägg till vänner</a>
+<a class="button" asp-controller="" asp-action="">Sammanställning</a>
 
 @section addExpenseFooter {
 	<footer>

@@ -13,5 +13,6 @@ namespace Grupp5.Models.Entities
 		public int MyTotal { get; set; }
 		public List<WhoOwesWhoVM> TransactionsCommittedToMe  { get; set; }
 		public List<WhoOwesWhoVM> TransactionsWithoutMe { get; set; }
+		public string FriendIds { get; set; }
 	}
 }

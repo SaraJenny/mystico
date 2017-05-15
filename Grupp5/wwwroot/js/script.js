@@ -166,6 +166,15 @@
 		$('#FriendIds').val(userIdString);
 	});
 	/*
+	SPLIT/OVERVIEW
+	*/
+	// Visa formulär för att lägga till vänner till eventet
+	$('#addFriendsButton').click(function (e) {
+		e.preventDefault();
+		$('#addFriendsBox').show();
+		$(this).hide();
+	});
+	/*
 	PROFILE
 	*/
 	// Visa lösenordsformuläret

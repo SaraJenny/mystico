@@ -416,8 +416,14 @@ ADD FRIENDS
 }
 
 /*
-	SPLIT/EXPENSE
+	SPLIT/OVERVIEW
 */
+#addFriendsBox {
+	display: none;
+}
+
+
+
 
 
 
