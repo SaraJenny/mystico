@@ -333,6 +333,11 @@ p+h3 {
 	margin-top: .5em;
 }
 
+h4 {
+	font-weight: 500;
+	margin-top: .5em;
+}
+
 .aboutSection p {
 	margin-bottom: 1em;
 }
@@ -508,9 +513,12 @@ ADD FRIENDS
 SPLIT/DETAILS
 ************************/
 .expenseBox {
-	margin-bottom: 1em;
-	border-bottom: 1px solid #351c38;
-	padding-bottom: .5em;
+	-moz-border-radius: 25px;
+	-webkit-border-radius: 25px;
+	border-radius: 25px;
+	padding: 4% 6%;
+	margin: 0 2% 2% 0;
+	border: 1px solid #351c38;
 }
 
 
