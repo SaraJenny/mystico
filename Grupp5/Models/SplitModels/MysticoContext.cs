@@ -183,19 +183,27 @@ namespace Grupp5.Models.Entities
 
         public void AddParticipantsToEvent(string friends, int eventId)
         {
-            var FriendIds = friends.Split(',');
-
-            foreach (var userId in FriendIds)
+            
+            try
             {
-                ParticipantsInEvent.Add(new ParticipantsInEvent
+                var FriendIds = friends.Split(',');
+                foreach (var userId in FriendIds)
                 {
-                    EventId = eventId,
-                    UserId = Convert.ToInt32(userId)
-                });
+                    ParticipantsInEvent.Add(new ParticipantsInEvent
+                    {
+                        EventId = eventId,
+                        UserId = Convert.ToInt32(userId)
+                    });
 
-            };
+                };
 
-            SaveChanges();
+                SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
         }
 
         public void AddLoggedInUserToEvent(int currentUserId, int eventId)
@@ -301,6 +309,12 @@ namespace Grupp5.Models.Entities
             var myExpense = Expense.Where(e => e.Id == id).FirstOrDefault();
             var listOfPayers = PayersForExpense.Where(p => p.ExpenseId == myExpense.Id).ToList();
             myExpense.PayersForExpense = listOfPayers;
+
+            foreach (var payer in myExpense.PayersForExpense)
+            {
+                payer.User = User.Where(u => u.Id == payer.UserId).FirstOrDefault();
+            }
+
             return myExpense;
         }
 
@@ -328,6 +342,17 @@ namespace Grupp5.Models.Entities
             myExpense.AmountInStandardCurrency = Convert.ToDecimal(viewModel.Amount); //TODO valutaomvandling
             SaveChanges();
         }
-       
+
+        internal List<User> GetPayersByExpense(Expense expense)
+        {
+            var payers = new List<User>();
+
+            foreach (var payer in expense.PayersForExpense)
+            {
+                payers.Add(payer.User);
+            }
+
+            return payers;
+        }
     }
 }
