@@ -250,7 +250,8 @@ namespace Grupp5.Models.SplitModels
             {
                 Name = myEvent.EventName,
                 Description = myEvent.Description,
-                AlreadyParticipants = new List<UserVM>()
+                AlreadyParticipants = new List<UserVM>(),
+                EventId = myEvent.Id
             };
 
             foreach (var participant in myEvent.ParticipantsInEvent)

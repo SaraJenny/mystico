@@ -222,6 +222,7 @@ namespace Grupp5.Controllers
             List<Currency> allCurrencies = mysticoContext.GetAllCurrencies();
             viewModel.CurrencyItem = Library.ConvertCurrencyToSelectListItem(allCurrencies);
 
+
             return View(viewModel);
         }
 
@@ -237,6 +238,9 @@ namespace Grupp5.Controllers
 
             mysticoContext.UpdateEvent(myEvent, viewModel);
             mysticoContext.AddParticipantsToEvent(viewModel.FriendIds, id);
+
+            //TODO Update standard amount in every expanse that is connected to this event!
+
 
             return RedirectToAction(nameof(SplitController.Index), nameof(SplitController).Replace("Controller", ""));
         }
@@ -264,6 +268,8 @@ namespace Grupp5.Controllers
         #endregion
 
         #region UpdateExpense
+
+
 
         #endregion
 
