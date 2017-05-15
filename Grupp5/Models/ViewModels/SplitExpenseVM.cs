@@ -13,7 +13,7 @@ namespace Grupp5.Models.Entities
 
 		[Required(ErrorMessage = "Event saknas")]
 		[Display(Name = "Event")]
-		public string SelectedEvent { get; set; }
+		public int SelectedEvent { get; set; }
 
 		[Required(ErrorMessage = "Beskrivning saknas")]
 		[Display(Name = "Beskrivning")]
@@ -23,12 +23,13 @@ namespace Grupp5.Models.Entities
 
 		[Required(ErrorMessage = "Valuta saknas")]
 		[Display(Name = "Valuta")]
-		public string SelectedCurrency { get; set; }
+		public int SelectedCurrency { get; set; }
 
 		[Required(ErrorMessage = "Belopp saknas")]
 		[Display(Name = "Belopp")]
+        [DataType(DataType.Currency)]
 		[Range(0.0, double.MaxValue, ErrorMessage = "Ogiltigt belopp")]
-		public string Amount { get; set; }
+        public double Amount { get; set; }
 
 		[Required(ErrorMessage = "Betalningsdatum saknas")]
 		[Display(Name = "Betalningsdatum")]

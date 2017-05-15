@@ -268,8 +268,36 @@ namespace Grupp5.Controllers
         #endregion
 
         #region UpdateExpense
+        [HttpGet]
+        public async Task<IActionResult> UpdateExpense(int id)
+        {
+            //Hämta currentUser
+            var myUser = await userManager.GetUserAsync(HttpContext.User);
+            User currentUser = mysticoContext.GetUserByAspUserId(myUser.Id);
+
+            //Hämta specifikt event som ska ändras
+            var myExpense = mysticoContext.GetExpenseById(id);
+
+            //OM jag inte är inköpare ==> skickas till overview
+            if (myExpense.PurchaserId != currentUser.Id)
+                return RedirectToAction(nameof(SplitController.Overview), nameof(SplitController).Replace("Controller", ""));
 
 
+            //Hämta event från databasen som currentUser är med i...
+            var myEvents = mysticoContext.GetActiveEventsByUserId(currentUser.Id);
+
+
+            //Hämta valutor från databasen
+            List<Currency> allCurrencies = mysticoContext.GetAllCurrencies();
+
+            var viewModel = Library.ConvertToSplitExpenseVM(myExpense);
+            viewModel.CurrencyItem = Library.ConvertCurrencyToSelectListItem(allCurrencies);
+            viewModel.EventItem = Library.ConvertEventToSelectListItem(myEvents);
+            viewModel.Date = DateTime.Today.ToString().Replace(" 00:00:00", "");
+            
+
+            return View(viewModel);
+        }
 
         #endregion
 
@@ -288,6 +316,6 @@ namespace Grupp5.Controllers
 
             return RedirectToAction(nameof(SplitController.Overview), nameof(SplitController).Replace("Controller", ""));
         }
-            #endregion
-        }
+        #endregion
+    }
 }

@@ -301,5 +301,17 @@ namespace Grupp5.Models.SplitModels
 
             return transactionsVM;
         }
+
+        internal static SplitExpenseVM ConvertToSplitExpenseVM(Expense myExpense)
+        {
+            return new SplitExpenseVM {
+                Amount = Convert.ToDouble(myExpense.Amount),
+                Date = myExpense.Date.ToString().Replace(" 00:00:00", ""),
+                Description = myExpense.Description,
+                SelectedCurrency = myExpense.CurrencyId,
+                SelectedEvent = myExpense.EventId
+
+            };
+        }
     }
 }
