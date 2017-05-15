@@ -17,13 +17,13 @@ namespace Grupp5.Controllers
     [Authorize]
     public class JsonController : Controller
     {
-    
+
         #region General
         UserManager<IdentityUser> userManager;
         IdentityDbContext identityContext;
         MysticoContext mysticoContext;
 
-        public JsonController (UserManager<IdentityUser> userManager, IdentityDbContext identityContext, MysticoContext mysticoContext)
+        public JsonController(UserManager<IdentityUser> userManager, IdentityDbContext identityContext, MysticoContext mysticoContext)
         {
             this.userManager = userManager;
             this.identityContext = identityContext;
@@ -79,7 +79,20 @@ namespace Grupp5.Controllers
 
             return userVMs;
         }
-#endregion
+        #endregion
+
+        #region SearchAllUsersExceptAlreadyParticipantsAndChosen
+
+        public List<UserVM> SearchAllUsersExceptAlreadyParticipantsAndChosen(string search, string chosen, int id)
+        {
+
+            var users = mysticoContext.SearchUserExceptParticipants(search, chosen, id);
+            List<UserVM> userVMs = Library.ConvertUsersToUsersVM(users);
+
+            return userVMs;
+        }
+
+        #endregion
 
     }
 }

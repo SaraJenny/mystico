@@ -68,8 +68,8 @@ namespace Grupp5.Controllers
             var myUser = await userManager.GetUserAsync(HttpContext.User);
             User user = mysticoContext.GetUserByAspUserId(myUser.Id);
 
-
-            mysticoContext.AddParticipantsToEvent(viewModel.FriendIds, newEvent.Id, user.Id);
+            mysticoContext.AddLoggedInUserToEvent(user.Id, newEvent.Id);
+            mysticoContext.AddParticipantsToEvent(viewModel.FriendIds, newEvent.Id);
 
             return RedirectToAction(nameof(SplitController.Overview), nameof(SplitController).Replace("Controller", ""), new { id = newEvent.Id });
         }
@@ -141,6 +141,7 @@ namespace Grupp5.Controllers
 
         #region Overview
 
+        [HttpGet]
         public async Task<IActionResult> Overview(int id) // TODO lägg till int id som parameter
         {
             var myUser = await userManager.GetUserAsync(HttpContext.User);
@@ -171,11 +172,29 @@ namespace Grupp5.Controllers
                 MyStatus = Library.GetUserStatusById(thisEvent, user.Id),
                 MyTotal = Library.GetUserTotalById(thisEvent, user.Id),
                 Total = Library.GetTotalCostForEvent(thisEvent),
-                EventIsActive = thisEvent.IsActive
+                EventIsActive = thisEvent.IsActive,
+                EventId = id
                 
             };
 
             return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Overview(SplitOverviewVM viewModel, int id) // TODO lägg till int id som parameter
+        {
+            if (!ModelState.IsValid)
+            {
+                viewModel.Message = "Modelstate is not valid...";
+                return View(viewModel);
+            }
+
+            mysticoContext.AddParticipantsToEvent(viewModel.FriendIds, id);
+            viewModel.FriendIds = "";
+            viewModel.Message = "Vänner tillagda! :)";
+            //TODO viewModel.Message försvinner ju... kanske inte redirecta...
+            return RedirectToAction(nameof(SplitController.Overview), nameof(SplitController).Replace("Controller", ""), new { id = id });
+
         }
         #endregion
 
