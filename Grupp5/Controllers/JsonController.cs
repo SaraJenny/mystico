@@ -83,10 +83,10 @@ namespace Grupp5.Controllers
 
         #region SearchAllUsersExceptAlreadyParticipantsAndChosen
 
-        public List<UserVM> SearchAllUsersExceptAlreadyParticipantsAndChosen(string search, string chosen, int id)
+        public List<UserVM> SearchAllUsersExceptAlreadyParticipantsAndChosen(string search, string chosen, string eventid)
         {
 
-            var users = mysticoContext.SearchUserExceptParticipants(search, chosen, id);
+            var users = mysticoContext.SearchUserExceptParticipants(search, chosen, Convert.ToInt32(eventid));
             List<UserVM> userVMs = Library.ConvertUsersToUsersVM(users);
 
             return userVMs;
