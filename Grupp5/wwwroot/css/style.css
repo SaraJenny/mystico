@@ -82,7 +82,7 @@ main {
 	position: relative;
 }
 
-	/*main:after {
+/*main:after {
 		content: "";
 		display: block;
 		height: 4em;
@@ -320,7 +320,7 @@ h3 {
 	text-align: center;
 }
 
-p+h3 {
+p + h3 {
 	margin-top: 1em;
 }
 
@@ -368,7 +368,7 @@ a {
 	text-align: center;
 }
 
-.section li {
+.listItem {
 	background: url("../img/arrow_30.png") no-repeat left top;
 	text-align: left;
 	padding-left: 7%;
@@ -443,14 +443,24 @@ SPLIT/OVERVIEW
 	padding: 1em 2%;
 }
 
-#updateEvent {
+#updateEvent, #updateExpense {
 	font-size: 2em;
-	color: #295800;
 	position: absolute;
 	top: .5em;
 	right: 3%;
 }
 
+#deleteExpense {
+	font-size: 2em;
+	position: absolute;
+	bottom: .5em;
+	right: 3%;
+	color: #710114;
+}
+
+#transactionsWithoutMe {
+	display: none;
+}
 
 
 
@@ -519,6 +529,7 @@ SPLIT/DETAILS
 	padding: 4% 6%;
 	margin: 0 2% 2% 0;
 	border: 1px solid #351c38;
+	position: relative;
 }
 
 
@@ -566,11 +577,11 @@ HOME/INDEX
 	.startTextBox:hover {
 		opacity: 1;
 	}
-	
+
 .startText {
-		font-size: 1.5em;
-		margin-bottom: 4.5em;
-	}
+	font-size: 1.5em;
+	margin-bottom: 4.5em;
+}
 
 
 
@@ -582,4 +593,3 @@ HOME/ABOUT
 	max-width: 640px;
 	margin: 0 auto;
 }
-

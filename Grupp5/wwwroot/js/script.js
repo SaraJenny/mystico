@@ -32,7 +32,6 @@
 		// Om sökningen görs på redan inlagt event (split/overview eller split/updateEvent)
 		if ($('.addFriendsBox').length > 0) {
 			var eventId = $('.addFriendsBox').attr('eventid');
-			console.log(eventId)
 			$.ajax({
 				url: "/Json/SearchAllUsersExceptAlreadyParticipantsAndChosen",
 				type: "GET",
@@ -224,6 +223,36 @@
 		}
 		else {
 			return false;
+		}
+	});
+	/*******************************
+	SPLIT/DETAILS
+	*******************************/
+	/*
+	Radera expense
+	*/
+	$('#deleteExpenseButton').click(function (e) {
+		e.preventDefault();
+		var expenseId = ""; //TODO hämta in expenseId från Details
+		if (confirm('Vill du radera utlägget?')) {
+			window.location.replace('/Split/DeletExpense/' + eventId);
+		}
+		else {
+			return false;
+		}
+	});
+	/*******************************
+	SPLIT/OVERVIEW
+	*******************************/
+	// Se/dölj alla transaktioner
+	$('#allTransactionsButton').click(function (e) {
+		e.preventDefault();
+		$('#transactionsWithoutMe').toggle();
+		if ($('#allTransactionsButton').text() === 'Se alla överföringar') {
+			$('#allTransactionsButton').text('Dölj överföringar');
+		}
+		else {
+			$('#allTransactionsButton').text('Se alla överföringar');
 		}
 	});
 });
