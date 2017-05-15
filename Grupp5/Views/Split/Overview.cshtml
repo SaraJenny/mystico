@@ -44,7 +44,11 @@
 
 	</section>
 	<form id="addFriendsBox" class="addFriendsBox" eventid="@Model.EventId" asp-controller="Split" asp-action="Overview">
-		<label for="friendsTextBox">Vänner</label>
+		<label for="friendsTextBox">Deltagare</label>
+		@*@foreach (var item in Model.AlreadyParticipants)
+		{
+			<p class="friend participant">@item.FirstName @item.LastName</p>
+		}*@
 		<div class="friend-box" id="choosenFriends"></div>
 		<input type="text" id="friendsTextBox" placeholder="Sök efter vänner" />
 		<input type="hidden" asp-for="FriendIds" />

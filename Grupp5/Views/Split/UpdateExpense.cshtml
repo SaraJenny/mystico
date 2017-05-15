@@ -1,3 +1,39 @@
 ﻿@model SplitExpenseVM
 
-jag är split/updateExpense och @Model.Description är inlagd!
+<h2>Uppdatera: @Model.Description</h2>
+
+<form asp-controller="Split" asp-action="Expense">
+
+	<label asp-for="SelectedEvent"></label>
+	<select asp-for="SelectedEvent" asp-items="Model.EventItem"></select>
+	<span asp-validation-for="SelectedEvent"></span>
+
+	<label asp-for="Description"></label>
+	<input asp-for="Description" placeholder="ex. Middag på kvarterskrogen" />
+	<span asp-validation-for="Description"></span>
+
+	<label asp-for="SelectedCurrency"></label>
+	<select asp-for="SelectedCurrency" asp-items="Model.CurrencyItem"></select>
+	<span asp-validation-for="SelectedCurrency"></span>
+
+	<label asp-for="Amount"></label>
+	<input asp-for="Amount" placeholder="ex. 950 kr" />
+	<span asp-validation-for="Amount" id="amountError"></span>
+
+	<label asp-for="Date"></label>
+	<input asp-for="Date" value="@Model.Date" />
+	<span asp-validation-for="Date"></span>
+
+	<div id="friendListBox"></div>
+
+	<input type="hidden" asp-for="FriendIds" />
+
+	<input type="submit" value="Lägg till utlägg" id="addExpenseButton" />
+
+</form>
+
+@section scripts {
+	<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.0.min.js"></script>
+	<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
+	<script src="http://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>
+}
