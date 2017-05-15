@@ -32,13 +32,13 @@
 
 		@foreach (var item in Model.TransactionsCommittedToMe)
 		{
-			<p class="listItem">@item.DebitorFirstName ska överföra @item.Amount SEK till @item.CreditorFirstName</p>
+			<p class="listItem">@item.DebitorFirstName ska överföra @item.Amount @Model.StandardCurrency till @item.CreditorFirstName</p>
 		}
 		@*TODO uppdatera valuta till ej hårdkodat värde*@
 		<div id="transactionsWithoutMe">
 			@foreach (var item in Model.TransactionsWithoutMe)
 				{
-				<p class="listItem">@item.DebitorFirstName ska överföra @item.Amount SEK till @item.CreditorFirstName</p>
+				<p class="listItem">@item.DebitorFirstName ska överföra @item.Amount @Model.StandardCurrency till @item.CreditorFirstName</p>
 				}
 		</div>
 

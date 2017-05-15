@@ -180,6 +180,7 @@ namespace Grupp5.Controllers
                 Total = Library.GetTotalCostForEvent(thisEvent),
                 EventIsActive = thisEvent.IsActive,
                 EventId = id,
+                StandardCurrency = thisEvent.StandardCurrency.CurrencyCode,
                 AlreadyParticipants = participants
             };
 
@@ -294,12 +295,12 @@ namespace Grupp5.Controllers
 
             //Hämta valutor från databasen
             List<Currency> allCurrencies = mysticoContext.GetAllCurrencies();
+            List<User> payers = mysticoContext.GetPayersByExpense(myExpense);
 
             var viewModel = Library.ConvertToSplitExpenseVM(myExpense);
             viewModel.CurrencyItem = Library.ConvertCurrencyToSelectListItem(allCurrencies);
             viewModel.EventItem = Library.ConvertEventToSelectListItem(myEvents);
-            //viewModel.Date = DateTime.Today;
-            //string tmp = viewModel.Date.
+            viewModel.Payers = Library.ConvertUsersToUsersVM(payers);
 
 
             return View(viewModel);
@@ -324,7 +325,8 @@ namespace Grupp5.Controllers
 
             mysticoContext.UpdateExpense(myExpense, viewModel);
 
-            return View(viewModel);
+            return RedirectToAction(nameof(SplitController.Overview), nameof(SplitController).Replace("Controller", ""), new { id = myExpense.EventId });
+
         }
 
         #endregion

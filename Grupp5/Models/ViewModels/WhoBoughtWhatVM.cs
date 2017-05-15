@@ -14,6 +14,7 @@ namespace Grupp5.Models.Entities
         public decimal Amount { get; set; }
         public List<PayerVM> payers { get; set; }
         public string ExpenseDescription { get; set; }
+        public int CurrencyId { get; set; }
 
     }
 
