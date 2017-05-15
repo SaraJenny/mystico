@@ -15,5 +15,7 @@ namespace Grupp5.Models.Entities
 		public List<WhoOwesWhoVM> TransactionsCommittedToMe  { get; set; }
 		public List<WhoOwesWhoVM> TransactionsWithoutMe { get; set; }
 		public string FriendIds { get; set; }
-	}
+        public string Message { get; set; }
+        public int EventId { get; set; }
+    }
 }

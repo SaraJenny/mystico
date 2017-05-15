@@ -107,6 +107,38 @@ namespace Grupp5.Models.Entities
             return newEvent;
         }
 
+        internal List<User> SearchUserExceptParticipants(string search, string chosen, int eventId)
+        {
+            List<string> chosenIds = new List<string>();
+
+            try
+            {
+                chosenIds = chosen.Split(',').ToList();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
+            var users = new List<User>();
+
+            var participants =GetUsersByEventId(eventId);
+
+            //OM search matchar med User.Name osv... (firstname, lastname, email)
+            var userMatching = User.Where(u => u.FirstName.Contains(search) || u.LastName.Contains(search) || u.Email.Contains(search)).ToList();
+
+            foreach (var user in userMatching)
+            {
+                //KOlla så att id inte matcher med mitt id & chosenId..
+                //OM BÅDA stämmer (check på första, ej på andra) => Lägg till i users
+                if (participants.Where(p => p.Id == user.Id).Count() == 0 &&
+                    chosenIds.Where(u => Convert.ToInt32(u) == user.Id).Count() == 0)
+                    users.Add(user);
+            }
+
+            return users;
+        }
+
         internal List<User> GetUsersByEventId(int id)
         {
             var participants = ParticipantsInEvent.Where(e => e.EventId == id).ToList();
@@ -149,28 +181,31 @@ namespace Grupp5.Models.Entities
             return users;
         }
 
-        public void AddParticipantsToEvent(string friends, int eventId, int currentUserId)
+        public void AddParticipantsToEvent(string friends, int eventId)
         {
            var FriendIds = friends.Split(',');
+
+            foreach (var userId in FriendIds)
+            {
+                    ParticipantsInEvent.Add(new ParticipantsInEvent
+                    {
+                        EventId = eventId,
+                        UserId = Convert.ToInt32(userId)
+                    });
+
+            };
+
+            SaveChanges();
+        }
+
+        public void AddLoggedInUserToEvent(int currentUserId, int eventId)
+        {
 
             ParticipantsInEvent.Add(new ParticipantsInEvent
             {
                 EventId = eventId,
                 UserId = currentUserId,
             });
-
-            foreach (var userId in FriendIds)
-            {
-                if (Convert.ToInt32(userId) != currentUserId)
-                {
-                    ParticipantsInEvent.Add(new ParticipantsInEvent
-                    {
-                        EventId = eventId,
-                        UserId = Convert.ToInt32(userId)
-                    });
-                }
-            };
-
             SaveChanges();
         }
 
