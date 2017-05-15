@@ -352,15 +352,10 @@ a {
 	text-align: center;
 }
 
-ul {
-	list-style-type: disc;
-	list-style-image: url("../img/arrow_30.png");
-	list-style-position: inside;
-	padding: 0;
-}
-
-li {
-	text-align:left;
+.section li {
+	background: url("../img/arrow_30.png") no-repeat left top;
+	text-align: left;
+	padding-left: 7%;
 }
 
 
