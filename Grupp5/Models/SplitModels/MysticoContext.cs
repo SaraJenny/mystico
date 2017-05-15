@@ -299,7 +299,8 @@ namespace Grupp5.Models.Entities
         internal Expense GetExpenseById(int id)
         {
             var myExpense = Expense.Where(e => e.Id == id).FirstOrDefault();
-            myExpense.PayersForExpense = PayersForExpense.Where(p => p.ExpenseId == myExpense.Id).ToList();
+            var listOfPayers = PayersForExpense.Where(p => p.ExpenseId == myExpense.Id).ToList();
+            myExpense.PayersForExpense = listOfPayers;
             return myExpense;
         }
 
@@ -308,8 +309,9 @@ namespace Grupp5.Models.Entities
             foreach (var payer in myExpense.PayersForExpense)
             {
                 PayersForExpense.Remove(payer);
-                SaveChanges();
+             
             }
+            SaveChanges();
 
             Expense.Remove(myExpense);
 
