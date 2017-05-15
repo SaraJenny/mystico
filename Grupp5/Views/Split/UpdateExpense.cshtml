@@ -1,6 +1,6 @@
 ﻿@model SplitExpenseVM
 
-<h2>Uppdatera: @Model.Description</h2>
+<h2>@Model.Description</h2>
 
 <form asp-controller="Split" asp-action="Expense">
 
@@ -24,11 +24,17 @@
 	<input asp-for="Date" value="@Model.Date" />
 	<span asp-validation-for="Date"></span>
 
-	<div id="friendListBox"></div>
+	<div id="friendListBox">
+		<label>Deltagare</label>
+		@foreach (var item in Model.Payers)
+		{
+			<div><input class="friendCheckbox" type="checkbox" name="payerList" value="@item.Id" checked />@item.FirstName @item.LastName</div>
+		}
+	</div>
 
 	<input type="hidden" asp-for="FriendIds" />
 
-	<input type="submit" value="Lägg till utlägg" id="addExpenseButton" />
+	<input type="submit" value="Uppdatera utlägg" id="addExpenseButton" />
 
 </form>
 
