@@ -34,7 +34,8 @@ namespace Grupp5.Models.Entities
 		[Required(ErrorMessage = "Betalningsdatum saknas")]
 		[Display(Name = "Betalningsdatum")]
 		[DataType(DataType.Date)]
-		public string Date { get; set; }
+        public string Date { get; set; }
+        //public DateTime Date { get; set; }
 
         public List<UserVM> Payers { get; set; }
 

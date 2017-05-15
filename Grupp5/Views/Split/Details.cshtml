@@ -7,7 +7,7 @@
     @foreach (var item in Model)
     {
         <div class="expenseBox">
-			<a asp-controller="Split" asp-action="UpdateExpense" asp-route-id="">
+			<a asp-controller="Split" asp-action="UpdateExpense" asp-route-id="@item.ExpenseId">
 				<i id="updateExpense" class="fa fa-pencil-square-o" aria-hidden="true"></i>
 			</a>
 			<a href="" id="deleteExpenseButton">

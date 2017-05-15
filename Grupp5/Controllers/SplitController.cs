@@ -107,6 +107,8 @@ namespace Grupp5.Controllers
             viewModel.CurrencyItem = Library.ConvertCurrencyToSelectListItem(allCurrencies);
             viewModel.EventItem = Library.ConvertEventToSelectListItem(myEvents);
             viewModel.Date = DateTime.Today.ToString().Replace(" 00:00:00", "");
+            //viewModel.Date = DateTime.Today;
+            //viewModel.Date = DateTime.Today.ToString("yyyy-mm-dd");
 
             return View(viewModel);
         }
@@ -143,7 +145,7 @@ namespace Grupp5.Controllers
         #region Overview
 
         [HttpGet]
-        public async Task<IActionResult> Overview(int id) // TODO lägg till int id som parameter
+        public async Task<IActionResult> Overview(int id)
         {
             var myUser = await userManager.GetUserAsync(HttpContext.User);
             User user = mysticoContext.GetUserByAspUserId(myUser.Id);
@@ -152,6 +154,7 @@ namespace Grupp5.Controllers
                 return RedirectToAction(nameof(SplitController.Index), nameof(SplitController).Replace("Controller", ""));
 
             var thisEvent = mysticoContext.GetEventById(id);
+            
 
             var transactions = Library.WhoOweWho(thisEvent);
             var transactionsVM = Library.ConvertWhoOwesWho(transactions);
@@ -165,6 +168,8 @@ namespace Grupp5.Controllers
                     restTransactions.Add(item);
             }
 
+            List<UserVM> participants = Library.ConvertUsersToUsersVM(mysticoContext.GetUsersByEventId(thisEvent.Id));
+
             var viewModel = new SplitOverviewVM()
             {
                 TransactionsCommittedToMe = myTransactions,
@@ -174,8 +179,8 @@ namespace Grupp5.Controllers
                 MyTotal = Library.GetUserTotalById(thisEvent, user.Id),
                 Total = Library.GetTotalCostForEvent(thisEvent),
                 EventIsActive = thisEvent.IsActive,
-                EventId = id
-
+                EventId = id,
+                AlreadyParticipants = participants
             };
 
             return View(viewModel);
@@ -293,7 +298,8 @@ namespace Grupp5.Controllers
             var viewModel = Library.ConvertToSplitExpenseVM(myExpense);
             viewModel.CurrencyItem = Library.ConvertCurrencyToSelectListItem(allCurrencies);
             viewModel.EventItem = Library.ConvertEventToSelectListItem(myEvents);
-            viewModel.Date = DateTime.Today.ToString().Replace(" 00:00:00", "");
+            //viewModel.Date = DateTime.Today;
+            //string tmp = viewModel.Date.
 
 
             return View(viewModel);

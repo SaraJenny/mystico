@@ -88,6 +88,8 @@ namespace Grupp5.Models.SplitModels
             {
                 SplitDetailsVM expense = new SplitDetailsVM();
 
+                expense.ExpenseId = exp.Id;
+
                 expense.expenseInfo = new WhoBoughtWhatVM
                 {
                     PurchaserId = exp.PurchaserId,
@@ -96,6 +98,7 @@ namespace Grupp5.Models.SplitModels
                     PurchaserLastName = exp.Purchaser.LastName,
                     Amount = exp.Amount,
                     ExpenseDescription = exp.Description
+                    
                 };
 
                 expense.expenseInfo.payers = new List<PayerVM>();
@@ -309,7 +312,7 @@ namespace Grupp5.Models.SplitModels
                 Date = myExpense.Date.ToString().Replace(" 00:00:00", ""),
                 Description = myExpense.Description,
                 SelectedCurrency = myExpense.CurrencyId,
-                SelectedEvent = myExpense.EventId
+                SelectedEvent = myExpense.EventId,
 
             };
         }
