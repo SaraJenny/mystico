@@ -6,6 +6,9 @@
 
   <ItemGroup>
     <Content Include="wwwroot\css\style.css" />
+    <Content Include="wwwroot\img\coins.jpg" />
+    <Content Include="wwwroot\img\logo.png" />
+    <Content Include="wwwroot\img\logo_150.png" />
     <Content Include="wwwroot\img\logo_175-white.png" />
     <Content Include="wwwroot\img\logo_175.png" />
     <Content Include="wwwroot\img\plus_75.png" />
