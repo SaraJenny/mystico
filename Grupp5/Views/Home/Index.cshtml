@@ -1,7 +1,13 @@
 ﻿@{ViewBag.Title = "Hem";}
 
-<section class="startSection">
-	<p class="startText">Dela på kostnaderna</p>
-	<img class="startLogo" src="~/img/logo_150.png" />
-	<p>Ett smart sätt att hålla koll på vem som är skyldig vem</p>
-</section>
+@section outsideMain {
+	<section class="startSection">
+		<div class="startTextBox">
+			<p class="startText">Dela på kostnaderna</p>
+			<p>Ett smart sätt att hålla koll på vem som är skyldig vem</p>
+		</div>
+	</section>
+}
+<a asp-controller="Account" asp-action="Register" class="button">Skapa konto</a>
+<a asp-controller="Account" asp-action="Login" class="button">Logga in</a>
+<img class="startLogo" src="~/img/logo_150.png" />

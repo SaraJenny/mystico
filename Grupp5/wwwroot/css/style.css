@@ -76,18 +76,18 @@ header {
 }
 
 main {
-	min-height: 100%;
-	margin-bottom: -4em;
+	/*min-height: 100%;*/
+	/*margin-bottom: -4em;*/
 	padding: 3%;
 }
 
-	main:after {
+	/*main:after {
 		content: "";
 		display: block;
 		height: 4em;
-	}
+	}*/
 
-footer {
+/*footer {
 	height: 4em;
 	background-color: #191919;
 	text-align: center;
@@ -96,7 +96,7 @@ footer {
 
 	footer p {
 		line-height: 4em;
-	}
+	}*/
 
 /* Döljer element visuellt samtidigt som skärmläsare kan läsa av dem */
 .hidden {
@@ -470,17 +470,28 @@ HOME/INDEX
 }
 
 .startSection {
-	background-color: rgba(25,25,25,.05);
-	background-image: url("../img/coins.jpg");
-	background-size:contain;
-	padding: 1em 5%;
+	background-color: #191919;
+	background: url("../img/coins.jpg") no-repeat center center;
+	background-size: cover;
+	padding: 2em 5% 1em;
+	opacity: 1;
+	margin-bottom: 1em;
+}
+
+.startTextBox {
 	text-align: center;
 	font-size: 1.5em;
 	font-family: 'Patua One', cursive;
+	color: #fff;
+	text-shadow: 2px 2px #191919;
 }
 
+	.startTextBox:hover {
+		opacity: 1;
+	}
+	
 .startText {
-	font-size: 1.5em;
-	margin-bottom: .5em;
-}
+		font-size: 1.5em;
+		margin-bottom: 4.5em;
+	}
 
