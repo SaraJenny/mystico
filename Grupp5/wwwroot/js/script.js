@@ -29,10 +29,10 @@
 		string = $('#friendsTextBox').val();
 		var chosenFriendIds = $('#FriendIds').val();
 
-		// Om sökningen görs på redan inlagt event (split/overview)
-		if ($('#addFriendsBox').length > 0) {
+		// Om sökningen görs på redan inlagt event (split/overview eller split/updateEvent)
+		if ($('.addFriendsBox').length > 0) {
 			var eventId = $('#addFriendsBox').attr('eventid');
-
+			console.log(eventId)
 			$.ajax({
 				url: "/Json/SearchAllUsersExceptAlreadyParticipantsAndChosen",
 				type: "GET",
