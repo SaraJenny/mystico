@@ -1,23 +1,30 @@
 ﻿@model List<SplitDetailsVM>
 @*@{ViewBag.Title = Model.;} // TODO lägg till eventnamn*@
 
-<h2>Eventnamn</h2>
+<h2>@ViewBag.EventName</h2>
 
 <section>
-	@foreach (var item in Model)
-	{
-		<div class="expenseBox">
-			<p>@item.expenseInformation</p>
-		</div>
-	}
+    @foreach (var item in Model)
+    {
+        <div class="expenseBox">
+            <p>
+                @item.expenseInfo.PurchaserFirstName har köpt @item.expenseInfo.ExpenseDescription för @item.expenseInfo.Amount kr som 
+                @foreach (var payer in item.expenseInfo.payers)
+                {
+                    @payer.FirstName ;
+                }
+                ska betala för.
+            </p>
+        </div>
+    }
 </section>
 
 @section addExpenseFooter {
-	<footer>
-		<div id="addExpenseFooter">
-			<a asp-controller="Split" asp-action="Expense">
-				<img id="plusSign" src="~/img/plus_75.png" />
-			</a>
-		</div>
-	</footer>
+    <footer>
+        <div id="addExpenseFooter">
+            <a asp-controller="Split" asp-action="Expense">
+                <img id="plusSign" src="~/img/plus_75.png" />
+            </a>
+        </div>
+    </footer>
 }
