@@ -268,7 +268,20 @@ namespace Grupp5.Controllers
         #endregion
 
         #region DeleteExpense
+        [HttpGet]
+        public async Task<IActionResult> DeleteExpense(int id)
+        {
+            var myUser = await userManager.GetUserAsync(HttpContext.User);
+            User user = mysticoContext.GetUserByAspUserId(myUser.Id);
 
-        #endregion
-    }
+            Expense myExpense = mysticoContext.GetExpenseById(id);
+            if (myExpense == null || myExpense.PurchaserId != user.Id)
+                return RedirectToAction(nameof(SplitController.Index), nameof(SplitController).Replace("Controller", ""));
+
+            mysticoContext.DeleteExpense(myExpense);
+
+            return RedirectToAction(nameof(SplitController.Overview), nameof(SplitController).Replace("Controller", ""));
+        }
+            #endregion
+        }
 }
