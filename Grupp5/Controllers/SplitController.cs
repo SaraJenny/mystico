@@ -294,7 +294,29 @@ namespace Grupp5.Controllers
             viewModel.CurrencyItem = Library.ConvertCurrencyToSelectListItem(allCurrencies);
             viewModel.EventItem = Library.ConvertEventToSelectListItem(myEvents);
             viewModel.Date = DateTime.Today.ToString().Replace(" 00:00:00", "");
-            
+
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateExpense(SplitExpenseVM viewModel, int id)
+        {
+
+            if (!ModelState.IsValid)
+                return RedirectToAction(nameof(SplitController.Overview), nameof(SplitController).Replace("Controller", ""));
+            //Hämta currentUser
+            var myUser = await userManager.GetUserAsync(HttpContext.User);
+            User currentUser = mysticoContext.GetUserByAspUserId(myUser.Id);
+
+            //Hämta specifikt expense som ska ändras
+            var myExpense = mysticoContext.GetExpenseById(id);
+
+            //OM jag inte är inköpare ==> skickas till overview
+            if (myExpense.PurchaserId != currentUser.Id)
+                return RedirectToAction(nameof(SplitController.Overview), nameof(SplitController).Replace("Controller", ""));
+
+            mysticoContext.UpdateExpense(myExpense, viewModel);
 
             return View(viewModel);
         }

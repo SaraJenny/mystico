@@ -73,7 +73,7 @@ namespace Grupp5.Models.Entities
                 }
                 item.Currency = Currency.Where(c => c.Id == item.CurrencyId).First();
             }
-           
+
             return expenses;
         }
 
@@ -122,7 +122,7 @@ namespace Grupp5.Models.Entities
 
             var users = new List<User>();
 
-            var participants =GetUsersByEventId(eventId);
+            var participants = GetUsersByEventId(eventId);
 
             //OM search matchar med User.Name osv... (firstname, lastname, email)
             var userMatching = User.Where(u => u.FirstName.Contains(search) || u.LastName.Contains(search) || u.Email.Contains(search)).ToList();
@@ -159,9 +159,9 @@ namespace Grupp5.Models.Entities
             {
                 chosenIds = chosen.Split(',').ToList();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-				Console.WriteLine(ex);
+                Console.WriteLine(ex);
             }
 
             var users = new List<User>();
@@ -183,15 +183,15 @@ namespace Grupp5.Models.Entities
 
         public void AddParticipantsToEvent(string friends, int eventId)
         {
-           var FriendIds = friends.Split(',');
+            var FriendIds = friends.Split(',');
 
             foreach (var userId in FriendIds)
             {
-                    ParticipantsInEvent.Add(new ParticipantsInEvent
-                    {
-                        EventId = eventId,
-                        UserId = Convert.ToInt32(userId)
-                    });
+                ParticipantsInEvent.Add(new ParticipantsInEvent
+                {
+                    EventId = eventId,
+                    UserId = Convert.ToInt32(userId)
+                });
 
             };
 
@@ -309,7 +309,7 @@ namespace Grupp5.Models.Entities
             foreach (var payer in myExpense.PayersForExpense)
             {
                 PayersForExpense.Remove(payer);
-             
+
             }
             SaveChanges();
 
@@ -317,5 +317,17 @@ namespace Grupp5.Models.Entities
 
             SaveChanges();
         }
+
+        internal void UpdateExpense(Expense myExpense, SplitExpenseVM viewModel)
+        {
+            myExpense.Amount = Convert.ToDecimal(viewModel.Amount);
+            myExpense.Description = viewModel.Description;
+            myExpense.CurrencyId = Convert.ToInt32(viewModel.SelectedCurrency);
+            myExpense.Date = Convert.ToDateTime(viewModel.Date);
+            myExpense.EventId = Convert.ToInt32(viewModel.SelectedEvent);
+            myExpense.AmountInStandardCurrency = Convert.ToDecimal(viewModel.Amount); //TODO valutaomvandling
+            SaveChanges();
+        }
+       
     }
 }
