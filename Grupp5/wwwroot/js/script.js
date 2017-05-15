@@ -47,7 +47,6 @@
 					}
 				}
 			});
-			console.log("split/overview")
 		}
 		// Om sökningen görs på nytt event (split/event)
 		else {
