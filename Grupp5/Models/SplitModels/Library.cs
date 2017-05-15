@@ -244,6 +244,29 @@ namespace Grupp5.Models.SplitModels
             return myList.ToArray();
         }
 
+        internal static SplitUpdateEventVM ConvertEventToSplitEventVM(Event myEvent)
+        {
+            var splitEvent = new SplitUpdateEventVM
+            {
+                Name = myEvent.EventName,
+                Description = myEvent.Description,
+                AlreadyParticipants = new List<UserVM>()
+            };
+
+            foreach (var participant in myEvent.ParticipantsInEvent)
+            {
+                splitEvent.AlreadyParticipants.Add(new UserVM {
+                    FirstName = participant.User.FirstName,
+                    LastName = participant.User.LastName,
+                    Email = participant.User.Email,
+                    Id = participant.UserId
+                });
+
+            }
+
+            return splitEvent;
+        }
+
         internal static SelectListItem[] ConvertEventToSelectListItem(List<Event> myEvents)
         {
             var eventItems = new List<SelectListItem>();

@@ -208,6 +208,7 @@ namespace Grupp5.Controllers
 
         #region UpdateEvent
 
+        [HttpGet]
         public async Task<IActionResult> UpdateEvent(int id)
         {
             var myUser = await userManager.GetUserAsync(HttpContext.User);
@@ -217,7 +218,24 @@ namespace Grupp5.Controllers
             if (myEvent.ParticipantsInEvent.Where(p => p.UserId == user.Id).Count() == 0)
                 return RedirectToAction(nameof(SplitController.Index), nameof(SplitController).Replace("Controller", ""));
 
-            mysticoContext.InActivateEvent(myEvent);
+            var viewModel = Library.ConvertEventToSplitEventVM(myEvent);
+            List<Currency> allCurrencies = mysticoContext.GetAllCurrencies();
+            viewModel.CurrencyItem = Library.ConvertCurrencyToSelectListItem(allCurrencies);
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateEvent(int id, SplitEventVM viewModel)
+        {
+            var myUser = await userManager.GetUserAsync(HttpContext.User);
+            User user = mysticoContext.GetUserByAspUserId(myUser.Id);
+
+            var myEvent = mysticoContext.GetEventById(id);
+            if (myEvent.ParticipantsInEvent.Where(p => p.UserId == user.Id).Count() == 0)
+                return RedirectToAction(nameof(SplitController.Index), nameof(SplitController).Replace("Controller", ""));
+
+            mysticoContext.UpdateEvent(myEvent, viewModel);
 
             return RedirectToAction(nameof(SplitController.Index), nameof(SplitController).Replace("Controller", ""));
         }

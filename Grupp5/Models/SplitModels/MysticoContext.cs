@@ -286,5 +286,12 @@ namespace Grupp5.Models.Entities
             else
                 return false;
         }
+
+        internal void UpdateEvent(Event myEvent, SplitEventVM viewModel)
+        {
+            myEvent.EventName = viewModel.Name;
+            myEvent.Description = viewModel.Description;
+            //myEvent.StandardCurrencyId = viewModel.SelectedCurrency;
+        }
     }
 }
