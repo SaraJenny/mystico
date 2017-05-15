@@ -6,6 +6,8 @@
 
   <ItemGroup>
     <Content Include="wwwroot\css\style.css" />
+    <Content Include="wwwroot\img\arrow-right.png" />
+    <Content Include="wwwroot\img\arrow_30.png" />
     <Content Include="wwwroot\img\card.jpg" />
     <Content Include="wwwroot\img\coffee-to-go.jpg" />
     <Content Include="wwwroot\img\coins.jpg" />

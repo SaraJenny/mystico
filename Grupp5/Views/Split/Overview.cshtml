@@ -20,18 +20,21 @@
             </div>
         }
     </section>
-    <section class="status total">
+    <section class="status total section">
         <h3>Total kostnad</h3>
-        <p class="">@Model.Total kr</p>
-        <p>varav din kostnad är @Model.MyTotal kr</p>
+        <p class="totalCost">@Model.Total kr</p>
+        <p>varav din andel är @Model.MyTotal kr</p>
     </section>
-    <section>
+    <section class="section">
         <h3>Överföringar</h3>
-        @foreach (var item in Model.TransactionsCommittedToMe)
-        {
-            <p>@item.DebitorFirstName ska överföra @item.Amount SEK till @item.CreditorFirstName</p>
-        }
-        @*TODO uppdatera valuta till ej hårdkodat värde*@
+		<ul>
+			@foreach (var item in Model.TransactionsCommittedToMe)
+			{
+				<li>@item.DebitorFirstName ska överföra @item.Amount SEK till @item.CreditorFirstName</li>
+			}
+			@*TODO uppdatera valuta till ej hårdkodat värde*@
+		</ul>
+
     </section>
     <form id="addFriendsBox" eventid="@Model.EventId" asp-controller="Split" asp-action="Overview">
         <label for="friendsTextBox">Vänner</label>
