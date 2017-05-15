@@ -29,13 +29,18 @@
 	</section>
 	<section class="section">
 		<h3>Överföringar</h3>
-		<ul>
-			@foreach (var item in Model.TransactionsCommittedToMe)
-			{
-				<li>@item.DebitorFirstName ska överföra @item.Amount SEK till @item.CreditorFirstName</li>
-			}
-			@*TODO uppdatera valuta till ej hårdkodat värde*@
-		</ul>
+
+		@foreach (var item in Model.TransactionsCommittedToMe)
+		{
+			<p class="listItem">@item.DebitorFirstName ska överföra @item.Amount SEK till @item.CreditorFirstName</p>
+		}
+		@*TODO uppdatera valuta till ej hårdkodat värde*@
+		<div id="transactionsWithoutMe">
+			@foreach (var item in Model.TransactionsWithoutMe)
+				{
+				<p class="listItem">@item.DebitorFirstName ska överföra @item.Amount SEK till @item.CreditorFirstName</p>
+				}
+		</div>
 
 	</section>
 	<form id="addFriendsBox" class="addFriendsBox" eventid="@Model.EventId" asp-controller="Split" asp-action="Overview">
@@ -47,9 +52,9 @@
 		<div class="friend-box" id="friend-box"></div>
 		<input type="submit" value="Lägg till vänner" />
 	</form>
+	<a id="allTransactionsButton" class="button" href="#">Se alla överföringar</a>
 	<a class="button" id="addFriendsButton" href="#">Lägg till vänner</a>
 	<a class="button" asp-controller="Split" asp-action="Details" asp-route-id="@Model.EventId">Alla utlägg</a>
-	<a class="button" asp-controller="" asp-action="">Sammanställning</a>
 	<a class="button deleteButton" id="deleteEventButton" href="">Stäng event</a>
 	@section addExpenseFooter {
 		<footer>
