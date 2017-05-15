@@ -14,7 +14,7 @@ namespace Grupp5.Models.SplitModels
             decimal amount = 0;
             foreach (var expense in myEvent.Expense)
             {
-                amount += expense.Amount;
+                amount += expense.AmountInStandardCurrency;
             }
 
             return Convert.ToInt32(Math.Round(amount, MidpointRounding.AwayFromZero));
@@ -22,6 +22,8 @@ namespace Grupp5.Models.SplitModels
 
         static public List<WhoOwesWho> WhoOweWho(Event myEvent)
         {
+           
+
             Dictionary<int, decimal> userCredits = CreateDictionaryForUserCredits(myEvent);
 
             var creditors = new List<User>();
@@ -97,6 +99,7 @@ namespace Grupp5.Models.SplitModels
                     PurchaserFirstName = exp.Purchaser.FirstName,
                     PurchaserLastName = exp.Purchaser.LastName,
                     Amount = exp.Amount,
+                    CurrencyId = exp.CurrencyId,
                     ExpenseDescription = exp.Description
                     
                 };
@@ -154,6 +157,9 @@ namespace Grupp5.Models.SplitModels
 
         private static Dictionary<int, decimal> CreateDictionaryForUserCredits(Event myEvent)
         {
+
+           
+
             var userCredits = new Dictionary<int, Decimal>();
 
             foreach (var participant in myEvent.ParticipantsInEvent)
@@ -163,7 +169,7 @@ namespace Grupp5.Models.SplitModels
 
             foreach (var expense in myEvent.Expense)
             {
-                var amount = expense.Amount;
+                var amount = expense.AmountInStandardCurrency;
                 var purchaser = expense.PurchaserId;
                 var payers = expense.PayersForExpense;
 
@@ -197,7 +203,7 @@ namespace Grupp5.Models.SplitModels
 
             foreach (var expense in myEvent.Expense)
             {
-                var amount = expense.Amount;
+                var amount = expense.AmountInStandardCurrency;
                 var payers = expense.PayersForExpense;
 
                 foreach (var payer in payers)
@@ -290,7 +296,7 @@ namespace Grupp5.Models.SplitModels
             {
                 transactionsVM.Add(new WhoOwesWhoVM
                 {
-                    Amount = Convert.ToInt32(item.Amount),
+                    Amount = Convert.ToInt32(Math.Round(item.Amount, MidpointRounding.AwayFromZero)),
                     DebitorId = item.Debitor.Id,
                     DebitorFirstName = item.Debitor.FirstName,
                     DebitorLastName = item.Debitor.LastName,

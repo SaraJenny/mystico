@@ -17,6 +17,7 @@ namespace Grupp5.Models.Entities
 		public string FriendIds { get; set; }
         public string Message { get; set; }
         public int EventId { get; set; }
+        public string StandardCurrency { get; set; }
         public List<UserVM> AlreadyParticipants { get; set; }
 
     }

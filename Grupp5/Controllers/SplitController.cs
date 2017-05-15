@@ -180,6 +180,7 @@ namespace Grupp5.Controllers
                 Total = Library.GetTotalCostForEvent(thisEvent),
                 EventIsActive = thisEvent.IsActive,
                 EventId = id,
+                StandardCurrency = thisEvent.StandardCurrency.CurrencyCode,
                 AlreadyParticipants = participants
             };
 

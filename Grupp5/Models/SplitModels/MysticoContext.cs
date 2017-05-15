@@ -8,8 +8,14 @@ using System.Threading.Tasks;
 
 namespace Grupp5.Models.Entities
 {
+
     public partial class MysticoContext : DbContext
     {
+        public decimal Vadsomhelst(decimal amount, int currencyId, int standardCurrencyId, DateTime date)
+        {
+            return (amount * currencyId)/standardCurrencyId;
+        }
+
         public MysticoContext(DbContextOptions<MysticoContext> options) : base(options)
         {
 
@@ -40,6 +46,8 @@ namespace Grupp5.Models.Entities
             var myEvent = Event.Where(e => e.Id == id).First();
 
             myEvent.ParticipantsInEvent = ParticipantsInEvent.Where(p => p.EventId == myEvent.Id).ToList();
+
+            myEvent.StandardCurrency = Currency.Where(c => c.Id == myEvent.StandardCurrencyId).FirstOrDefault();
 
             myEvent.Expense = Expense.Where(e => e.EventId == myEvent.Id).ToList();
 
@@ -183,7 +191,7 @@ namespace Grupp5.Models.Entities
 
         public void AddParticipantsToEvent(string friends, int eventId)
         {
-            
+
             try
             {
                 var FriendIds = friends.Split(',');
@@ -245,6 +253,8 @@ namespace Grupp5.Models.Entities
 
         internal int CreateExpense(SplitExpenseVM viewModel, int currentUserId)
         {
+            var myEvent = GetEventById(Convert.ToInt32(viewModel.SelectedEvent));
+
             var newExpense = new Expense()
             {
 
@@ -253,8 +263,8 @@ namespace Grupp5.Models.Entities
                 CurrencyId = Convert.ToInt32(viewModel.SelectedCurrency),
                 Date = Convert.ToDateTime(viewModel.Date),
                 PurchaserId = currentUserId,
-                EventId = Convert.ToInt32(viewModel.SelectedEvent),
-                AmountInStandardCurrency = Convert.ToDecimal(viewModel.Amount) //TODO valutaomvandling
+                EventId = myEvent.Id,
+                AmountInStandardCurrency = Vadsomhelst(Convert.ToDecimal(viewModel.Amount), viewModel.SelectedCurrency, myEvent.StandardCurrencyId, Convert.ToDateTime(viewModel.Date)) //TODO valutaomvandling
 
             };
 
@@ -299,9 +309,25 @@ namespace Grupp5.Models.Entities
         {
             myEvent.EventName = viewModel.Name;
             myEvent.Description = viewModel.Description;
-            myEvent.StandardCurrencyId = Convert.ToInt32(viewModel.SelectedCurrency);
+            if (myEvent.StandardCurrencyId != Convert.ToInt32(viewModel.SelectedCurrency))
+            {
+                myEvent.StandardCurrencyId = Convert.ToInt32(viewModel.SelectedCurrency);
+
+                SaveChanges();
+
+                foreach (var expense in myEvent.Expense)
+                {
+                    UpdateAmountInExpense(expense);
+                }
+            }
+
 
             SaveChanges();
+        }
+
+        private void UpdateAmountInExpense(Expense expense)
+        {
+            expense.AmountInStandardCurrency = Vadsomhelst(expense.Amount, expense.CurrencyId, expense.Event.StandardCurrencyId, expense.Date);
         }
 
         internal Expense GetExpenseById(int id)
@@ -334,12 +360,13 @@ namespace Grupp5.Models.Entities
 
         internal void UpdateExpense(Expense myExpense, SplitExpenseVM viewModel)
         {
+            var myEvent = GetEventById(Convert.ToInt32(viewModel.SelectedEvent));
             myExpense.Amount = Convert.ToDecimal(viewModel.Amount);
             myExpense.Description = viewModel.Description;
             myExpense.CurrencyId = Convert.ToInt32(viewModel.SelectedCurrency);
             myExpense.Date = Convert.ToDateTime(viewModel.Date);
-            myExpense.EventId = Convert.ToInt32(viewModel.SelectedEvent);
-            myExpense.AmountInStandardCurrency = Convert.ToDecimal(viewModel.Amount); //TODO valutaomvandling
+            myExpense.EventId = myEvent.Id;
+            myExpense.AmountInStandardCurrency = Vadsomhelst(Convert.ToDecimal(viewModel.Amount),viewModel.SelectedCurrency, myEvent.StandardCurrencyId, Convert.ToDateTime(viewModel.Date));
             SaveChanges();
         }
 
