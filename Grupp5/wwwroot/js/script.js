@@ -29,19 +29,43 @@
 		string = $('#friendsTextBox').val();
 		var chosenFriendIds = $('#FriendIds').val();
 
-		$.ajax({
-			url: "/Json/SearchUserExceptMe",
-			type: "GET",
-			data: {
-				search: string,
-				chosen: chosenFriendIds
-			},
-			success: function (result) {
-				for (var i = 0; i < result.length; i++) {
-					$('#friend-box').append('<a href="#" class="friend not-choosen" id="' + result[i].id + '">' + result[i].firstName + ' ' + result[i].lastName + '</a>');
+		// Om sökningen görs på redan inlagt event (split/overview)
+		if ($('#addFriendsBox').length > 0) {
+			var eventId = $('#addFriendsBox').attr('eventid');
+
+			$.ajax({
+				url: "/Json/SearchAllUsersExceptAlreadyParticipantsAndChosen",
+				type: "GET",
+				data: {
+					search: string,
+					chosen: chosenFriendIds,
+					eventid: eventId
+				},
+				success: function (result) {
+					for (var i = 0; i < result.length; i++) {
+						$('#friend-box').append('<a href="#" class="friend not-choosen" id="' + result[i].id + '">' + result[i].firstName + ' ' + result[i].lastName + '</a>');
+					}
 				}
-			}
-		});
+			});
+			console.log("split/overview")
+		}
+		// Om sökningen görs på nytt event (split/event)
+		else {
+			$.ajax({
+				url: "/Json/SearchUserExceptMe",
+				type: "GET",
+				data: {
+					search: string,
+					chosen: chosenFriendIds
+				},
+				success: function (result) {
+					for (var i = 0; i < result.length; i++) {
+						$('#friend-box').append('<a href="#" class="friend not-choosen" id="' + result[i].id + '">' + result[i].firstName + ' ' + result[i].lastName + '</a>');
+					}
+				}
+			});
+		}
+
 	});
 	/* Klick på en väns namn bland de sökta */
 	$('body').on('click', '.not-choosen', function (e) {
