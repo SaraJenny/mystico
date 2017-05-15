@@ -236,6 +236,7 @@ namespace Grupp5.Controllers
                 return RedirectToAction(nameof(SplitController.Index), nameof(SplitController).Replace("Controller", ""));
 
             mysticoContext.UpdateEvent(myEvent, viewModel);
+            mysticoContext.AddParticipantsToEvent(viewModel.FriendIds, id);
 
             return RedirectToAction(nameof(SplitController.Index), nameof(SplitController).Replace("Controller", ""));
         }

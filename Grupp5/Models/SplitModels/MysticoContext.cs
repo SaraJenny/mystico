@@ -291,7 +291,9 @@ namespace Grupp5.Models.Entities
         {
             myEvent.EventName = viewModel.Name;
             myEvent.Description = viewModel.Description;
-            //myEvent.StandardCurrencyId = viewModel.SelectedCurrency;
+            myEvent.StandardCurrencyId = Convert.ToInt32(viewModel.SelectedCurrency);
+
+            SaveChanges();
         }
     }
 }
