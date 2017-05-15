@@ -4,29 +4,31 @@
 @if (Model.EventIsActive)
 {
 
-    <h2>@Model.EventName</h2>
-
-    <section class="status">
-        @if (Model.MyStatus < 0)
-        {
-            <div class="minus circle">
-                <span class="focus">@Model.MyStatus kr</span>
-            </div>
-        }
-        else
-        {
-            <div class="plus circle">
-                <span class="focus">+ @Model.MyStatus kr</span>
-            </div>
-        }
-    </section>
-    <section class="status total section">
-        <h3>Total kostnad</h3>
-        <p class="totalCost">@Model.Total kr</p>
-        <p>varav din andel är @Model.MyTotal kr</p>
-    </section>
-    <section class="section">
-        <h3>Överföringar</h3>
+	<h2>@Model.EventName</h2>
+	<a asp-controller="Split" asp-action="UpdateEvent" asp-route-id="@Model.EventId">
+		<i id="updateEvent" class="fa fa-pencil-square-o" aria-hidden="true"></i>
+	</a>
+	<section class="status">
+		@if (Model.MyStatus < 0)
+		{
+			<div class="minus circle">
+				<span class="focus">@Model.MyStatus kr</span>
+			</div>
+		}
+		else
+		{
+			<div class="plus circle">
+				<span class="focus">+ @Model.MyStatus kr</span>
+			</div>
+		}
+	</section>
+	<section class="status total section">
+		<h3>Total kostnad</h3>
+		<p class="totalCost">@Model.Total kr</p>
+		<p>varav din andel är @Model.MyTotal kr</p>
+	</section>
+	<section class="section">
+		<h3>Överföringar</h3>
 		<ul>
 			@foreach (var item in Model.TransactionsCommittedToMe)
 			{
@@ -35,31 +37,31 @@
 			@*TODO uppdatera valuta till ej hårdkodat värde*@
 		</ul>
 
-    </section>
-    <form id="addFriendsBox" eventid="@Model.EventId" asp-controller="Split" asp-action="Overview">
-        <label for="friendsTextBox">Vänner</label>
-        <div class="friend-box" id="choosenFriends"></div>
-        <input type="text" id="friendsTextBox" placeholder="Sök efter vänner" />
-        <input type="hidden" asp-for="FriendIds" />
+	</section>
+	<form id="addFriendsBox" eventid="@Model.EventId" asp-controller="Split" asp-action="Overview">
+		<label for="friendsTextBox">Vänner</label>
+		<div class="friend-box" id="choosenFriends"></div>
+		<input type="text" id="friendsTextBox" placeholder="Sök efter vänner" />
+		<input type="hidden" asp-for="FriendIds" />
 
-        <div class="friend-box" id="friend-box"></div>
-        <input type="submit" value="Lägg till vänner" />
-    </form>
-    <a class="button" id="addFriendsButton" href="#">Lägg till vänner</a>
-    <a class="button" asp-controller="" asp-action="">Sammanställning</a>
-
-    @section addExpenseFooter {
-        <footer>
-            <div id="addExpenseFooter">
-                <a asp-controller="Split" asp-action="Expense">
-                    <img id="plusSign" src="~/img/plus_75.png" />
-                </a>
-            </div>
-        </footer>
-    }
+		<div class="friend-box" id="friend-box"></div>
+		<input type="submit" value="Lägg till vänner" />
+	</form>
+	<a class="button" id="addFriendsButton" href="#">Lägg till vänner</a>
+	<a class="button" asp-controller="" asp-action="">Sammanställning</a>
+	<a class="button deleteButton" id="deleteEventButton" href="">Stäng event</a>
+	@section addExpenseFooter {
+		<footer>
+			<div id="addExpenseFooter">
+				<a asp-controller="Split" asp-action="Expense">
+					<img id="plusSign" src="~/img/plus_75.png" />
+				</a>
+			</div>
+		</footer>
+	}
 }
 else
-    {
-<h1>Jag är avslutad!</h1>
-    }
+{
+	<h1>Jag är avslutad!</h1>
+}
 

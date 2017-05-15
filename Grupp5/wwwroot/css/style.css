@@ -79,6 +79,7 @@ main {
 	/*min-height: 100%;*/
 	/*margin-bottom: -4em;*/
 	padding: 3%;
+	position: relative;
 }
 
 	/*main:after {
@@ -256,6 +257,16 @@ BUTTON
 		text-decoration: none;
 	}
 
+.deleteButton {
+	background-color: #710114;
+	border: 1px solid #710114;
+}
+
+	.deleteButton:hover {
+		background-color: #38000a;
+		border: 1px solid #38000a;
+	}
+
 
 
 
@@ -427,12 +438,21 @@ SPLIT/OVERVIEW
 	padding: 1em 2%;
 }
 
+#updateEvent {
+	font-size: 2em;
+	color: #295800;
+	position: absolute;
+	top: .5em;
+	right: 3%;
+}
+
+
+
 
 
 /************************
 ADD FRIENDS
 ************************/
-
 .friend:hover {
 	text-decoration: none;
 }

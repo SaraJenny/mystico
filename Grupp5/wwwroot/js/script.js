@@ -210,4 +210,20 @@
 			$('#updatePassword').text('Uppdatera lösenord');
 		}
 	});
+	/*******************************
+	SPLIT/EVENT
+	*******************************/
+	/*
+	Stäng event
+	*/
+	$('#deleteEventButton').click(function (e) {
+		e.preventDefault();
+		eventId = $('#addFriendsBox').attr('eventid');
+		if (confirm('Vill du stänga eventet?')) {
+			window.location.replace('/Split/DeleteEvent/' + eventId);
+		}
+		else {
+			return false;
+		}
+	});
 });

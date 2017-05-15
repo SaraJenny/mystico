@@ -20,6 +20,8 @@
     <Content Include="wwwroot\img\plus_75x75.png" />
     <Content Include="wwwroot\img\telephone.jpg" />
     <Content Include="wwwroot\img\wing.jpg" />
+    <Content Include="wwwroot\js\jquery.confirm.js" />
+    <Content Include="wwwroot\js\jquery.confirm.min.js" />
     <Content Include="wwwroot\js\script.js" />
   </ItemGroup>
   <ItemGroup>

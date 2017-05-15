@@ -33,6 +33,12 @@
 				<li>
 					<a asp-controller="Split" asp-action="Expense">Lägg till utlägg</a>
 				</li>
+				@if (User.Identity.IsAuthenticated)
+				{
+					<li>
+						<a asp-controller="Split" asp-action="EventHistory">Avslutade event</a>
+					</li>
+				}
 				<li>
 					<a asp-controller="Split" asp-action="Search">Sök event</a>
 				</li>
