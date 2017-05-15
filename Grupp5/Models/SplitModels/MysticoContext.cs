@@ -256,6 +256,12 @@ namespace Grupp5.Models.Entities
 
         }
 
+        internal void InActivateEvent(Event myEvent)
+        {
+            myEvent.IsActive = false;
+            SaveChanges();
+        }
+
         internal void CreatePayerForExpense(string payerIds, int expenseId)
         {
             var splitpayers = payerIds.Split(',');

@@ -27,7 +27,7 @@ namespace Grupp5.Controllers
             this.identityContext = identityContext;
             this.mysticoContext = mysticoContext;
         }
-#endregion
+        #endregion
 
         #region Details
         [HttpGet]
@@ -148,7 +148,7 @@ namespace Grupp5.Controllers
             var myUser = await userManager.GetUserAsync(HttpContext.User);
             User user = mysticoContext.GetUserByAspUserId(myUser.Id);
 
-            if(mysticoContext.CheckIfUserIsParticipant(user.Id, id) == false)
+            if (mysticoContext.CheckIfUserIsParticipant(user.Id, id) == false)
                 return RedirectToAction(nameof(SplitController.Index), nameof(SplitController).Replace("Controller", ""));
 
             var thisEvent = mysticoContext.GetEventById(id);
@@ -175,7 +175,7 @@ namespace Grupp5.Controllers
                 Total = Library.GetTotalCostForEvent(thisEvent),
                 EventIsActive = thisEvent.IsActive,
                 EventId = id
-                
+
             };
 
             return View(viewModel);
@@ -204,6 +204,52 @@ namespace Grupp5.Controllers
         {
             return View();
         }
+        #endregion
+
+        #region UpdateEvent
+
+        public async Task<IActionResult> UpdateEvent(int id)
+        {
+            var myUser = await userManager.GetUserAsync(HttpContext.User);
+            User user = mysticoContext.GetUserByAspUserId(myUser.Id);
+
+            var myEvent = mysticoContext.GetEventById(id);
+            if (myEvent.ParticipantsInEvent.Where(p => p.UserId == user.Id).Count() == 0)
+                return RedirectToAction(nameof(SplitController.Index), nameof(SplitController).Replace("Controller", ""));
+
+            mysticoContext.InActivateEvent(myEvent);
+
+            return RedirectToAction(nameof(SplitController.Index), nameof(SplitController).Replace("Controller", ""));
+        }
+
+
+
+        #endregion
+
+        #region DeleteEvent
+
+        public async Task<IActionResult> DeleteEvent(int id)
+        {
+            var myUser = await userManager.GetUserAsync(HttpContext.User);
+            User user = mysticoContext.GetUserByAspUserId(myUser.Id);
+
+            var myEvent = mysticoContext.GetEventById(id);
+            if (myEvent.ParticipantsInEvent.Where(p => p.UserId == user.Id).Count() == 0)
+                return RedirectToAction(nameof(SplitController.Index), nameof(SplitController).Replace("Controller", ""));
+
+            mysticoContext.InActivateEvent(myEvent);
+
+            return RedirectToAction(nameof(SplitController.Index), nameof(SplitController).Replace("Controller", ""));
+        }
+
+        #endregion
+
+        #region UpdateExpense
+
+        #endregion
+
+        #region DeleteExpense
+
         #endregion
     }
 }
