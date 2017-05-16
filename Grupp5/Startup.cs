@@ -22,7 +22,8 @@ namespace Grupp5
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables();
+                .AddEnvironmentVariables()
+                .AddUserSecrets<Startup>();
             Configuration = builder.Build();
         }
 
@@ -32,7 +33,7 @@ namespace Grupp5
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            var conString = Configuration.GetConnectionString("MysticoConnection");
+            var conString = Configuration["MysticoConnection"];
             services.AddDbContext<MysticoContext>(o => o.UseSqlServer(conString));
             services.AddDbContext<IdentityDbContext>(o => o.UseSqlServer(conString));
             
