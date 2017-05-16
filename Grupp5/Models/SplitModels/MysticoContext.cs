@@ -16,17 +16,35 @@ namespace Grupp5.Models.Entities
     {
         public async Task<decimal> CalculateStandardCurrencyAmount(decimal amount, int currencyId, int standardCurrencyId, DateTime date)
         {
-            HttpClient httpClient = new HttpClient();
-            date.ToString().Replace(" 00:00:00", "");
-            var url = $"http://api.fixer.io/{date}?symbols=USD&base=SEK";
-            var json = await httpClient.GetStringAsync(url);
-            dynamic response = JsonConvert.DeserializeObject(json);
-            //dynamic rates = response.rates;
-            var currency = "USD";
-            decimal value = response.rates[currency];
-            //var ret = decimal.Parse(value,new CultureInfo ("en-US"));
+            if (currencyId == standardCurrencyId)
+                return amount;
 
-            return value;
+            else
+            {
+                try
+                {
+                    HttpClient httpClient = new HttpClient();
+
+                    var baseCurrency = Currency.Where(c => standardCurrencyId == c.Id).FirstOrDefault().CurrencyCode;
+                    var currency = Currency.Where(c => currencyId == c.Id).FirstOrDefault().CurrencyCode;
+                    var shortDate = date.ToString().Replace(" 00:00:00", "");
+
+                    var url = $"http://api.fixer.io/{shortDate}?symbols={currency}&base={baseCurrency}";
+
+                    var json = await httpClient.GetStringAsync(url);
+                    dynamic response = JsonConvert.DeserializeObject(json);
+                    decimal value = response.rates[currency];
+
+                    var AmountInStandardCurrency = amount / value;
+
+                    return AmountInStandardCurrency;
+                }
+                catch
+                {
+                    Console.WriteLine("skit också..");
+                    return 0;
+                }
+            }
         }
 
         public MysticoContext(DbContextOptions<MysticoContext> options) : base(options)

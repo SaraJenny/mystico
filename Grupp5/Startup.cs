@@ -10,16 +10,29 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Grupp5.Models.Entities;
+using Microsoft.Extensions.Configuration;
 
 namespace Grupp5
 {
     public class Startup
     {
+        public Startup(IHostingEnvironment env)
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddEnvironmentVariables();
+            Configuration = builder.Build();
+        }
+
+        public IConfigurationRoot Configuration { get; }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-			var conString = @"Server=tcp:mystico.database.windows.net,1433;Initial Catalog=Mystico;Persist Security Info=False;User ID=grupp5;Password=Pillow123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+            var conString = Configuration.GetConnectionString("MysticoConnection");
             services.AddDbContext<MysticoContext>(o => o.UseSqlServer(conString));
             services.AddDbContext<IdentityDbContext>(o => o.UseSqlServer(conString));
             
