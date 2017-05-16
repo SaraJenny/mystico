@@ -17,8 +17,9 @@ namespace Grupp5.Models.Entities
         public async Task<decimal> CalculateStandardCurrencyAmount(decimal amount, int currencyId, int standardCurrencyId, DateTime date)
         {
             HttpClient httpClient = new HttpClient();
-
-            var json = await httpClient.GetStringAsync("http://api.fixer.io/2015-05-15?symbols=USD&base=SEK");
+            date.ToString().Replace(" 00:00:00", "");
+            var url = $"http://api.fixer.io/{date}?symbols=USD&base=SEK";
+            var json = await httpClient.GetStringAsync(url);
             dynamic response = JsonConvert.DeserializeObject(json);
             //dynamic rates = response.rates;
             var currency = "USD";

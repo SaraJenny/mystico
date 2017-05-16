@@ -9,12 +9,12 @@ namespace Grupp5.Controllers
 {
     public class HomeController : Controller
     {
-        MysticoContext mysticoContext;
+        //MysticoContext mysticoContext;
 
-        public HomeController(MysticoContext mysticoContext)
-        {
-            this.mysticoContext = mysticoContext;
-        }
+        //public HomeController(MysticoContext mysticoContext)
+        //{
+        //    this.mysticoContext = mysticoContext;
+        //}
         #region About
         public IActionResult About()
         {
@@ -25,7 +25,7 @@ namespace Grupp5.Controllers
         #region Index
         public async Task<IActionResult> Index()
         {
-            await mysticoContext.CalculateStandardCurrencyAmount(500,1,1,DateTime.Now);
+            //await mysticoContext.CalculateStandardCurrencyAmount(500,1,1,DateTime.Now);
 
             return View();
         }
