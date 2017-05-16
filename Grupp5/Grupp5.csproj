@@ -11,6 +11,7 @@
     <Content Include="wwwroot\img\card.jpg" />
     <Content Include="wwwroot\img\coffee-to-go.jpg" />
     <Content Include="wwwroot\img\coins.jpg" />
+    <Content Include="wwwroot\img\favicon.ico" />
     <Content Include="wwwroot\img\jump.jpg" />
     <Content Include="wwwroot\img\logo.png" />
     <Content Include="wwwroot\img\logo_150.png" />

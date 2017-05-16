@@ -3,14 +3,14 @@
 
 <h2>@ViewBag.EventName</h2>
 
-<section>
+<section id="details">
     @foreach (var item in Model)
     {
         <div class="expenseBox">
 			<a asp-controller="Split" asp-action="UpdateExpense" asp-route-id="@item.ExpenseId">
-				<i id="updateExpense" class="fa fa-pencil-square-o" aria-hidden="true"></i>
+				<i class="updateExpense fa fa-pencil-square-o" aria-hidden="true"></i>
 			</a>
-			<a href="" id="deleteExpenseButton">
+			<a href="#" id="deleteExpenseButton" expenseId="@item.ExpenseId">
 				<i id="deleteExpense" class="fa fa-trash" aria-hidden="true"></i>
 			</a>
 			<h3>@item.expenseInfo.ExpenseDescription</h3>

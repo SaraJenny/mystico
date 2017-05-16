@@ -233,13 +233,14 @@
 	*/
 	$('#deleteExpenseButton').click(function (e) {
 		e.preventDefault();
-		var expenseId = ""; //TODO hämta in expenseId från Details
-		if (confirm('Vill du radera utlägget?')) {
-			window.location.replace('/Split/DeletExpense/' + eventId);
-		}
-		else {
-			return false;
-		}
+		//var expenseId = $(this);
+		console.log(this)//TODO hämta in expenseId från Details
+		//if (confirm('Vill du radera utlägget?')) {
+		//	//window.location.replace('/Split/DeletExpense/' + eventId);
+		//}
+		//else {
+		//	return false;
+		//}
 	});
 	/*******************************
 	SPLIT/OVERVIEW
@@ -254,5 +255,15 @@
 		else {
 			$('#allTransactionsButton').text('Se alla överföringar');
 		}
+	});
+
+	// Se mer info om person
+	$('.person').click(function () {
+		var userId = $(this).attr('userId');
+		var firstname = $(this).text();
+		var lastname = $(this).attr('lastname');
+		var email = $(this).attr('email');
+		console.log(firstname + ' ' + lastname + ' ' + email)
+		// TODO visa denna info
 	});
 });
