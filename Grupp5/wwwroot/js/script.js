@@ -122,9 +122,9 @@
 
 
 	/*
-	SPLIT/EXPENSE
+	SPLIT/EXPENSE & SPLIT/UPDATEEXPENSE
 	*/
-	if ($('#splitExpense').length > 0) {
+	if ($('#splitExpense').length > 0 || $('#updateExpenseForm').length > 0) {
 		var eventId = $('#SelectedEvent').val();
 
 		$.ajax({
@@ -134,6 +134,7 @@
 				id: eventId
 			},
 			success: function (result) {
+				console.log(result)
 				for (var i = 0; i < result.length; i++) {
 					$('#friendListBox').append('<div><input class="friendCheckbox" type="checkbox" name="payerList" value="' + result[i].id + '" checked />' + result[i].firstName + ' ' + result[i].lastName + '</div>');
 					if (userIdString === "") {
@@ -162,7 +163,7 @@
 			},
 			success: function (result) {
 				for (var i = 0; i < result.length; i++) {
-					$('#friendListBox').append('<input class="friendCheckbox" type="checkbox" name="payerList" value="' + result[i].id + '" checked />' + result[i].firstName + ' ' + result[i].lastName);
+					$('#friendListBox').append('<div><input class="friendCheckbox" type="checkbox" name="payerList" value="' + result[i].id + '" checked />' + result[i].firstName + ' ' + result[i].lastName + '</div>');
 					if (userIdString === "") {
 						userIdString = result[i].id;
 					}
@@ -201,6 +202,22 @@
 		}
 		$('#FriendIds').val(userIdString);
 	});
+	/*
+	SPLIT/UPDATEEXPENSE
+	*/
+	//if ($('#updateExpenseForm').length > 0) {
+	//	userIdString = '';
+	//	$('input:checked').each(function () {
+	//		var userId = $(this).val();
+	//		if (userIdString === '') {
+	//			userIdString = userId;
+	//		}
+	//		else {
+	//			userIdString += ',' + userId;
+	//		}
+	//	});
+	//	$('#FriendIds').val(userIdString);
+	//}
 	/*
 	SPLIT/OVERVIEW
 	*/
@@ -272,11 +289,11 @@
 	$('#allTransactionsButton').click(function (e) {
 		e.preventDefault();
 		$('#transactionsWithoutMe').toggle();
-		if ($('#allTransactionsButton').text() === 'Se alla överföringar') {
-			$('#allTransactionsButton').text('Dölj överföringar');
+		if ($('#allTransactionsText').text() === 'Se alla överföringar') {
+			$('#allTransactionsText').text('Dölj överföringar');
 		}
 		else {
-			$('#allTransactionsButton').text('Se alla överföringar');
+			$('#allTransactionsText').text('Se alla överföringar');
 		}
 	});
 
