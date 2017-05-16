@@ -4,35 +4,40 @@
 <h2>@ViewBag.EventName</h2>
 
 <section id="details">
-    @foreach (var item in Model)
-    {
-        <div class="expenseBox">
-			<a asp-controller="Split" asp-action="UpdateExpense" asp-route-id="@item.ExpenseId">
-				<i class="updateExpense fa fa-pencil-square-o" aria-hidden="true"></i>
-			</a>
-			<a href="#" id="deleteExpenseButton" expenseId="@item.ExpenseId">
-				<i id="deleteExpense" class="fa fa-trash" aria-hidden="true"></i>
-			</a>
-			<h3>@item.expenseInfo.ExpenseDescription</h3>
+	@foreach (var item in Model)
+	{
+		<div class="expenseBox">
+			@if (item.ExpenseInfo.PurchaserId == ViewBag.CurrentUserId)
+			{
+				<a asp-controller="Split" asp-action="UpdateExpense" asp-route-id="@item.ExpenseId">
+					<i class="updateExpense fa fa-pencil-square-o" aria-hidden="true"></i>
+				</a>
+				<a href="#" id="deleteExpenseButton" expenseId="@item.ExpenseId">
+					<i id="deleteExpense" class="fa fa-trash" aria-hidden="true"></i>
+				</a>
+			}
+			<h3>@item.ExpenseInfo.ExpenseDescription</h3>
+			<h4>Belopp</h4>
+			<p>@item.ExpenseInfo.Amount</p>
 			<h4>Köpare</h4>
-			<p>@item.expenseInfo.PurchaserFirstName</p>
+			<p>@item.ExpenseInfo.PurchaserFirstName</p>
 			<h4>Deltagare</h4>
 			<ul>
-				@foreach (var payer in item.expenseInfo.payers)
+				@foreach (var payer in item.ExpenseInfo.payers)
 				{
 					<li>@payer.FirstName</li>
 				}
 			</ul>
-        </div>
-    }
+		</div>
+	}
 </section>
 
 @section addExpenseFooter {
-    <footer>
-        <div id="addExpenseFooter">
-            <a asp-controller="Split" asp-action="Expense">
-                <img id="plusSign" src="~/img/plus_75.png" />
-            </a>
-        </div>
-    </footer>
+	<footer>
+		<div id="addExpenseFooter">
+			<a asp-controller="Split" asp-action="Expense">
+				<img id="plusSign" src="~/img/plus_75.png" />
+			</a>
+		</div>
+	</footer>
 }
