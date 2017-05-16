@@ -126,7 +126,19 @@
 	*/
 	if ($('#splitExpense').length > 0 || $('#updateExpenseForm').length > 0) {
 		var eventId = $('#SelectedEvent').val();
+		// Hämta standardcurrency och sätt till selected
+		$.ajax({
+			url: "/Json/GetStandardCurrencyByEvent",
+			type: "GET",
+			data: {
+				id: eventId
+			},
+			success: function (result) {
+				$('#SelectedCurrency').val(result);
+			}
+		});
 
+		// Hämta vänner
 		$.ajax({
 			url: "/Json/GetUsersByEventId",
 			type: "GET",
