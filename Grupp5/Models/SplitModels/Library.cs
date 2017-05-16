@@ -92,7 +92,7 @@ namespace Grupp5.Models.SplitModels
 
                 expense.ExpenseId = exp.Id;
 
-                expense.expenseInfo = new WhoBoughtWhatVM
+                expense.ExpenseInfo = new WhoBoughtWhatVM
                 {
                     PurchaserId = exp.PurchaserId,
                     PurchaserEmail = exp.Purchaser.Email,
@@ -104,11 +104,11 @@ namespace Grupp5.Models.SplitModels
                     
                 };
 
-                expense.expenseInfo.payers = new List<PayerVM>();
+                expense.ExpenseInfo.payers = new List<PayerVM>();
 
                 foreach (var payer in exp.PayersForExpense)
                 {
-                    expense.expenseInfo.payers.Add(new PayerVM
+                    expense.ExpenseInfo.payers.Add(new PayerVM
                     {
                         Id = payer.UserId,
                         FirstName = payer.User.FirstName,
@@ -121,12 +121,12 @@ namespace Grupp5.Models.SplitModels
 
                 if (objectionsForExpense.Count() > 0)
                 {
-                    expense.objectionExists = true;
-                    expense.objectionMessage = new List<string>();
+                    expense.ObjectionExists = true;
+                    expense.ObjectionMessage = new List<string>();
 
                     foreach (var objection in objectionsForExpense)
                     {
-                        expense.objectionMessage.Add(objection.ObjectionDescription);
+                        expense.ObjectionMessage.Add(objection.ObjectionDescription);
                     }
                 }
 

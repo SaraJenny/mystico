@@ -42,7 +42,9 @@ namespace Grupp5.Controllers
             var expenses = mysticoContext.GetExpensesByEvent(id);
             var objections = mysticoContext.GetObjectionsInEvent(id);
             List<SplitDetailsVM> viewModel = Library.ConvertExpenseToSplitDetailsVM(expenses, objections);
+            ViewBag.CurrentUserId = user.Id;
             ViewBag.EventName = mysticoContext.GetEventById(id).EventName;
+            
 
             return View(viewModel);
         }
