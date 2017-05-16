@@ -99,7 +99,7 @@ namespace Grupp5.Models.SplitModels
                     PurchaserFirstName = exp.Purchaser.FirstName,
                     PurchaserLastName = exp.Purchaser.LastName,
                     Amount = exp.Amount,
-                    CurrencyId = exp.CurrencyId,
+                    CurrencyCode = exp.Currency.CurrencyCode,
                     ExpenseDescription = exp.Description
                     
                 };

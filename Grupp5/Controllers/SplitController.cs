@@ -45,7 +45,6 @@ namespace Grupp5.Controllers
             ViewBag.CurrentUserId = user.Id;
             ViewBag.EventName = mysticoContext.GetEventById(id).EventName;
             
-
             return View(viewModel);
         }
         #endregion
@@ -242,7 +241,7 @@ namespace Grupp5.Controllers
 
             var myEvent = mysticoContext.GetEventById(id);
             if (myEvent.ParticipantsInEvent.Where(p => p.UserId == user.Id).Count() == 0)
-                return RedirectToAction(nameof(SplitController.Index), nameof(SplitController).Replace("Controller", ""));
+                return RedirectToAction(nameof(SplitController.Overview), nameof(SplitController).Replace("Controller", ""), new { id =myEvent.Id });
 
             mysticoContext.UpdateEvent(myEvent, viewModel);
             mysticoContext.AddParticipantsToEvent(viewModel.FriendIds, id);
@@ -250,7 +249,7 @@ namespace Grupp5.Controllers
             //TODO Update standard amount in every expanse that is connected to this event!
 
 
-            return RedirectToAction(nameof(SplitController.Index), nameof(SplitController).Replace("Controller", ""));
+            return RedirectToAction(nameof(SplitController.Overview), nameof(SplitController).Replace("Controller", ""), new { id = myEvent.Id });
         }
 
 
