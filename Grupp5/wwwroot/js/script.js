@@ -116,17 +116,8 @@
 		$('#' + id).removeClass('choosen').addClass('not-choosen');
 	}
 
-
-
-
-
-
-	/*
-	SPLIT/EXPENSE & SPLIT/UPDATEEXPENSE
-	*/
-	if ($('#splitExpense').length > 0 || $('#updateExpenseForm').length > 0) {
-		var eventId = $('#SelectedEvent').val();
-		// Hämta standardcurrency och sätt till selected
+	// Hämta standardcurrency och sätt till selected
+	function setStandardCurrency(eventId) {
 		$.ajax({
 			url: "/Json/GetStandardCurrencyByEvent",
 			type: "GET",
@@ -137,6 +128,19 @@
 				$('#SelectedCurrency').val(result);
 			}
 		});
+	}
+
+
+	if ($('#updateEventForm').length > 0) {
+		var eventId = $('#updateEventForm').attr('eventid');
+		setStandardCurrency(eventId);
+	}
+	/*
+	SPLIT/EXPENSE & SPLIT/UPDATEEXPENSE
+	*/
+	if ($('#splitExpense').length > 0 || $('#updateExpenseForm').length > 0) {
+		eventId = $('#SelectedEvent').val();
+		setStandardCurrency(eventId);
 
 		if ($('#splitExpense').length > 0) {
 			// Hämta vänner
@@ -196,8 +200,11 @@
 	}
 	/* Sker då användaren ändrar valt event */
 	$('#SelectedEvent').change(function () {
-		$('#friendListBox').html("");
 		var eventId = $('#SelectedEvent').val();
+		// sätt valuta till standardvaluta för eventet
+		setStandardCurrency(eventId);
+
+		$('#friendListBox').html("");
 		userIdString = "";
 
 		$.ajax({
