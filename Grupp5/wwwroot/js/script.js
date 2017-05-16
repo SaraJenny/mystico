@@ -25,7 +25,7 @@
 	*/
 	$('#friendsTextBox').on('input', function (e) {
 		// töm vänboxen
-		$('#friend-box').html("");
+		$('#friend-box').html('');
 		string = $('#friendsTextBox').val();
 		var chosenFriendIds = $('#FriendIds').val();
 
@@ -130,7 +130,9 @@
 		});
 	}
 
-
+	/*
+	SPLIT/UPDATEEVENT
+	*/
 	if ($('#updateEventForm').length > 0) {
 		var eventId = $('#updateEventForm').attr('eventid');
 		setStandardCurrency(eventId);
@@ -255,22 +257,6 @@
 		$('#FriendIds').val(userIdString);
 	});
 	/*
-	SPLIT/UPDATEEXPENSE
-	*/
-	//if ($('#updateExpenseForm').length > 0) {
-	//	userIdString = '';
-	//	$('input:checked').each(function () {
-	//		var userId = $(this).val();
-	//		if (userIdString === '') {
-	//			userIdString = userId;
-	//		}
-	//		else {
-	//			userIdString += ',' + userId;
-	//		}
-	//	});
-	//	$('#FriendIds').val(userIdString);
-	//}
-	/*
 	SPLIT/OVERVIEW
 	*/
 	// Visa formulär för att lägga till vänner till eventet
@@ -288,8 +274,9 @@
 	// Ändra cirkelns storlek dynamiskt
 	if ($('#circleSection').length > 0) {
 		var circleLength = $('#circle').text().length;
+		//$('#circle').text('1000000 SEK');
 		if (circleLength > 6) {
-			var circleSize = circleLength * 25;
+			var circleSize = 50 + circleLength * 20;
 			$('.circle').css('width', circleSize);
 			$('.circle').css('height', circleSize);
 			$('.circle .focus').css('line-height', circleSize + 'px');

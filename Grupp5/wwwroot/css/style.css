@@ -237,6 +237,8 @@ label {
 }
 
 
+
+
 /******************
 BUTTON
 ******************/
@@ -315,7 +317,7 @@ h2 {
 	text-align: center;
 	font-weight: 700;
 	text-transform: uppercase;
-	margin: .5em 0;
+	margin: .5em 0 1em;
 	color: #351c38;
 }
 
@@ -402,6 +404,10 @@ a {
 	margin: 0 auto;
 }
 
+label+.participant{
+	margin-top: .5em;
+}
+
 
 
 
@@ -423,8 +429,13 @@ SPLIT/OVERVIEW
 	/*margin-top: .1em;*/
 }
 
+#circle {
+	display: inline-block;
+	padding: 0 20px;
+}
+
 .circle .focus {
-	line-height: 150px;
+	line-height: 130px;
 }
 
 /* Minussiffror */
@@ -439,8 +450,8 @@ SPLIT/OVERVIEW
 
 /* Cirkel */
 .circle {
-	width: 150px;
-	height: 150px;
+	width: 130px;
+	height: 130px;
 	-moz-border-radius: 50%;
 	-webkit-border-radius: 50%;
 	border-radius: 50%;
@@ -463,6 +474,7 @@ SPLIT/OVERVIEW
 
 #addFriendsBox {
 	display: none;
+	position: relative;
 }
 
 .section {
@@ -477,7 +489,7 @@ SPLIT/OVERVIEW
 	padding: 1em 2% 0;
 }
 
-#updateEvent, #details .updateExpense {
+#updateEvent, #details .updateExpense, #closeFriends {
 	font-size: 2em;
 	position: absolute;
 }
@@ -510,19 +522,22 @@ SPLIT/OVERVIEW
 	margin-bottom: 1.5em;
 }
 
+#circleSection {
+	max-width: 500px;
+	position: relative;
+	margin: 0 auto 1em;
+}
+
 #closeFriends{
 	color: #710114;
+	top: 0;
+	right: 0;
 }
 
 #closeFriends:hover {
 	color: #38000a;
 }
 
-#circleSection {
-	max-width: 500px;
-	position: relative;
-	margin: 0 auto 1em;
-}
 
 
 
