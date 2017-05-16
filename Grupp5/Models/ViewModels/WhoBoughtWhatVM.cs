@@ -11,7 +11,7 @@ namespace Grupp5.Models.Entities
         public string PurchaserFirstName { get; set; }
         public string PurchaserLastName { get; set; }
         public string PurchaserEmail { get; set; }
-        public decimal Amount { get; set; }
+        public int Amount { get; set; }
         public List<PayerVM> payers { get; set; }
         public string ExpenseDescription { get; set; }
         public string CurrencyCode { get; set; }

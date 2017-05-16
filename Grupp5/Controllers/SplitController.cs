@@ -312,7 +312,7 @@ namespace Grupp5.Controllers
         {
 
             if (!ModelState.IsValid)
-                return RedirectToAction(nameof(SplitController.Overview), nameof(SplitController).Replace("Controller", ""));
+                return View(viewModel);
             //Hämta currentUser
             var myUser = await userManager.GetUserAsync(HttpContext.User);
             User currentUser = mysticoContext.GetUserByAspUserId(myUser.Id);
@@ -322,11 +322,11 @@ namespace Grupp5.Controllers
 
             //OM jag inte är inköpare ==> skickas till overview
             if (myExpense.PurchaserId != currentUser.Id)
-                return RedirectToAction(nameof(SplitController.Overview), nameof(SplitController).Replace("Controller", ""));
+                return RedirectToAction(nameof(SplitController.Details), nameof(SplitController).Replace("Controller", ""), new { id = myExpense.EventId });
 
             mysticoContext.UpdateExpense(myExpense, viewModel);
 
-            return RedirectToAction(nameof(SplitController.Overview), nameof(SplitController).Replace("Controller", ""), new { id = myExpense.EventId });
+            return RedirectToAction(nameof(SplitController.Details), nameof(SplitController).Replace("Controller", ""), new { id = myExpense.EventId });
 
         }
 
@@ -341,11 +341,11 @@ namespace Grupp5.Controllers
 
             Expense myExpense = mysticoContext.GetExpenseById(id);
             if (myExpense == null || myExpense.PurchaserId != user.Id)
-                return RedirectToAction(nameof(SplitController.Index), nameof(SplitController).Replace("Controller", ""));
+                return RedirectToAction(nameof(SplitController.Details), nameof(SplitController).Replace("Controller", ""), new { id = myExpense.EventId });
 
             mysticoContext.DeleteExpense(myExpense);
 
-            return RedirectToAction(nameof(SplitController.Overview), nameof(SplitController).Replace("Controller", ""));
+            return RedirectToAction(nameof(SplitController.Details), nameof(SplitController).Replace("Controller", ""), new { id = myExpense.EventId });
         }
         #endregion
     }
