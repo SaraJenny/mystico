@@ -12,20 +12,20 @@
 		@if (Model.MyStatus < 0)
 		{
 			<div class="minus circle">
-				<span class="focus">@Model.MyStatus kr</span>
+				<span class="focus">@Model.MyStatus @Model.StandardCurrency</span>
 			</div>
 		}
 		else
 		{
 			<div class="plus circle">
-				<span class="focus">+ @Model.MyStatus kr</span>
+				<span class="focus">+ @Model.MyStatus @Model.StandardCurrency</span>
 			</div>
 		}
 	</section>
 	<section class="status total section">
 		<h3>Total kostnad</h3>
-		<p class="totalCost">@Model.Total kr</p>
-		<p>varav din andel är @Model.MyTotal kr</p>
+		<p class="totalCost">@Model.Total @Model.StandardCurrency</p>
+		<p>varav din andel är @Model.MyTotal @Model.StandardCurrency</p>
 	</section>
 	<section class="section">
 		<h3>Överföringar</h3>
