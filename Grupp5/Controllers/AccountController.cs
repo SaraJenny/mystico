@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Grupp5.Models.Entities;
+using Microsoft.AspNetCore.Http;
 
 namespace Grupp5.Controllers
 {
@@ -29,10 +30,14 @@ namespace Grupp5.Controllers
 
         #region Login
         [HttpGet]
-        public IActionResult Login()
+        public async Task<IActionResult> Login()
         {
             //identityContext.Database.EnsureCreated();
             //TODO check if user is logged in already
+
+            var myUser = await userManager.GetUserAsync(HttpContext.User);
+            if (myUser != null)
+                return RedirectToAction(nameof(SplitController.Index), nameof(SplitController).Replace("Controller", ""));
 
             return View();
         }
@@ -59,8 +64,12 @@ namespace Grupp5.Controllers
 
         #region Register
         [HttpGet]
-        public IActionResult Register()
+        public async Task<IActionResult> Register()
         {
+            var myUser = await userManager.GetUserAsync(HttpContext.User);
+            if (myUser != null)
+                return RedirectToAction(nameof(SplitController.Index), nameof(SplitController).Replace("Controller", ""));
+
             return View();
         }
 
@@ -129,17 +138,17 @@ namespace Grupp5.Controllers
             User user = mysticoContext.GetUserByAspUserId(myUser.Id);
 
             try
-            { 
-            mysticoContext.UpdateUserProfile(viewModel, user);
-
-            var resultUserName = await userManager.SetUserNameAsync(myUser, viewModel.Email);
-            
-            if (viewModel.Password != null)
             {
-                var resultPassWord = await userManager.ChangePasswordAsync(myUser, viewModel.CurrentPassword, viewModel.Password);
-            }
+                mysticoContext.UpdateUserProfile(viewModel, user);
 
-            viewModel.Message = "Du har uppdaterat din profil";
+                var resultUserName = await userManager.SetUserNameAsync(myUser, viewModel.Email);
+
+                if (viewModel.Password != null)
+                {
+                    var resultPassWord = await userManager.ChangePasswordAsync(myUser, viewModel.CurrentPassword, viewModel.Password);
+                }
+
+                viewModel.Message = "Du har uppdaterat din profil";
             }
             catch
             {

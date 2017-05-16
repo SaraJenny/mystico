@@ -10,63 +10,65 @@
 </head>
 <body>
 	<header>
-		<h1 class="hidden">PayMe</h1>
-		<a asp-controller="Split" asp-action="Index">
-			<img src="~/img/logo_175-white.png" alt="" />
-		</a>
-		<a href="#" id="toggle-nav">&#9776;</a>
-		<nav id="mainmenu" class="sidenav">
-			<ul class="active">
-				@if (User.Identity.IsAuthenticated)
-				{
+		<div id="innerHeader">
+			<h1 class="hidden">PayMe</h1>
+			<a asp-controller="Split" asp-action="Index">
+				<img src="~/img/logo_175-white.png" alt="" />
+			</a>
+			<a href="#" id="toggle-nav">&#9776;</a>
+			<nav id="mainmenu" class="sidenav">
+				<ul class="active">
+					@if (User.Identity.IsAuthenticated)
+					{
+						<li>
+							<a asp-controller="Split" asp-action="Index">Hem</a>
+						</li>
+					}
+					else
+					{
+						<li>
+							<a asp-controller="Home" asp-action="Index">Hem</a>
+						</li>
+					}
 					<li>
-						<a asp-controller="Split" asp-action="Index">Hem</a>
-					</li>
-				}
-				else
-				{
-					<li>
-						<a asp-controller="Home" asp-action="Index">Hem</a>
-					</li>
-				}
-				<li>
-					<a asp-controller="Split" asp-action="Event">Lägg till event</a>
-				</li>
-				<li>
-					<a asp-controller="Split" asp-action="Expense">Lägg till utlägg</a>
-				</li>
-				@if (User.Identity.IsAuthenticated)
-				{
-					<li>
-						<a asp-controller="Split" asp-action="EventHistory">Avslutade event</a>
-					</li>
-				}
-				@*<li>
-					<a asp-controller="Split" asp-action="Search">Sök event</a>
-				</li>*@
-				<li>
-					<a asp-controller="Account" asp-action="Profile">Min profil</a>
-				</li>
-				<li>
-					<a asp-controller="Home" asp-action="About">Om PayMe</a>
-				</li>
-				@if (User.Identity.IsAuthenticated)
-				{
-					<li>
-						<a asp-controller="Account" asp-action="Signout">Logga ut</a>
-					</li>
-				}
-				else
-				{
-					<li>
-						<a asp-controller="Account" asp-action="Register">Skapa konto</a>
+						<a asp-controller="Split" asp-action="Event">Lägg till event</a>
 					</li>
 					<li>
-						<a asp-controller="Account" asp-action="Login">Logga in</a>
+						<a asp-controller="Split" asp-action="Expense">Lägg till utlägg</a>
 					</li>
-				}
-			</ul>
-		</nav>
+					@if (User.Identity.IsAuthenticated)
+					{
+						<li>
+							<a asp-controller="Split" asp-action="EventHistory">Avslutade event</a>
+						</li>
+					}
+					@*<li>
+						<a asp-controller="Split" asp-action="Search">Sök event</a>
+					</li>*@
+					<li>
+						<a asp-controller="Account" asp-action="Profile">Min profil</a>
+					</li>
+					<li>
+						<a asp-controller="Home" asp-action="About">Om PayMe</a>
+					</li>
+					@if (User.Identity.IsAuthenticated)
+					{
+						<li>
+							<a asp-controller="Account" asp-action="Signout">Logga ut</a>
+						</li>
+					}
+					else
+					{
+						<li>
+							<a asp-controller="Account" asp-action="Register">Skapa konto</a>
+						</li>
+						<li>
+							<a asp-controller="Account" asp-action="Login">Logga in</a>
+						</li>
+					}
+				</ul>
+			</nav>
+		</div>
 	</header>
 	@RenderSection("outsideMain", false)
 	<main>

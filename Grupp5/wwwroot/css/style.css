@@ -72,7 +72,12 @@ body {
 header {
 	background-color: #351c38;
 	padding: .5em;
+}
+
+#innerHeader {
 	position: relative;
+	max-width: 570px;
+	margin: 0 auto;
 }
 
 main {
@@ -132,7 +137,7 @@ img {
 	font-size: 4em;
 	position: absolute;
 	top: .1em;
-	right: .2em;
+	right: 0;
 	text-decoration: none;
 	color: #F5F7DC;
 	line-height: 1em;
@@ -232,6 +237,8 @@ label {
 }
 
 
+
+
 /******************
 BUTTON
 ******************/
@@ -310,7 +317,7 @@ h2 {
 	text-align: center;
 	font-weight: 700;
 	text-transform: uppercase;
-	margin: .5em 0;
+	margin: .5em 0 1em;
 	color: #351c38;
 }
 
@@ -341,6 +348,12 @@ p + h3 {
 	background-color: #351c38;
 	color: #fff;
 	font-weight: 400;
+	font-size: 1.2em;
+	padding: .2em;
+}
+
+.transactionsSection h3{
+	text-align: left;
 }
 
 h4 {
@@ -391,6 +404,10 @@ a {
 	margin: 0 auto;
 }
 
+label+.participant{
+	margin-top: .5em;
+}
+
 
 
 
@@ -412,8 +429,13 @@ SPLIT/OVERVIEW
 	/*margin-top: .1em;*/
 }
 
+#circle {
+	display: inline-block;
+	padding: 0 20px;
+}
+
 .circle .focus {
-	line-height: 150px;
+	line-height: 130px;
 }
 
 /* Minussiffror */
@@ -428,8 +450,8 @@ SPLIT/OVERVIEW
 
 /* Cirkel */
 .circle {
-	width: 150px;
-	height: 150px;
+	width: 130px;
+	height: 130px;
 	-moz-border-radius: 50%;
 	-webkit-border-radius: 50%;
 	border-radius: 50%;
@@ -452,6 +474,7 @@ SPLIT/OVERVIEW
 
 #addFriendsBox {
 	display: none;
+	position: relative;
 }
 
 .section {
@@ -466,10 +489,18 @@ SPLIT/OVERVIEW
 	padding: 1em 2% 0;
 }
 
-#updateEvent, #details .updateExpense {
+#updateEvent, #details .updateExpense, #closeFriends {
 	font-size: 2em;
 	position: absolute;
-	top: 1.1em;
+}
+
+#updateEvent {
+	top: 0;
+	right: 0;
+}
+
+#details .updateExpense {
+	top: 1.3em;
 	right: 3%;
 }
 
@@ -490,6 +521,23 @@ SPLIT/OVERVIEW
 	text-align: center;
 	margin-bottom: 1.5em;
 }
+
+#circleSection {
+	max-width: 500px;
+	position: relative;
+	margin: 0 auto 1em;
+}
+
+#closeFriends{
+	color: #710114;
+	top: 0;
+	right: 0;
+}
+
+#closeFriends:hover {
+	color: #38000a;
+}
+
 
 
 
@@ -559,7 +607,8 @@ SPLIT/DETAILS
 	margin: 0 2% 2% 0;
 	border: 1px solid #351c38;*/
 	position: relative;
-	margin-bottom: 1em;
+	max-width: 500px;
+	margin: 0 auto 1em;
 }
 
 
