@@ -8,11 +8,11 @@
 	<a asp-controller="Split" asp-action="UpdateEvent" asp-route-id="@Model.EventId">
 		<i id="updateEvent" class="fa fa-pencil-square-o" aria-hidden="true"></i>
 	</a>
-	<section class="status">
+	<section class="status" id="circleSection">
 		@if (Model.MyStatus < 0)
 		{
 			<div class="minus circle">
-				<span class="focus">@Model.MyStatus @Model.StandardCurrency</span>
+				<span id="circle" class="focus">@Model.MyStatus @Model.StandardCurrency</span>
 			</div>
 		}
 		else
@@ -27,7 +27,7 @@
 		<p class="totalCost">@Model.Total @Model.StandardCurrency</p>
 		<p>varav din andel är @Model.MyTotal @Model.StandardCurrency</p>
 	</section>
-	<section class="section">
+	<section class="transactionsSection">
 		<h3>Överföringar</h3>
 
 		@foreach (var item in Model.TransactionsCommittedToMe)
@@ -43,6 +43,8 @@
 		</div>
 
 	</section>
+	<a id="allTransactionsButton" href="#"><i class="fa fa-plus" aria-hidden="true"></i> <span id="allTransactionsText">Se alla överföringar</span></a>
+	<a class="button" asp-controller="Split" asp-action="Details" asp-route-id="@Model.EventId">Se alla utlägg</a>
 	<form id="addFriendsBox" class="addFriendsBox" eventid="@Model.EventId" asp-controller="Split" asp-action="Overview">
 		<label for="friendsTextBox">Deltagare</label>
 		@foreach (var item in Model.AlreadyParticipants)
@@ -56,10 +58,8 @@
 		<div class="friend-box" id="friend-box"></div>
 		<input type="submit" value="Lägg till vänner" />
 	</form>
-	<a id="allTransactionsButton" class="button" href="#">Se alla överföringar</a>
 	<a class="button" id="addFriendsButton" href="#">Lägg till vänner</a>
-	<a class="button" asp-controller="Split" asp-action="Details" asp-route-id="@Model.EventId">Alla utlägg</a>
-	<a class="button deleteButton" id="deleteEventButton" href="">Stäng event</a>
+	<a class="delete" id="deleteEventButton" href=""><i class="fa fa-times" aria-hidden="true"></i> Stäng event</a>
 	@section addExpenseFooter {
 		<footer>
 			<div id="addExpenseFooter">

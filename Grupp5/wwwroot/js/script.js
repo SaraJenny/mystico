@@ -67,7 +67,7 @@
 	});
 	/* Klick på en väns namn bland de sökta */
 	$('body').on('click', '.not-choosen', function (e) {
-		var id = e.target.id;
+		var id = e.target.id; // TODO byt till userId istället för id i html
 		// Lägg till userId i hiddenfältet
 		if (idString === "") {
 			idString = id;
@@ -86,9 +86,18 @@
 		$('#friend-box').html("");
 	});
 
-	/* Ta bort en väns namn bland de utvalda */
+	/*
+	Ta bort en väns namn bland de utvalda
+	*/
 	$('body').on('click', '.choosen', function (e) {
-		var id = e.target.id;
+		var id = e.target.id; // TODO byt till userId istället för id i html
+		removeChoosenFriend(id);
+	});
+	$('body').on('click', '.deleteX', function (e) {
+		var id = $(this).parent().attr('id');
+		removeChoosenFriend(id);
+	});
+	function removeChoosenFriend(id) {
 		idString = $('#FriendIds').val();
 		// Ta bort id i hiddenfältet
 		if (idString.includes(',' + id)) {
@@ -105,12 +114,17 @@
 		$('#' + id).remove();
 		// ta bort klass och lägg till en annan
 		$('#' + id).removeClass('choosen').addClass('not-choosen');
-	});
+	}
+
+
+
+
+
 
 	/*
-	SPLIT/EXPENSE
+	SPLIT/EXPENSE & SPLIT/UPDATEEXPENSE
 	*/
-	if ($('#splitExpense').length > 0) {
+	if ($('#splitExpense').length > 0 || $('#updateExpenseForm').length > 0) {
 		var eventId = $('#SelectedEvent').val();
 
 		$.ajax({
@@ -120,6 +134,7 @@
 				id: eventId
 			},
 			success: function (result) {
+				console.log(result)
 				for (var i = 0; i < result.length; i++) {
 					$('#friendListBox').append('<div><input class="friendCheckbox" type="checkbox" name="payerList" value="' + result[i].id + '" checked />' + result[i].firstName + ' ' + result[i].lastName + '</div>');
 					if (userIdString === "") {
@@ -148,7 +163,7 @@
 			},
 			success: function (result) {
 				for (var i = 0; i < result.length; i++) {
-					$('#friendListBox').append('<input class="friendCheckbox" type="checkbox" name="payerList" value="' + result[i].id + '" checked />' + result[i].firstName + ' ' + result[i].lastName);
+					$('#friendListBox').append('<div><input class="friendCheckbox" type="checkbox" name="payerList" value="' + result[i].id + '" checked />' + result[i].firstName + ' ' + result[i].lastName + '</div>');
 					if (userIdString === "") {
 						userIdString = result[i].id;
 					}
@@ -188,6 +203,22 @@
 		$('#FriendIds').val(userIdString);
 	});
 	/*
+	SPLIT/UPDATEEXPENSE
+	*/
+	//if ($('#updateExpenseForm').length > 0) {
+	//	userIdString = '';
+	//	$('input:checked').each(function () {
+	//		var userId = $(this).val();
+	//		if (userIdString === '') {
+	//			userIdString = userId;
+	//		}
+	//		else {
+	//			userIdString += ',' + userId;
+	//		}
+	//	});
+	//	$('#FriendIds').val(userIdString);
+	//}
+	/*
 	SPLIT/OVERVIEW
 	*/
 	// Visa formulär för att lägga till vänner till eventet
@@ -196,6 +227,16 @@
 		$('#addFriendsBox').show();
 		$(this).hide();
 	});
+	// Ändra cirkelns storlek dynamiskt
+	if ($('#circleSection').length > 0) {
+		var circleLength = $('#circle').text().length;
+		if (circleLength > 6) {
+			var circleSize = circleLength * 25;
+			$('.circle').css('width', circleSize);
+			$('.circle').css('height', circleSize);
+			$('.circle .focus').css('line-height', circleSize + 'px');
+		}
+	}
 	/*
 	PROFILE
 	*/
@@ -248,11 +289,11 @@
 	$('#allTransactionsButton').click(function (e) {
 		e.preventDefault();
 		$('#transactionsWithoutMe').toggle();
-		if ($('#allTransactionsButton').text() === 'Se alla överföringar') {
-			$('#allTransactionsButton').text('Dölj överföringar');
+		if ($('#allTransactionsText').text() === 'Se alla överföringar') {
+			$('#allTransactionsText').text('Dölj överföringar');
 		}
 		else {
-			$('#allTransactionsButton').text('Se alla överföringar');
+			$('#allTransactionsText').text('Se alla överföringar');
 		}
 	});
 
@@ -262,7 +303,7 @@
 		var firstname = $(this).text();
 		var lastname = $(this).attr('lastname');
 		var email = $(this).attr('email');
-		console.log(firstname + ' ' + lastname + ' ' + email)
+		console.log(firstname + ' ' + lastname + ' ' + email);
 		// TODO visa denna info
 	});
 });

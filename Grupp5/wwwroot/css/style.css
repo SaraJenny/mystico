@@ -267,6 +267,10 @@ BUTTON
 		border: 1px solid #38000a;
 	}
 
+.delete {
+	color: #710114;
+}
+
 
 
 
@@ -443,6 +447,12 @@ SPLIT/OVERVIEW
 	padding: 1em 2%;
 }
 
+.transactionsSection {
+	max-width: 500px;
+	margin: 0 auto;
+	padding: 1em 2% 0;
+}
+
 #updateEvent, #details .updateExpense {
 	font-size: 2em;
 	position: absolute;
@@ -460,6 +470,12 @@ SPLIT/OVERVIEW
 
 #transactionsWithoutMe {
 	display: none;
+}
+
+#allTransactionsButton, .delete {
+	display: block;
+	text-align: center;
+	margin-bottom: 1.5em;
 }
 
 
@@ -552,6 +568,10 @@ PROFILE
 /************************
 HOME/INDEX
 ************************/
+.start:hover {
+	text-decoration: none;
+}
+
 .startLogo {
 	display: block;
 	margin: 0 auto;
@@ -561,15 +581,13 @@ HOME/INDEX
 	background-color: #191919;
 	background: url("../img/coins.jpg") no-repeat center center;
 	background-size: cover;
-	padding: 2em 5% 1em;
+	padding-top: 2em;
 	opacity: 1;
 	margin-bottom: 1em;
 }
 
 .startTextBox {
 	text-align: center;
-	font-size: 1.5em;
-	font-family: 'Patua One', cursive;
 	color: #fff;
 	text-shadow: 2px 2px #191919;
 }
@@ -579,8 +597,19 @@ HOME/INDEX
 	}
 
 .startText {
-	font-size: 1.5em;
+	font-family: 'Patua One', cursive;
+	font-size: 2em;
 	margin-bottom: 4.5em;
+}
+
+.startParas {
+	background-color: rgba(12,12,12,.4);
+	padding: .5em 1em;
+	font-size: 1.4em;
+}
+
+.readMoreLink {
+	font-size: .8em;
 }
 
 

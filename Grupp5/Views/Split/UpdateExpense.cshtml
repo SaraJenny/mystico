@@ -2,7 +2,7 @@
 
 <h2>@Model.Description</h2>
 
-<form asp-controller="Split" asp-action="UpdateExpense">
+<form asp-controller="Split" asp-action="UpdateExpense" id="updateExpenseForm">
 
 	<label asp-for="SelectedEvent"></label>
 	<select asp-for="SelectedEvent" asp-items="Model.EventItem"></select>
@@ -26,13 +26,9 @@
 
 	<div id="friendListBox">
 		<label>Deltagare</label>
-		@foreach (var item in Model.Payers)
-		{
-			<div><input class="friendCheckbox" type="checkbox" name="payerList" value="@item.Id" checked />@item.FirstName @item.LastName</div>
-		}
 	</div>
 
-	<input type="hidden" asp-for="FriendIds" />
+	<input type="hidden" asp-for="FriendIds" value=""/>
 
 	<input type="submit" value="Uppdatera utlägg" id="addExpenseButton" />
 
