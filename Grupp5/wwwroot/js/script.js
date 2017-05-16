@@ -233,14 +233,13 @@
 	*/
 	$('.deleteExpenseButton').click(function (e) {
 		e.preventDefault();
-		//var expenseId = $(this);
-		console.log(this)//TODO hämta in expenseId från Details
-		//if (confirm('Vill du radera utlägget?')) {
-		//	//window.location.replace('/Split/DeletExpense/' + eventId);
-		//}
-		//else {
-		//	return false;
-		//}
+		var expenseId = $(this).attr('expenseid');
+		if (confirm('Är du säker på att du vill radera utlägget?')) {
+			window.location.replace('/split/deleteexpense/' + expenseId);
+		}
+		else {
+			return false;
+		}
 	});
 	/*******************************
 	SPLIT/OVERVIEW
