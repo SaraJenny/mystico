@@ -21,9 +21,7 @@ namespace Grupp5.Models.SplitModels
         }
 
         static public List<WhoOwesWho> WhoOweWho(Event myEvent)
-        {
-           
-
+        { 
             Dictionary<int, decimal> userCredits = CreateDictionaryForUserCredits(myEvent);
 
             var creditors = new List<User>();
@@ -182,8 +180,6 @@ namespace Grupp5.Models.SplitModels
         private static Dictionary<int, decimal> CreateDictionaryForUserCredits(Event myEvent)
         {
 
-           
-
             var userCredits = new Dictionary<int, Decimal>();
 
             foreach (var participant in myEvent.ParticipantsInEvent)
@@ -197,18 +193,29 @@ namespace Grupp5.Models.SplitModels
                 var purchaser = expense.PurchaserId;
                 var payers = expense.PayersForExpense;
 
-                foreach (var payer in payers)
+                var debt = (amount / payers.Count);
+
+                if (payers.Where(p => p.UserId == purchaser).Count() > 0)
                 {
-                    var debt = (amount / payers.Count);
-                    if (payer.UserId == purchaser)
+                    foreach (var payer in payers)
                     {
-                        var userId = myEvent.ParticipantsInEvent.Where(p => p.UserId == payer.UserId).First().UserId;
-                        userCredits[userId] += (amount - debt);
+                        if (payer.UserId == purchaser)
+                        {
+                            userCredits[payer.UserId] += (amount - debt);
+                        }
+                        else
+                        {
+                            //var userId = myEvent.ParticipantsInEvent.Where(p => p.UserId == payer.UserId).First().UserId;
+                            userCredits[payer.UserId] -= debt;
+                        }
                     }
-                    else
+                }
+                else
+                {
+                    userCredits[purchaser] += amount;
+                    foreach (var payer in payers)
                     {
-                        var userId = myEvent.ParticipantsInEvent.Where(p => p.UserId == payer.UserId).First().UserId;
-                        userCredits[userId] -= debt;
+                        userCredits[payer.UserId] -= debt;
                     }
                 }
             }

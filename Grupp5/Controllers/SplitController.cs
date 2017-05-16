@@ -44,7 +44,7 @@ namespace Grupp5.Controllers
             List<SplitDetailsVM> viewModel = Library.ConvertExpenseToSplitDetailsVM(expenses, objections);
             ViewBag.CurrentUserId = user.Id;
             ViewBag.EventName = mysticoContext.GetEventById(id).EventName;
-            
+
             return View(viewModel);
         }
         #endregion
@@ -123,7 +123,7 @@ namespace Grupp5.Controllers
             var myUser = await userManager.GetUserAsync(HttpContext.User);
             User user = mysticoContext.GetUserByAspUserId(myUser.Id);
 
-            var expenseId =  await mysticoContext.CreateExpense(viewModel, user.Id);
+            var expenseId = await mysticoContext.CreateExpense(viewModel, user.Id);
 
             mysticoContext.CreatePayerForExpense(viewModel.FriendIds, expenseId);
 
@@ -155,7 +155,7 @@ namespace Grupp5.Controllers
                 return RedirectToAction(nameof(SplitController.Index), nameof(SplitController).Replace("Controller", ""));
 
             var thisEvent = mysticoContext.GetEventById(id);
-            
+
 
             var transactions = Library.WhoOweWho(thisEvent);
             var transactionsVM = Library.ConvertWhoOwesWho(transactions);
@@ -241,7 +241,7 @@ namespace Grupp5.Controllers
 
             var myEvent = mysticoContext.GetEventById(id);
             if (myEvent.ParticipantsInEvent.Where(p => p.UserId == user.Id).Count() == 0)
-                return RedirectToAction(nameof(SplitController.Overview), nameof(SplitController).Replace("Controller", ""), new { id =myEvent.Id });
+                return RedirectToAction(nameof(SplitController.Overview), nameof(SplitController).Replace("Controller", ""), new { id = myEvent.Id });
 
             await mysticoContext.UpdateEvent(myEvent, viewModel);
             mysticoContext.AddParticipantsToEvent(viewModel.FriendIds, id);
@@ -251,8 +251,6 @@ namespace Grupp5.Controllers
 
             return RedirectToAction(nameof(SplitController.Overview), nameof(SplitController).Replace("Controller", ""), new { id = myEvent.Id });
         }
-
-
 
         #endregion
 
@@ -286,13 +284,11 @@ namespace Grupp5.Controllers
             var myExpense = mysticoContext.GetExpenseById(id);
 
             //OM jag inte är inköpare ==> skickas till overview
-            if (myExpense.PurchaserId != currentUser.Id)
+            if (myExpense == null || myExpense.PurchaserId != currentUser.Id)
                 return RedirectToAction(nameof(SplitController.Overview), nameof(SplitController).Replace("Controller", ""));
-
 
             //Hämta event från databasen som currentUser är med i...
             var myEvents = mysticoContext.GetActiveEventsByUserId(currentUser.Id);
-
 
             //Hämta valutor från databasen
             List<Currency> allCurrencies = mysticoContext.GetAllCurrencies();
@@ -349,5 +345,15 @@ namespace Grupp5.Controllers
             return RedirectToAction(nameof(SplitController.Details), nameof(SplitController).Replace("Controller", ""), new { id = myExpense.EventId });
         }
         #endregion
+
+        #region ReActivateEvent
+        public IActionResult ReActivateEvent(int id)
+        {
+            mysticoContext.ReActivateEvent(id);
+
+            return RedirectToAction(nameof(SplitController.Overview), nameof(SplitController).Replace("Controller", ""), new { id = id });
+        }
+        #endregion
+
     }
 }
