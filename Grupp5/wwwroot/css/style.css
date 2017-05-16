@@ -337,6 +337,12 @@ p + h3 {
 	margin-top: .5em;
 }
 
+.expenseBox h3 {
+	background-color: #351c38;
+	color: #fff;
+	font-weight: 400;
+}
+
 h4 {
 	font-weight: 500;
 	margin-top: .5em;
@@ -463,14 +469,14 @@ SPLIT/OVERVIEW
 #updateEvent, #details .updateExpense {
 	font-size: 2em;
 	position: absolute;
-	top: .5em;
+	top: 1.1em;
 	right: 3%;
 }
 
 #deleteExpense {
 	font-size: 2em;
 	position: absolute;
-	bottom: .5em;
+	bottom: 0;
 	right: 3%;
 	color: #710114;
 }
@@ -546,13 +552,14 @@ ADD FRIENDS
 SPLIT/DETAILS
 ************************/
 .expenseBox {
-	-moz-border-radius: 25px;
+	/*-moz-border-radius: 25px;
 	-webkit-border-radius: 25px;
 	border-radius: 25px;
 	padding: 4% 6%;
 	margin: 0 2% 2% 0;
-	border: 1px solid #351c38;
+	border: 1px solid #351c38;*/
 	position: relative;
+	margin-bottom: 1em;
 }
 
 
