@@ -25,12 +25,12 @@ namespace Grupp5.Models.Entities
         [DataType(DataType.Password)]
         public string CurrentPassword { get; set; }
 
-        [Display(Name = "Lösenord")]
+        [Display(Name = "Nytt lösenord")]
         [DataType(DataType.Password)]
         [MinLength(5, ErrorMessage = "Minst 5 tecken krävs")]
         public string Password { get; set; }
 
-        [Display(Name = "Upprepa lösenord")]
+        [Display(Name = "Upprepa nytt lösenord")]
         [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "Lösenorden överensstämmer inte")]
         public string PasswordCheck { get; set; }
