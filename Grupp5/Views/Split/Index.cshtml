@@ -1,7 +1,7 @@
 ﻿@{ViewBag.Title = "Event";}
 @model ListOfEventsVM[]
 
-<a class="button" asp-controller="Split" asp-action="Event">Lägg till event</a>
+<a class="right" asp-controller="Split" asp-action="Event"><i class="fa fa-plus" aria-hidden="true"></i> Lägg till event</a>
 
 <h2 class="eventHeading">Mina event</h2>
 @foreach (ListOfEventsVM item in Model)
