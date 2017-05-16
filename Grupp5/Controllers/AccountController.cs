@@ -166,5 +166,79 @@ namespace Grupp5.Controllers
         }
 
         #endregion
+
+        #region Google
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public IActionResult ExternalLogin(string provider = "Google", string returnUrl = null)
+        {
+            // Request a redirect to the external login provider.
+            var redirectUrl = Url.Action(nameof(ExternalLoginCallback), "Account", new { ReturnUrl = returnUrl });
+            var properties = signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
+            return Challenge(properties, provider);
+        }
+
+        
+        // GET: /Account/ExternalLoginCallback
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> ExternalLoginCallback(string returnUrl = null, string remoteError = null)
+        {
+            if (remoteError != null)
+            {
+                ModelState.AddModelError(string.Empty, $"Error from external provider: {remoteError}");
+                return View(nameof(Login));
+            }
+            var info = await signInManager.GetExternalLoginInfoAsync();
+            if (info == null)
+            {
+                return RedirectToAction(nameof(Login));
+            }
+
+            // Sign in the user with this external login provider if the user already has a login.
+            var result = await signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false);
+            if (result.Succeeded)
+            {
+                return RedirectToLocal("/split");
+            }
+            if (result.IsLockedOut)
+            {
+                return View("Lockout");
+            }
+            else
+            {
+                //Registrerar användaren automatiskt om det är första gången man loggar in
+                var email = info.Principal.Claims.SingleOrDefault(x => x.Type.Contains("emailaddress"))?.Value;
+                var firstName = info.Principal.Claims.SingleOrDefault(x => x.Type.Contains("givenname"))?.Value;
+                var lastName = info.Principal.Claims.SingleOrDefault(x => x.Type.Contains("surname"))?.Value;
+
+                var user = new IdentityUser { UserName = email, Email = email };
+
+                await userManager.CreateAsync(user);
+
+                await userManager.AddLoginAsync(user, info);
+
+                await signInManager.SignInAsync(user, false);
+
+                mysticoContext.AddUser(user.Id, firstName, lastName, email);
+
+                return RedirectToLocal("/split");
+            }
+        }
+
+        private IActionResult RedirectToLocal(string returnUrl)
+        {
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+            else
+            {
+                return RedirectToAction(nameof(HomeController.Index), "Home");
+            }
+        }
+#endregion
     }
 }

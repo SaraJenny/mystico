@@ -5,21 +5,29 @@
 
 <form asp-controller="Account" asp-action="Login">
 
-	<label asp-for="Email"></label>
-	<input asp-for="Email" placeholder="E-post" />
-	<span asp-validation-for="Email"></span>
+    <label asp-for="Email"></label>
+    <input asp-for="Email" placeholder="E-post" />
+    <span asp-validation-for="Email"></span>
 
 
-	<label asp-for="Password"></label>
-	<input asp-for="Password" placeholder="Lösenord" />
-	<span asp-validation-for="Password"></span>
+    <label asp-for="Password"></label>
+    <input asp-for="Password" placeholder="Lösenord" />
+    <span asp-validation-for="Password"></span>
 
-	<input type="submit" value="Logga in" />
+    <input type="submit" value="Logga in" />
 
 </form>
 
+<div class="g-signin2"></div> @*Funkar inte, men schnygg..*@
+
+<form asp-controller="Account" asp-action="ExternalLogin">
+    <button type="submit">Logga in med Google</button>
+</form>
+
+
 @section scripts {
-	<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.0.min.js"></script>
-	<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
-	<script src="http://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.0.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
 }

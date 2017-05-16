@@ -63,7 +63,14 @@ namespace Grupp5
 			app.UseStaticFiles();
 			app.UseDeveloperExceptionPage();
 			app.UseIdentity();
-			app.UseMvcWithDefaultRoute();
+
+            app.UseGoogleAuthentication(new GoogleOptions()
+            {
+                ClientId = Configuration["GoogleClientId"],
+                ClientSecret = Configuration["GoogleClientSecret"]
+            });
+
+            app.UseMvcWithDefaultRoute();
         }
     }
 }

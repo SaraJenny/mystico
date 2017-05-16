@@ -39,9 +39,9 @@ namespace Grupp5.Models.Entities
 
                     return AmountInStandardCurrency;
                 }
-                catch
+                catch (Exception ex)
                 {
-                    Console.WriteLine("skit också..");
+                    Console.WriteLine(ex);
                     return 0;
                 }
             }
