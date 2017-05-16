@@ -40,5 +40,7 @@ namespace Grupp5.Models.Entities
         public List<UserVM> Payers { get; set; }
 
 		public string FriendIds { get; set; }
-	}
+
+        public int ExpenseId { get; set; }
+    }
 }

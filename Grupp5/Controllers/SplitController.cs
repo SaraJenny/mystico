@@ -302,6 +302,7 @@ namespace Grupp5.Controllers
             viewModel.CurrencyItem = Library.ConvertCurrencyToSelectListItem(allCurrencies);
             viewModel.EventItem = Library.ConvertEventToSelectListItem(myEvents);
             viewModel.Payers = Library.ConvertUsersToUsersVM(payers);
+            viewModel.ExpenseId = myExpense.Id;
 
 
             return View(viewModel);
