@@ -192,6 +192,7 @@ ClientBin/
 *.jfm
 *.pfx
 *.publishsettings
+AppSettings.json
 node_modules/
 orleans.codegen.cs
 
@@ -259,3 +260,4 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/Grupp5/AppSettings.json
