@@ -16,18 +16,18 @@ namespace Grupp5.Models.Entities
     {
         public async Task<decimal> CalculateStandardCurrencyAmount(decimal amount, int currencyId, int standardCurrencyId, DateTime date)
         {
-            if (currencyId == standardCurrencyId)
-                return amount;
+            decimal AmountInStandardCurrency;
+            var baseCurrency = Currency.Where(c => standardCurrencyId == c.Id).FirstOrDefault().CurrencyCode;
+            var currency = Currency.Where(c => currencyId == c.Id).FirstOrDefault().CurrencyCode;
+            var shortDate = date.ToString().Replace(" 00:00:00", "");
 
+            if (currencyId == standardCurrencyId)
+                   return amount; 
             else
             {
                 try
                 {
                     HttpClient httpClient = new HttpClient();
-
-                    var baseCurrency = Currency.Where(c => standardCurrencyId == c.Id).FirstOrDefault().CurrencyCode;
-                    var currency = Currency.Where(c => currencyId == c.Id).FirstOrDefault().CurrencyCode;
-                    var shortDate = date.ToString().Replace(" 00:00:00", "");
 
                     var url = $"http://api.fixer.io/{shortDate}?symbols={currency}&base={baseCurrency}";
 
@@ -35,16 +35,58 @@ namespace Grupp5.Models.Entities
                     dynamic response = JsonConvert.DeserializeObject(json);
                     decimal value = response.rates[currency];
 
-                    var AmountInStandardCurrency = amount / value;
-
-                    return AmountInStandardCurrency;
+                    AmountInStandardCurrency = amount / value;    
                 }
                 catch
                 {
-                    Console.WriteLine("skit också..");
-                    return 0;
+                    Dictionary<string, double> currencyDictionary = createCurrencyDictionary();
+
+                    var valueInEuro = amount / Convert.ToDecimal(currencyDictionary[currency]);
+
+                    AmountInStandardCurrency = valueInEuro * Convert.ToDecimal(currencyDictionary[baseCurrency]);
                 }
             }
+            return AmountInStandardCurrency;
+        }
+
+        private Dictionary<string, double> createCurrencyDictionary()
+        {
+            Dictionary<string, double> currencyDictionary = new Dictionary<string, double>();
+            //HÄMTAD 2017-05-16
+            currencyDictionary.Add("EUR", 1);
+            currencyDictionary.Add("AUD", 1.492);
+            currencyDictionary.Add("BGN", 1.9558);
+            currencyDictionary.Add("BRL", 3.4316);
+            currencyDictionary.Add("CAD", 1.5058);
+            currencyDictionary.Add("CHF", 1.0958);
+            currencyDictionary.Add("CNY", 7.6185);
+            currencyDictionary.Add("CZK", 26.42);
+            currencyDictionary.Add("DKK", 7.4394);
+            currencyDictionary.Add("GBP", 0.85868);
+            currencyDictionary.Add("HKD", 8.6143);
+            currencyDictionary.Add("HRK", 7.4303);
+            currencyDictionary.Add("HUF", 309.54);
+            currencyDictionary.Add("IDR", 14709.0);
+            currencyDictionary.Add("ILS", 3.9874);
+            currencyDictionary.Add("INR", 70.85);
+            currencyDictionary.Add("JPY", 125.67);
+            currencyDictionary.Add("KRW", 1234.8);
+            currencyDictionary.Add("MXN", 20.689);
+            currencyDictionary.Add("MYR", 4.7791);
+            currencyDictionary.Add("NOK", 9.3918);
+            currencyDictionary.Add("NZD", 1.609);
+            currencyDictionary.Add("PHP", 54.898);
+            currencyDictionary.Add("PLN", 4.1984);
+            currencyDictionary.Add("RON", 4.5478);
+            currencyDictionary.Add("RUB", 62.3);
+            currencyDictionary.Add("SEK", 9.7215);
+            currencyDictionary.Add("SGD", 1.5457);
+            currencyDictionary.Add("THB", 38.187);
+            currencyDictionary.Add("TRY", 3.933);
+            currencyDictionary.Add("USD", 1.1059);
+            currencyDictionary.Add("ZAR", 14.529);
+
+            return currencyDictionary;
         }
 
         public MysticoContext(DbContextOptions<MysticoContext> options) : base(options)
@@ -369,15 +411,28 @@ namespace Grupp5.Models.Entities
         internal Expense GetExpenseById(int id)
         {
             var myExpense = Expense.Where(e => e.Id == id).FirstOrDefault();
-            var listOfPayers = PayersForExpense.Where(p => p.ExpenseId == myExpense.Id).ToList();
-            myExpense.PayersForExpense = listOfPayers;
-
-            foreach (var payer in myExpense.PayersForExpense)
+            if (myExpense != null)
             {
-                payer.User = User.Where(u => u.Id == payer.UserId).FirstOrDefault();
-            }
+                var listOfPayers = PayersForExpense.Where(p => p.ExpenseId == myExpense.Id).ToList();
+                myExpense.PayersForExpense = listOfPayers;
 
+                foreach (var payer in myExpense.PayersForExpense)
+                {
+                    payer.User = User.Where(u => u.Id == payer.UserId).FirstOrDefault();
+                }
+
+            }
             return myExpense;
+        }
+
+        internal void ReActivateEvent(int id)
+        {
+            var myEvent = Event.Where(e => e.Id == id).FirstOrDefault();
+            if (myEvent != null)
+            {
+                myEvent.IsActive = true;
+                SaveChanges();
+            }
         }
 
         internal void DeleteExpense(Expense myExpense)
@@ -396,7 +451,7 @@ namespace Grupp5.Models.Entities
 
         internal async Task UpdateExpense(Expense myExpense, SplitExpenseVM viewModel)
         {
-            if (viewModel.FriendIds != "") 
+            if (viewModel.FriendIds != "")
             {
                 try
                 {
@@ -406,7 +461,7 @@ namespace Grupp5.Models.Entities
 
                     foreach (var payer in newPayers)
                     {
-                        payerIds.Add(Convert.ToInt32(payer));  
+                        payerIds.Add(Convert.ToInt32(payer));
                     }
 
                     var oldPayers = PayersForExpense.Where(p => p.ExpenseId == myExpense.Id).ToList();
@@ -427,7 +482,7 @@ namespace Grupp5.Models.Entities
 
                     SaveChanges();
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Console.WriteLine(ex);
                 }
@@ -439,7 +494,7 @@ namespace Grupp5.Models.Entities
             myExpense.CurrencyId = Convert.ToInt32(viewModel.SelectedCurrency);
             myExpense.Date = Convert.ToDateTime(viewModel.Date);
             myExpense.EventId = myEvent.Id;
-            myExpense.AmountInStandardCurrency = await CalculateStandardCurrencyAmount(Convert.ToDecimal(viewModel.Amount),viewModel.SelectedCurrency, myEvent.StandardCurrencyId, Convert.ToDateTime(viewModel.Date));
+            myExpense.AmountInStandardCurrency = await CalculateStandardCurrencyAmount(Convert.ToDecimal(viewModel.Amount), viewModel.SelectedCurrency, myEvent.StandardCurrencyId, Convert.ToDateTime(viewModel.Date));
             SaveChanges();
         }
 
