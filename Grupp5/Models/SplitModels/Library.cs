@@ -137,6 +137,30 @@ namespace Grupp5.Models.SplitModels
 
         }
 
+        internal static List<PayerVM> ConvertToListOfPayersVM(List<User> myParticipants, List<User> myPayers)
+        {
+            var participantsWithMarkedPayer = new List<PayerVM>();
+
+            foreach (var participant in myParticipants)
+            {
+                var payerVM = new PayerVM{
+                    Id = participant.Id,
+                    FirstName = participant.FirstName,
+                    LastName = participant.LastName,
+                    Email = participant.Email
+                };
+            
+                if(myPayers.Contains(participant))
+                {
+                    payerVM.IsPayer = true;
+                }
+
+                participantsWithMarkedPayer.Add(payerVM);
+            }
+
+            return participantsWithMarkedPayer;
+        }
+
         internal static List<UserVM> ConvertUsersToUsersVM(List<User> users)
         {
             var userVMlist = new List<UserVM>();

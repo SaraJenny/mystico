@@ -107,6 +107,11 @@ namespace Grupp5.Models.Entities
             return User.Where(u => u.Id != id).ToList();
         }
 
+        internal Event GetEventByExpense(Expense expense)
+        {
+            return Event.Where(e => e.Id == expense.EventId).FirstOrDefault();
+        }
+
         public List<Currency> GetAllCurrencies()
         {
             return Currency.ToList();

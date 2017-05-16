@@ -101,6 +101,21 @@ namespace Grupp5.Controllers
 
             return myEvent.StandardCurrencyId;
         }
+        #endregion
+
+        #region GetUsersByExpense
+        public List<PayerVM> GetUsersByExpense(int id)
+        {
+            var myExpense = mysticoContext.GetExpenseById(id);
+            var myEvent = mysticoContext.GetEventByExpense(myExpense);
+
+            var myParticipants = mysticoContext.GetUsersByEventId(myEvent.Id);
+            var myPayers = mysticoContext.GetPayersByExpense(myExpense);
+
+            var participantsWithMarkedPayers = Library.ConvertToListOfPayersVM(myParticipants, myPayers);
+
+            return participantsWithMarkedPayers;
+        }
 #endregion
 
     }
