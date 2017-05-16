@@ -2,7 +2,7 @@
 
 <h2>@Model.Description</h2>
 
-<form asp-controller="Split" asp-action="UpdateExpense" id="updateExpenseForm">
+<form asp-controller="Split" asp-action="UpdateExpense" id="updateExpenseForm" expenseId="@Model.ExpenseId">
 
 	<label asp-for="SelectedEvent"></label>
 	<select asp-for="SelectedEvent" asp-items="Model.EventItem"></select>

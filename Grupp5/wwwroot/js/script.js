@@ -138,27 +138,60 @@
 			}
 		});
 
-		// Hämta vänner
-		$.ajax({
-			url: "/Json/GetUsersByEventId",
-			type: "GET",
-			data: {
-				id: eventId
-			},
-			success: function (result) {
-				console.log(result)
-				for (var i = 0; i < result.length; i++) {
-					$('#friendListBox').append('<div><input class="friendCheckbox" type="checkbox" name="payerList" value="' + result[i].id + '" checked />' + result[i].firstName + ' ' + result[i].lastName + '</div>');
-					if (userIdString === "") {
-						userIdString = result[i].id;
+		if ($('#splitExpense').length > 0) {
+			// Hämta vänner
+			$.ajax({
+				url: "/Json/GetUsersByEventId",
+				type: "GET",
+				data: {
+					id: eventId
+				},
+				success: function (result) {
+					for (var i = 0; i < result.length; i++) {
+
+						$('#friendListBox').append('<div><input class="friendCheckbox" type="checkbox" name="payerList" value="' + result[i].id + '" checked />' + result[i].firstName + ' ' + result[i].lastName + '</div>');
+						if (userIdString === "") {
+							userIdString = result[i].id;
+						}
+						else {
+							userIdString += ',' + result[i].id;
+						}
 					}
-					else {
-						userIdString += ',' + result[i].id;
-					}
+					$('#FriendIds').val(userIdString);
 				}
-				$('#FriendIds').val(userIdString);
-			}
-		});
+			});
+		}
+		else {
+
+			var expenseId = $('#updateExpenseForm').attr('expenseid');
+			var output = '';
+			// Hämta vänner
+			$.ajax({
+				url: "/Json/GetUsersByExpense",
+				type: "GET",
+				data: {
+					id: expenseId
+				},
+				success: function (result) {
+					for (var i = 0; i < result.length; i++) {
+						output += '<div><input class="friendCheckbox" type="checkbox" name="payerList" value="' + result[i].id + '"';
+						// Om personen är satt till payer: bocka för checkboxen + lägg till i FriendIds
+						if (result[i].isPayer) {
+							if (userIdString === "") {
+								userIdString = result[i].id;
+							}
+							else {
+								userIdString += ',' + result[i].id;
+							}
+							output += ' checked';
+						}
+						output += '/>' + result[i].firstName + ' ' + result[i].lastName + '</div > ';
+					}
+					$('#friendListBox').append(output);
+					$('#FriendIds').val(userIdString);
+				}
+			});
+		}
 
 	}
 	/* Sker då användaren ändrar valt event */
