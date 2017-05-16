@@ -233,7 +233,7 @@
 	*/
 	$('#deleteExpenseButton').click(function (e) {
 		e.preventDefault();
-		var expenseId = $(this);
+		//var expenseId = $(this);
 		console.log(this)//TODO hämta in expenseId från Details
 		//if (confirm('Vill du radera utlägget?')) {
 		//	//window.location.replace('/Split/DeletExpense/' + eventId);

@@ -443,7 +443,7 @@ SPLIT/OVERVIEW
 	padding: 1em 2%;
 }
 
-#updateEvent, #updateExpense {
+#updateEvent, #details .updateExpense {
 	font-size: 2em;
 	position: absolute;
 	top: .5em;
