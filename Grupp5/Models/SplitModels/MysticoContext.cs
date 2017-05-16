@@ -1,9 +1,12 @@
 ﻿using Grupp5.Models.Entities;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Grupp5.Models.Entities
@@ -11,9 +14,18 @@ namespace Grupp5.Models.Entities
 
     public partial class MysticoContext : DbContext
     {
-        public decimal Vadsomhelst(decimal amount, int currencyId, int standardCurrencyId, DateTime date)
+        public async Task<decimal> CalculateStandardCurrencyAmount(decimal amount, int currencyId, int standardCurrencyId, DateTime date)
         {
-            return (amount * currencyId)/standardCurrencyId;
+            HttpClient httpClient = new HttpClient();
+
+            var json = await httpClient.GetStringAsync("http://api.fixer.io/2015-05-15?symbols=USD&base=SEK");
+            dynamic response = JsonConvert.DeserializeObject(json);
+            //dynamic rates = response.rates;
+            var currency = "USD";
+            decimal value = response.rates[currency];
+            //var ret = decimal.Parse(value,new CultureInfo ("en-US"));
+
+            return value;
         }
 
         public MysticoContext(DbContextOptions<MysticoContext> options) : base(options)
@@ -251,7 +263,7 @@ namespace Grupp5.Models.Entities
             return User.Where(u => u.AspId == id).First();
         }
 
-        internal int CreateExpense(SplitExpenseVM viewModel, int currentUserId)
+        internal async Task<int> CreateExpense(SplitExpenseVM viewModel, int currentUserId)
         {
             var myEvent = GetEventById(Convert.ToInt32(viewModel.SelectedEvent));
 
@@ -264,7 +276,7 @@ namespace Grupp5.Models.Entities
                 Date = Convert.ToDateTime(viewModel.Date),
                 PurchaserId = currentUserId,
                 EventId = myEvent.Id,
-                AmountInStandardCurrency = Vadsomhelst(Convert.ToDecimal(viewModel.Amount), viewModel.SelectedCurrency, myEvent.StandardCurrencyId, Convert.ToDateTime(viewModel.Date)) //TODO valutaomvandling
+                AmountInStandardCurrency = await CalculateStandardCurrencyAmount(Convert.ToDecimal(viewModel.Amount), viewModel.SelectedCurrency, myEvent.StandardCurrencyId, Convert.ToDateTime(viewModel.Date)) //TODO valutaomvandling
 
             };
 
@@ -305,7 +317,7 @@ namespace Grupp5.Models.Entities
                 return false;
         }
 
-        internal void UpdateEvent(Event myEvent, SplitEventVM viewModel)
+        internal async Task UpdateEvent(Event myEvent, SplitEventVM viewModel)
         {
             myEvent.EventName = viewModel.Name;
             myEvent.Description = viewModel.Description;
@@ -317,7 +329,7 @@ namespace Grupp5.Models.Entities
 
                 foreach (var expense in myEvent.Expense)
                 {
-                    UpdateAmountInExpense(expense);
+                    await UpdateAmountInExpense(expense);
                 }
             }
 
@@ -325,9 +337,9 @@ namespace Grupp5.Models.Entities
             SaveChanges();
         }
 
-        private void UpdateAmountInExpense(Expense expense)
+        private async Task UpdateAmountInExpense(Expense expense)
         {
-            expense.AmountInStandardCurrency = Vadsomhelst(expense.Amount, expense.CurrencyId, expense.Event.StandardCurrencyId, expense.Date);
+            expense.AmountInStandardCurrency = await CalculateStandardCurrencyAmount(expense.Amount, expense.CurrencyId, expense.Event.StandardCurrencyId, expense.Date);
         }
 
         internal Expense GetExpenseById(int id)
@@ -358,15 +370,52 @@ namespace Grupp5.Models.Entities
             SaveChanges();
         }
 
-        internal void UpdateExpense(Expense myExpense, SplitExpenseVM viewModel)
+        internal async Task UpdateExpense(Expense myExpense, SplitExpenseVM viewModel)
         {
+            if (viewModel.FriendIds != "") 
+            {
+                try
+                {
+                    var newPayers = viewModel.FriendIds.Split(',');
+
+                    var payerIds = new List<int>();
+
+                    foreach (var payer in newPayers)
+                    {
+                        payerIds.Add(Convert.ToInt32(payer));  
+                    }
+
+                    var oldPayers = PayersForExpense.Where(p => p.ExpenseId == myExpense.Id).ToList();
+
+                    //Radera de oldpayers som inte är med i payerIds
+                    foreach (var payer in oldPayers)
+                    {
+                        if (payerIds.Where(p => p == payer.UserId).Count() == 0)
+                            PayersForExpense.Remove(payer);
+                    }
+
+                    //Lägg till de payerIds som inte fanns i oldPayers.
+                    foreach (var payer in payerIds)
+                    {
+                        if (oldPayers.Where(p => p.UserId == payer).Count() == 0)
+                            PayersForExpense.Add(new PayersForExpense { UserId = payer, ExpenseId = myExpense.Id });
+                    }
+
+                    SaveChanges();
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
+            }
+
             var myEvent = GetEventById(Convert.ToInt32(viewModel.SelectedEvent));
             myExpense.Amount = Convert.ToDecimal(viewModel.Amount);
             myExpense.Description = viewModel.Description;
             myExpense.CurrencyId = Convert.ToInt32(viewModel.SelectedCurrency);
             myExpense.Date = Convert.ToDateTime(viewModel.Date);
             myExpense.EventId = myEvent.Id;
-            myExpense.AmountInStandardCurrency = Vadsomhelst(Convert.ToDecimal(viewModel.Amount),viewModel.SelectedCurrency, myEvent.StandardCurrencyId, Convert.ToDateTime(viewModel.Date));
+            myExpense.AmountInStandardCurrency = await CalculateStandardCurrencyAmount(Convert.ToDecimal(viewModel.Amount),viewModel.SelectedCurrency, myEvent.StandardCurrencyId, Convert.ToDateTime(viewModel.Date));
             SaveChanges();
         }
 

@@ -123,7 +123,7 @@ namespace Grupp5.Controllers
             var myUser = await userManager.GetUserAsync(HttpContext.User);
             User user = mysticoContext.GetUserByAspUserId(myUser.Id);
 
-            var expenseId = mysticoContext.CreateExpense(viewModel, user.Id);
+            var expenseId =  await mysticoContext.CreateExpense(viewModel, user.Id);
 
             mysticoContext.CreatePayerForExpense(viewModel.FriendIds, expenseId);
 
@@ -243,7 +243,7 @@ namespace Grupp5.Controllers
             if (myEvent.ParticipantsInEvent.Where(p => p.UserId == user.Id).Count() == 0)
                 return RedirectToAction(nameof(SplitController.Overview), nameof(SplitController).Replace("Controller", ""), new { id =myEvent.Id });
 
-            mysticoContext.UpdateEvent(myEvent, viewModel);
+            await mysticoContext.UpdateEvent(myEvent, viewModel);
             mysticoContext.AddParticipantsToEvent(viewModel.FriendIds, id);
 
             //TODO Update standard amount in every expanse that is connected to this event!
@@ -324,7 +324,7 @@ namespace Grupp5.Controllers
             if (myExpense.PurchaserId != currentUser.Id)
                 return RedirectToAction(nameof(SplitController.Details), nameof(SplitController).Replace("Controller", ""), new { id = myExpense.EventId });
 
-            mysticoContext.UpdateExpense(myExpense, viewModel);
+            await mysticoContext.UpdateExpense(myExpense, viewModel);
 
             return RedirectToAction(nameof(SplitController.Details), nameof(SplitController).Replace("Controller", ""), new { id = myExpense.EventId });
 

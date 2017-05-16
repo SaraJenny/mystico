@@ -94,5 +94,14 @@ namespace Grupp5.Controllers
 
         #endregion
 
+        #region GetStandardCurrencyByEvent
+        public int GetStandardCurrencyByEvent(int id)
+        {
+            var myEvent = mysticoContext.GetEventById(id);
+
+            return myEvent.StandardCurrencyId;
+        }
+#endregion
+
     }
 }
