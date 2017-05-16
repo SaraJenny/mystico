@@ -279,6 +279,12 @@
 		$('#addFriendsBox').show();
 		$(this).hide();
 	});
+	// Dölj formulär för att lägga till vänner
+	$('#closeFriends').click(function (e) {
+		e.preventDefault();
+		$('#addFriendsButton').show();
+		$('#addFriendsBox').hide();
+	});
 	// Ändra cirkelns storlek dynamiskt
 	if ($('#circleSection').length > 0) {
 		var circleLength = $('#circle').text().length;
