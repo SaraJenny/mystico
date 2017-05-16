@@ -255,4 +255,14 @@
 			$('#allTransactionsButton').text('Se alla överföringar');
 		}
 	});
+
+	// Se mer info om person
+	$('.person').click(function () {
+		var userId = $(this).attr('userId');
+		var firstname = $(this).text();
+		var lastname = $(this).attr('lastname');
+		var email = $(this).attr('email');
+		console.log(firstname + ' ' + lastname + ' ' + email)
+		// TODO visa denna info
+	});
 });
