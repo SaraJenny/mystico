@@ -67,7 +67,7 @@
 	});
 	/* Klick på en väns namn bland de sökta */
 	$('body').on('click', '.not-choosen', function (e) {
-		var id = e.target.id;
+		var id = e.target.id; // TODO byt till userId istället för id i html
 		// Lägg till userId i hiddenfältet
 		if (idString === "") {
 			idString = id;
@@ -86,9 +86,18 @@
 		$('#friend-box').html("");
 	});
 
-	/* Ta bort en väns namn bland de utvalda */
+	/*
+	Ta bort en väns namn bland de utvalda
+	*/
 	$('body').on('click', '.choosen', function (e) {
-		var id = e.target.id;
+		var id = e.target.id; // TODO byt till userId istället för id i html
+		removeChoosenFriend(id);
+	});
+	$('body').on('click', '.deleteX', function (e) {
+		var id = $(this).parent().attr('id');
+		removeChoosenFriend(id);
+	});
+	function removeChoosenFriend(id) {
 		idString = $('#FriendIds').val();
 		// Ta bort id i hiddenfältet
 		if (idString.includes(',' + id)) {
@@ -105,7 +114,12 @@
 		$('#' + id).remove();
 		// ta bort klass och lägg till en annan
 		$('#' + id).removeClass('choosen').addClass('not-choosen');
-	});
+	}
+
+
+
+
+
 
 	/*
 	SPLIT/EXPENSE
@@ -196,6 +210,16 @@
 		$('#addFriendsBox').show();
 		$(this).hide();
 	});
+	// Ändra cirkelns storlek dynamiskt
+	if ($('#circleSection').length > 0) {
+		var circleLength = $('#circle').text().length;
+		if (circleLength > 6) {
+			var circleSize = circleLength * 25;
+			$('.circle').css('width', circleSize);
+			$('.circle').css('height', circleSize);
+			$('.circle .focus').css('line-height', circleSize + 'px');
+		}
+	}
 	/*
 	PROFILE
 	*/
@@ -262,7 +286,7 @@
 		var firstname = $(this).text();
 		var lastname = $(this).attr('lastname');
 		var email = $(this).attr('email');
-		console.log(firstname + ' ' + lastname + ' ' + email)
+		console.log(firstname + ' ' + lastname + ' ' + email);
 		// TODO visa denna info
 	});
 });

@@ -8,11 +8,11 @@
 	<a asp-controller="Split" asp-action="UpdateEvent" asp-route-id="@Model.EventId">
 		<i id="updateEvent" class="fa fa-pencil-square-o" aria-hidden="true"></i>
 	</a>
-	<section class="status">
+	<section class="status" id="circleSection">
 		@if (Model.MyStatus < 0)
 		{
 			<div class="minus circle">
-				<span class="focus">@Model.MyStatus @Model.StandardCurrency</span>
+				<span id="circle" class="focus">@Model.MyStatus @Model.StandardCurrency</span>
 			</div>
 		}
 		else
