@@ -11,6 +11,7 @@ namespace Grupp5.Models.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
+        public bool IsPayer { get; set; } = false;
 
     }
 }
