@@ -231,7 +231,7 @@
 	/*
 	Radera expense
 	*/
-	$('#deleteExpenseButton').click(function (e) {
+	$('.deleteExpenseButton').click(function (e) {
 		e.preventDefault();
 		//var expenseId = $(this);
 		console.log(this)//TODO hämta in expenseId från Details
