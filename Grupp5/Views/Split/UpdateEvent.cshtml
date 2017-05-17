@@ -2,6 +2,7 @@
 @{ViewBag.Title = Model.Name;}
 
 <h2>@Model.Name</h2>
+
 <form asp-controller="Split" asp-action="UpdateEvent" class="addFriendsBox" eventId="@Model.EventId" id="updateEventForm">
 
 	<label asp-for="Name"></label>
@@ -29,6 +30,7 @@
 	<input type="submit" value="Uppdatera event" />
 
 </form>
+<a class="delete" id="deleteEventButton" href=""><i class="fa fa-times" aria-hidden="true"></i> Stäng event</a>
 
 @section scripts {
 	<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.0.min.js"></script>

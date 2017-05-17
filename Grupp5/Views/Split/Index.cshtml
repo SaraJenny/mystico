@@ -6,10 +6,12 @@
 <h2 class="eventHeading">Mina event</h2>
 @if (Model.Count() == 0)
 {
-	<p>Ooops! Ser ut som att du inte har några öppna event.</p>
-	<p class="listItem">Börja med att lägga till ett nytt äventyr genom att trycka på "Lägg till event" uppe till höger.</p>
-	<p class="listItem">Senare kan du använda den stora plusknappen här nere för att lägga till utgifter som du betalat för.</p>
-	<p>Inga fler sura miner över vem som betalat vad! Keep your friends and wallet happy, PayMe-teamet</p>
+	<section class="no-events-section">
+		<p>Ooops! Ser ut som att du inte har några öppna event.</p>
+		<p class="listItem">Börja med att lägga till ett nytt äventyr genom att trycka på "Lägg till event" uppe till höger.</p>
+		<p class="listItem">Senare kan du använda den stora plusknappen här nere för att lägga till utgifter som du betalat för.</p>
+		<p>Inga fler sura miner över vem som betalat vad! Keep your friends and wallet happy, PayMe-teamet</p>
+	</section>
 }
 else
 {

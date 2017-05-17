@@ -422,12 +422,21 @@ label + .participant {
 
 
 
+/******************
+SPLIT/INDEX
+******************/
+.no-events-section {
+	max-width: 600px;
+	margin: 0 auto;
+}
+
+
+
 
 
 /*********
 SPLIT/OVERVIEW
 **********/
-
 /* Section */
 .status {
 	text-align: center;

@@ -53,7 +53,7 @@ namespace Grupp5.Controllers
 
             if (!result.Succeeded)
             {
-                ModelState.AddModelError(nameof(AccountLoginVM.Email), "Ogiltig inloggning");
+                ModelState.AddModelError(nameof(AccountLoginVM.Password), "Ogiltig inloggning");
                 return View(viewModel);
             }
 
