@@ -26,5 +26,11 @@ namespace Grupp5.Controllers
         }
 		#endregion
 
+		#region Logo
+		public IActionResult Logo()
+		{
+			return View();
+		}
+		#endregion
 	}
 }
