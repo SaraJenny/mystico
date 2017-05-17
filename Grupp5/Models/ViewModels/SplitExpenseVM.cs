@@ -28,8 +28,8 @@ namespace Grupp5.Models.Entities
 		[Required(ErrorMessage = "Belopp saknas")]
 		[Display(Name = "Belopp")]
         [DataType(DataType.Currency)]
-		[Range(0.0, double.MaxValue, ErrorMessage = "Ogiltigt belopp")]
-        public double Amount { get; set; }
+        [Range(0.0, double.MaxValue, ErrorMessage = "Ogiltigt belopp")]
+        public string Amount { get; set; }
 
 		[Required(ErrorMessage = "Betalningsdatum saknas")]
 		[Display(Name = "Betalningsdatum")]

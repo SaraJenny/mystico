@@ -113,8 +113,7 @@ namespace Grupp5.Controllers
             viewModel.CurrencyItem = Library.ConvertCurrencyToSelectListItem(allCurrencies);
             viewModel.EventItem = Library.ConvertEventToSelectListItem(myEvents);
             viewModel.Date = DateTime.Today.ToString().Replace(" 00:00:00", "");
-            //viewModel.Date = DateTime.Today;
-            //viewModel.Date = DateTime.Today.ToString("yyyy-mm-dd");
+
 
             return View(viewModel);
         }
