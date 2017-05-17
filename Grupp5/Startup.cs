@@ -22,8 +22,10 @@ namespace Grupp5
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables()
-                .AddUserSecrets<Startup>();
+                .AddEnvironmentVariables();
+        
+            if (env.IsDevelopment())
+                builder.AddUserSecrets<Startup>();
             Configuration = builder.Build();
         }
 
@@ -67,7 +69,7 @@ namespace Grupp5
             app.UseGoogleAuthentication(new GoogleOptions()
             {
                 ClientId = Configuration["GoogleClientId"],
-                ClientSecret = Configuration["GoogleClientSecret"]
+                ClientSecret = Configuration["GoogleClientSecret"],
             });
 
             app.UseMvcWithDefaultRoute();

@@ -177,8 +177,8 @@ namespace Grupp5.Controllers
         #endregion
 
         #region Google
-
-        //TODO fixa snyggare redirect mm..
+        
+        //TODO fixa snyggare redirect etc..
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]

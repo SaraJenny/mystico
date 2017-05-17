@@ -40,6 +40,8 @@ namespace Grupp5.Controllers
                 return RedirectToAction(nameof(SplitController.Index), nameof(SplitController).Replace("Controller", ""));
 
             var expenses = mysticoContext.GetExpensesByEvent(id);
+            expenses = expenses.OrderByDescending(e => e.Date).ToList();
+
             var objections = mysticoContext.GetObjectionsInEvent(id);
             List<SplitDetailsVM> viewModel = Library.ConvertExpenseToSplitDetailsVM(expenses, objections);
             ViewBag.CurrentUserId = user.Id;
@@ -129,7 +131,7 @@ namespace Grupp5.Controllers
 
             return RedirectToAction(nameof(SplitController.Overview), nameof(SplitController).Replace("Controller", ""), new { id = viewModel.SelectedEvent });
         }
-        #endregion
+        #endregion  
 
         #region Index
         public async Task<IActionResult> Index()
