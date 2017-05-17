@@ -74,11 +74,10 @@ header {
 	padding: .5em;
 }
 
-#innerHeader {
-	position: relative;
+/*#innerHeader {
 	max-width: 570px;
 	margin: 0 auto;
-}
+}*/
 
 main {
 	/*min-height: 100%;*/
@@ -124,6 +123,13 @@ img {
 	max-width: 100%;
 }
 
+@media (min-width: 600px) {
+	#logo {
+		display: block;
+		text-align: center;
+	}
+}
+
 
 
 
@@ -137,10 +143,16 @@ img {
 	font-size: 4em;
 	position: absolute;
 	top: .1em;
-	right: 0;
+	right: .2em;
 	text-decoration: none;
 	color: #F5F7DC;
 	line-height: 1em;
+}
+
+@media (min-width: 500px) {
+	#toggle-nav {
+		right: .5em;
+	}
 }
 
 #mainmenu .active {
