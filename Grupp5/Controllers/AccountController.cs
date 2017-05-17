@@ -178,10 +178,11 @@ namespace Grupp5.Controllers
 
         #region Google
 
+        //TODO fixa snyggare redirect mm..
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public IActionResult ExternalLogin(string provider = "Google", string returnUrl = null)
+        public IActionResult ExternalLogin(string provider, string returnUrl = null)
         {
             // Request a redirect to the external login provider.
             var redirectUrl = Url.Action(nameof(ExternalLoginCallback), "Account", new { ReturnUrl = returnUrl });
@@ -189,7 +190,7 @@ namespace Grupp5.Controllers
             return Challenge(properties, provider);
         }
 
-        
+
         // GET: /Account/ExternalLoginCallback
         [HttpGet]
         [AllowAnonymous]
@@ -198,7 +199,7 @@ namespace Grupp5.Controllers
             if (remoteError != null)
             {
                 ModelState.AddModelError(string.Empty, $"Error from external provider: {remoteError}");
-                return View(nameof(Login));
+                return RedirectToAction(nameof(Login));
             }
             var info = await signInManager.GetExternalLoginInfoAsync();
             if (info == null)
@@ -214,7 +215,7 @@ namespace Grupp5.Controllers
             }
             if (result.IsLockedOut)
             {
-                return View("Lockout");
+                return Content("Lockout");
             }
             else
             {
@@ -248,6 +249,6 @@ namespace Grupp5.Controllers
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
         }
-#endregion
+        #endregion
     }
 }
