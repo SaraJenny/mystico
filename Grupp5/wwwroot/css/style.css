@@ -352,7 +352,7 @@ p + h3 {
 	padding: .2em;
 }
 
-.transactionsSection h3{
+.transactionsSection h3 {
 	text-align: left;
 }
 
@@ -398,14 +398,21 @@ a {
 }
 
 .right {
-	display:block;
-	text-align:right;
+	display: block;
+	text-align: right;
 	max-width: 560px;
 	margin: 0 auto;
 }
 
-label+.participant{
+label + .participant {
 	margin-top: .5em;
+}
+
+.link {
+	display: block;
+	text-align: right;
+	max-width: 500px;
+	margin: 0 auto;
 }
 
 
@@ -528,15 +535,15 @@ SPLIT/OVERVIEW
 	margin: 0 auto 1em;
 }
 
-#closeFriends{
+#closeFriends {
 	color: #710114;
 	top: 0;
 	right: 0;
 }
 
-#closeFriends:hover {
-	color: #38000a;
-}
+	#closeFriends:hover {
+		color: #38000a;
+	}
 
 
 
@@ -661,14 +668,51 @@ HOME/INDEX
 
 .startText {
 	font-family: 'Patua One', cursive;
-	font-size: 2em;
-	margin-bottom: 4.5em;
+	font-size: 2.5em;
+	margin: 0 2% 4.5em;
+	line-height: 1.1em;
+}
+
+@media (min-width: 500px) {
+	.startText {
+		margin-bottom: 6.5em;
+	}
+}
+
+@media (min-width: 600px) {
+	.startText {
+		font-size: 3.5em;
+	}
+}
+
+@media (min-width: 700px) {
+	.startText {
+		margin-bottom: 8.5em;
+	}
 }
 
 .startParas {
 	background-color: rgba(12,12,12,.4);
 	padding: .5em 1em;
 	font-size: 1.4em;
+}
+
+@media (min-width: 600px) {
+	.startParas {
+		font-size: 1.6em;
+		line-height: 1.1em;
+	}
+}
+
+.startParas p {
+	max-width: 330px;
+	margin: 0 auto;
+}
+
+@media (min-width: 600px) {
+	.startParas p {
+		max-width: 450px;
+	}
 }
 
 .readMoreLink {
