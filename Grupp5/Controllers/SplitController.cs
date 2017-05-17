@@ -42,10 +42,13 @@ namespace Grupp5.Controllers
             var expenses = mysticoContext.GetExpensesByEvent(id);
             expenses = expenses.OrderByDescending(e => e.Date).ToList();
 
+            var myEvent = mysticoContext.GetEventById(id);
+
             var objections = mysticoContext.GetObjectionsInEvent(id);
             List<SplitDetailsVM> viewModel = Library.ConvertExpenseToSplitDetailsVM(expenses, objections);
             ViewBag.CurrentUserId = user.Id;
-            ViewBag.EventName = mysticoContext.GetEventById(id).EventName;
+            ViewBag.EventName = myEvent.EventName;
+            ViewBag.IsActive = myEvent.IsActive;
 
             return View(viewModel);
         }
@@ -110,8 +113,7 @@ namespace Grupp5.Controllers
             viewModel.CurrencyItem = Library.ConvertCurrencyToSelectListItem(allCurrencies);
             viewModel.EventItem = Library.ConvertEventToSelectListItem(myEvents);
             viewModel.Date = DateTime.Today.ToString().Replace(" 00:00:00", "");
-            //viewModel.Date = DateTime.Today;
-            //viewModel.Date = DateTime.Today.ToString("yyyy-mm-dd");
+
 
             return View(viewModel);
         }

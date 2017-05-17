@@ -346,7 +346,7 @@ namespace Grupp5.Models.SplitModels
         internal static SplitExpenseVM ConvertToSplitExpenseVM(Expense myExpense)
         {
             return new SplitExpenseVM {
-                Amount = Convert.ToDouble(myExpense.Amount),
+                Amount = myExpense.Amount.ToString(),
                 Date = myExpense.Date.ToString().Replace(" 00:00:00", ""),
                 Description = myExpense.Description,
                 SelectedCurrency = myExpense.CurrencyId,
