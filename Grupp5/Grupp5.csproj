@@ -20,6 +20,7 @@
     <Content Include="wwwroot\img\logo_150.png" />
     <Content Include="wwwroot\img\logo_175-white.png" />
     <Content Include="wwwroot\img\logo_175.png" />
+    <Content Include="wwwroot\img\logo_50.png" />
     <Content Include="wwwroot\img\logo_90.png" />
     <Content Include="wwwroot\img\plus_75.png" />
     <Content Include="wwwroot\img\plus_75x75.png" />
