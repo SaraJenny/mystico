@@ -5,8 +5,8 @@
 	<title>PayMe | @ViewBag.Title</title>
 	<link href="https://fonts.googleapis.com/css?family=Patua+One|Roboto:400,400i,500,700" rel="stylesheet">
 	<link href="~/css/style.css" rel="stylesheet" />
-    <meta name="google-signin-client_id" content="631299590819-qeaamapm9nt7p6svi2n62grkuu4q8vad.apps.googleusercontent.com">
-	@*<link rel="shortcut icon" type="image/png" href="/img/favicon.ico" />*@
+	<meta name="google-signin-client_id" content="631299590819-qeaamapm9nt7p6svi2n62grkuu4q8vad.apps.googleusercontent.com">
+	<link rel="icon" type="image/png" href="~/img/favicon.ico" />
 </head>
 <body>
 	<header>
@@ -16,9 +16,7 @@
 				<img src="~/img/logo_175-white.png" alt="" />
 			</a>
 
-        
-                <div hidden class="g-signin2"></div>
-
+			<div hidden class="g-signin2"></div>
 
 			<a href="#" id="toggle-nav">&#9776;</a>
 			<nav id="mainmenu" class="sidenav">
@@ -28,6 +26,22 @@
 						<li>
 							<a asp-controller="Split" asp-action="Index">Hem</a>
 						</li>
+						<li>
+							<a asp-controller="Split" asp-action="Event">Lägg till event</a>
+						</li>
+						<li>
+							<a asp-controller="Split" asp-action="Expense">Lägg till utlägg</a>
+						</li>
+						<li>
+							<a asp-controller="Split" asp-action="EventHistory">Avslutade event</a>
+						</li>
+
+						@*<li>
+								<a asp-controller="Split" asp-action="Search">Sök event</a>
+							</li>*@
+						<li>
+							<a asp-controller="Account" asp-action="Profile">Min profil</a>
+						</li>
 					}
 					else
 					{
@@ -35,24 +49,6 @@
 							<a asp-controller="Home" asp-action="Index">Hem</a>
 						</li>
 					}
-					<li>
-						<a asp-controller="Split" asp-action="Event">Lägg till event</a>
-					</li>
-					<li>
-						<a asp-controller="Split" asp-action="Expense">Lägg till utlägg</a>
-					</li>
-					@if (User.Identity.IsAuthenticated)
-					{
-						<li>
-							<a asp-controller="Split" asp-action="EventHistory">Avslutade event</a>
-						</li>
-					}
-					@*<li>
-						<a asp-controller="Split" asp-action="Search">Sök event</a>
-					</li>*@
-					<li>
-						<a asp-controller="Account" asp-action="Profile">Min profil</a>
-					</li>
 					<li>
 						<a asp-controller="Home" asp-action="About">Om PayMe</a>
 					</li>
@@ -82,16 +78,16 @@
 	@RenderSection("addExpenseFooter", false)
 	<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.0.min.js"></script>
 	<script src="~/js/script.js"></script>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
+	<script src="https://apis.google.com/js/platform.js" async defer></script>
 	<script src="https://use.fontawesome.com/9457647ef2.js"></script>
-    <script>
-        function signOut() {
-            var auth2 = gapi.auth2.getAuthInstance();
-            auth2.signOut().then(function () {
-                console.log('User signed out.');
-            });
-        }
-    </script>
+	<script>
+		function signOut() {
+			var auth2 = gapi.auth2.getAuthInstance();
+			auth2.signOut().then(function () {
+				console.log('User signed out.');
+			});
+		}
+	</script>
 	@RenderSection("scripts", false)
 </body>
 </html>

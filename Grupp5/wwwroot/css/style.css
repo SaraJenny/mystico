@@ -239,6 +239,8 @@ label {
 
 
 
+
+
 /******************
 BUTTON
 ******************/
@@ -381,7 +383,7 @@ a {
 		text-decoration: underline;
 	}
 
-p+p {
+.no-events-section p + p {
 	margin-top: 1em;
 }
 
@@ -417,6 +419,10 @@ label + .participant {
 	text-align: right;
 	max-width: 500px;
 	margin: 0 auto;
+}
+
+.link+.link {
+	margin-top: 1em;
 }
 
 

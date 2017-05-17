@@ -17,10 +17,12 @@
 	<input type="submit" value="Logga in" />
 
 </form>
+
 <form asp-controller="Account" asp-action="ExternalLogin" asp-route-provider="Google">
 	<div class="g-signin2" onClick="this.parentNode.submit();"></div>
 </form>
 
+<a class="link" asp-controller="#" asp-action="#">Glömt ditt lösenord?</a>
 <a class="link" asp-controller="Account" asp-action="Register">Skapa konto</a>
 
 @section scripts {

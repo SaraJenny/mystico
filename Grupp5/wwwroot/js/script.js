@@ -277,7 +277,7 @@
 	// Ändra cirkelns storlek dynamiskt
 	if ($('#circleSection').length > 0) {
 		var circleLength = $('#circle').text().length;
-		//$('#circle').text('1000000 SEK');
+		//$('#circle').text('10000000 SEK');
 		if (circleLength > 6) {
 			var circleSize = 50 + circleLength * 20;
 			$('.circle').css('width', circleSize);
