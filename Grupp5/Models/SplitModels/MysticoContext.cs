@@ -186,6 +186,7 @@ namespace Grupp5.Models.Entities
             newEvent.Description = viewModel.Description;
             newEvent.IsActive = true;
             newEvent.StandardCurrencyId = Convert.ToInt32(viewModel.SelectedCurrency);
+            newEvent.ExpenseCurrencyId = Convert.ToInt32(viewModel.ExpenseCurrencyId);
 
             Event.Add(newEvent);
             SaveChanges();
@@ -387,6 +388,7 @@ namespace Grupp5.Models.Entities
         {
             myEvent.EventName = viewModel.Name;
             myEvent.Description = viewModel.Description;
+            myEvent.ExpenseCurrencyId = Convert.ToInt32(viewModel.ExpenseCurrencyId);
             if (myEvent.StandardCurrencyId != Convert.ToInt32(viewModel.SelectedCurrency))
             {
                 myEvent.StandardCurrencyId = Convert.ToInt32(viewModel.SelectedCurrency);
