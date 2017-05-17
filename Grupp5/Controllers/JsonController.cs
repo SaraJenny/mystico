@@ -9,6 +9,7 @@ using Grupp5.Models.Entities;
 using Grupp5.Models.SplitModels;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -116,7 +117,40 @@ namespace Grupp5.Controllers
 
             return participantsWithMarkedPayers;
         }
-#endregion
+        #endregion
+
+        #region GetPossiblePurchaserById
+
+        public async Task<SelectListItem[]>GetPossiblePurchaserById(int id)
+        {
+            var myUser = await userManager.GetUserAsync(HttpContext.User);
+            User user = mysticoContext.GetUserByAspUserId(myUser.Id);
+
+            var myEvent = mysticoContext.GetEventById(id);
+            var possiblePurchasers = Library.ConvertParticipantsToSelectListItem(myEvent, user.Id);
+
+            return possiblePurchasers;
+        }
+
+
+        #endregion
+
+        #region AddUsersToEvent
+        public bool AddUsersToEvent(string userIds, int eventId)
+        {
+            try
+            {
+                mysticoContext.AddParticipantsToEvent(userIds, eventId);
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        #endregion
 
     }
 }
