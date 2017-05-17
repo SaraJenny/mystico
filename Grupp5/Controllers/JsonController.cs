@@ -99,7 +99,7 @@ namespace Grupp5.Controllers
         {
             var myEvent = mysticoContext.GetEventById(id);
 
-            return myEvent.StandardCurrencyId;
+            return myEvent.ExpenseCurrencyId;
         }
         #endregion
 
