@@ -1,49 +1,55 @@
 ﻿@model SplitOverviewVM
 @{ViewBag.Title = Model.EventName;}
 
-@if (Model.EventIsActive)
-{
 
-	<h2>@Model.EventName</h2>
-	<section class="status" id="circleSection">
+<h2>@Model.EventName</h2>
+<section class="status" id="circleSection">
+	@if (Model.EventIsActive)
+	{
 		<a asp-controller="Split" asp-action="UpdateEvent" asp-route-id="@Model.EventId">
 			<i id="updateEvent" class="fa fa-pencil-square-o" aria-hidden="true"></i>
 		</a>
-		@if (Model.MyStatus < 0)
-		{
-			<div class="minus circle">
-				<span id="circle" class="focus">@Model.MyStatus @Model.StandardCurrency</span>
-			</div>
-		}
-		else
-		{
-			<div class="plus circle">
-				<span class="focus">+ @Model.MyStatus @Model.StandardCurrency</span>
-			</div>
-		}
-	</section>
-	<section class="status total section">
-		<h3>Total kostnad</h3>
-		<p class="totalCost">@Model.Total @Model.StandardCurrency</p>
-		<p>varav din andel är @Model.MyTotal @Model.StandardCurrency</p>
-	</section>
-	<section class="transactionsSection">
-		<h3>Överföringar</h3>
-
-		@foreach (var item in Model.TransactionsCommittedToMe)
-		{
-			<p class="listItem"><a href="#" class="person" userId="@item.DebitorId" email="@item.DebitorEmail" lastname="@item.DebitorLastName">@item.DebitorFirstName</a> ska överföra @item.Amount @Model.StandardCurrency till @item.CreditorFirstName</p>
-		}
-		<div id="transactionsWithoutMe">
-			@foreach (var item in Model.TransactionsWithoutMe)
-				{
-				<p class="listItem"><a href="#" class="person">@item.DebitorFirstName</a> ska överföra @item.Amount @Model.StandardCurrency till @item.CreditorFirstName</p>
-				}
+	}
+	else
+	{
+	}
+	@if (Model.MyStatus < 0)
+	{
+		<div class="minus circle">
+			<span id="circle" class="focus">@Model.MyStatus @Model.StandardCurrency</span>
 		</div>
+	}
+	else
+	{
+		<div class="plus circle">
+			<span id="circle" class="focus">+ @Model.MyStatus @Model.StandardCurrency</span>
+		</div>
+	}
+</section>
+<section class="status total section">
+	<h3>Total kostnad</h3>
+	<p class="totalCost">@Model.Total @Model.StandardCurrency</p>
+	<p>varav din andel är @Model.MyTotal @Model.StandardCurrency</p>
+</section>
+<section class="transactionsSection">
+	<h3>Överföringar</h3>
 
-	</section>
-	<a id="allTransactionsButton" href="#"><i class="fa fa-plus" aria-hidden="true"></i> <span id="allTransactionsText">Se alla överföringar</span></a>
-	<a class="button" asp-controller="Split" asp-action="Details" asp-route-id="@Model.EventId">Se alla utlägg</a>
+	@foreach (var item in Model.TransactionsCommittedToMe)
+	{
+		<p class="listItem"><a href="#" class="person" userId="@item.DebitorId" email="@item.DebitorEmail" lastname="@item.DebitorLastName">@item.DebitorFirstName</a> ska överföra @item.Amount @Model.StandardCurrency till @item.CreditorFirstName</p>
+	}
+	<div id="transactionsWithoutMe">
+		@foreach (var item in Model.TransactionsWithoutMe)
+		{
+			<p class="listItem"><a href="#" class="person">@item.DebitorFirstName</a> ska överföra @item.Amount @Model.StandardCurrency till @item.CreditorFirstName</p>
+		}
+	</div>
+
+</section>
+<a id="allTransactionsButton" href="#"><i class="fa fa-plus" aria-hidden="true"></i> <span id="allTransactionsText">Se alla överföringar</span></a>
+<a class="button" asp-controller="Split" asp-action="Details" asp-route-id="@Model.EventId">Se alla utlägg</a>
+@if (Model.EventIsActive)
+{
 	<form id="addFriendsBox" class="addFriendsBox" eventid="@Model.EventId" asp-controller="Split" asp-action="Overview">
 		<a id="closeFriends" href=""><i class="fa fa-times" aria-hidden="true"></i></a>
 		<label for="friendsTextBox">Deltagare</label>
@@ -60,18 +66,13 @@
 	</form>
 	<a class="button" id="addFriendsButton" href="#">Lägg till vänner</a>
 	<a class="delete" id="deleteEventButton" href=""><i class="fa fa-times" aria-hidden="true"></i> Stäng event</a>
-	@section addExpenseFooter {
-		<footer>
-			<div id="addExpenseFooter">
-				<a asp-controller="Split" asp-action="Expense">
-					<img id="plusSign" src="~/img/plus_75.png" />
-				</a>
-			</div>
-		</footer>
-	}
 }
-else
-{
-	<h1>Jag är avslutad!</h1>
+@section addExpenseFooter {
+	<footer>
+		<div id="addExpenseFooter">
+			<a asp-controller="Split" asp-action="Expense">
+				<img id="plusSign" src="~/img/plus_75.png" />
+			</a>
+		</div>
+	</footer>
 }
-
