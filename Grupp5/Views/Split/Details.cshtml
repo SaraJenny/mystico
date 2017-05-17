@@ -7,7 +7,7 @@
 	@foreach (var item in Model)
 	{
 		<div class="expenseBox">
-			@if (item.ExpenseInfo.PurchaserId == ViewBag.CurrentUserId)
+			@if (item.ExpenseInfo.PurchaserId == ViewBag.CurrentUserId && ViewBag.IsActive == true)
 			{
 				<a asp-controller="Split" asp-action="UpdateExpense" asp-route-id="@item.ExpenseId">
 					<i class="updateExpense fa fa-pencil-square-o" aria-hidden="true"></i>
