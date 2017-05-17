@@ -98,7 +98,8 @@ namespace Grupp5.Models.SplitModels
                     PurchaserLastName = exp.Purchaser.LastName,
                     Amount = Convert.ToInt32(exp.Amount),
                     CurrencyCode = exp.Currency.CurrencyCode,
-                    ExpenseDescription = exp.Description
+                    ExpenseDescription = exp.Description,
+                    Date = exp.Date
                     
                 };
 
