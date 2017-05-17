@@ -99,8 +99,8 @@ namespace Grupp5.Models.SplitModels
                     Amount = Convert.ToInt32(exp.Amount),
                     CurrencyCode = exp.Currency.CurrencyCode,
                     ExpenseDescription = exp.Description,
-                    Date = exp.Date
-                    
+                    Date = exp.Date.ToString().Replace(" 00:00:00", "")
+
                 };
 
                 expense.ExpenseInfo.payers = new List<PayerVM>();

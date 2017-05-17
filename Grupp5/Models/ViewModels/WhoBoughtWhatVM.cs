@@ -15,7 +15,7 @@ namespace Grupp5.Models.Entities
         public List<PayerVM> payers { get; set; }
         public string ExpenseDescription { get; set; }
         public string CurrencyCode { get; set; }
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
 
 
     }
