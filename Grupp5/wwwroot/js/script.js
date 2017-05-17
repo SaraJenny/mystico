@@ -83,7 +83,8 @@
 		// töm textboxen
 		$('#friendsTextBox').val('');
 		// töm vänboxen
-		$('#friend-box').html("");
+		$('#friend-box').html('');
+		$('html, body').animate({ scrollTop: $(document).height() }, 'fast');
 	});
 
 	/*
@@ -114,6 +115,7 @@
 		$('#' + id).remove();
 		// ta bort klass och lägg till en annan
 		$('#' + id).removeClass('choosen').addClass('not-choosen');
+		$('html, body').animate({ scrollTop: $(document).height() }, 'fast');
 	}
 
 	// Hämta standardcurrency och sätt till selected
@@ -264,6 +266,7 @@
 		e.preventDefault();
 		$('#addFriendsBox').show();
 		$(this).hide();
+		$('html, body').animate({ scrollTop: $(document).height() }, 'slow');
 	});
 	// Dölj formulär för att lägga till vänner
 	$('#closeFriends').click(function (e) {
@@ -334,11 +337,11 @@
 	$('#allTransactionsButton').click(function (e) {
 		e.preventDefault();
 		$('#transactionsWithoutMe').toggle();
-		if ($('#allTransactionsText').text() === 'Se alla överföringar') {
-			$('#allTransactionsText').text('Dölj överföringar');
+		if ($('#allTransactionsText').text() === 'Se allas överföringar') {
+			$('#allTransactionsText').text('Dölj andras överföringar');
 		}
 		else {
-			$('#allTransactionsText').text('Se alla överföringar');
+			$('#allTransactionsText').text('Se allas överföringar');
 		}
 	});
 

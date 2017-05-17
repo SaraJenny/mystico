@@ -10,10 +10,6 @@
 			<i id="updateEvent" class="fa fa-pencil-square-o" aria-hidden="true"></i>
 		</a>
 	}
-	else
-	{
-		<a asp-controller="Split" asp-action="ReActivateEvent" asp-route-id="@Model.EventId">Återaktivera</a>
-	}
 	@if (Model.MyStatus < 0)
 	{
 		<div class="minus circle">
@@ -33,21 +29,28 @@
 	<p>varav din andel är @Model.MyTotal @Model.StandardCurrency</p>
 </section>
 <section class="transactionsSection">
-	<h3>Överföringar</h3>
+	<h3>Mina överföringar</h3>
 
 	@foreach (var item in Model.TransactionsCommittedToMe)
 	{
 		<p class="listItem"><a href="#" class="person" userId="@item.DebitorId" email="@item.DebitorEmail" lastname="@item.DebitorLastName">@item.DebitorFirstName</a> ska överföra @item.Amount @Model.StandardCurrency till @item.CreditorFirstName</p>
 	}
 	<div id="transactionsWithoutMe">
-		@foreach (var item in Model.TransactionsWithoutMe)
+		@if (Model.TransactionsWithoutMe.Count() == 0)
 		{
-			<p class="listItem"><a href="#" class="person">@item.DebitorFirstName</a> ska överföra @item.Amount @Model.StandardCurrency till @item.CreditorFirstName</p>
+			<p class="message">Det finns inga andra överföringar</p>
+		}
+		else
+		{
+			@foreach (var item in Model.TransactionsWithoutMe)
+			{
+				<p class="listItem"><a href="#" class="person">@item.DebitorFirstName</a> ska överföra @item.Amount @Model.StandardCurrency till @item.CreditorFirstName</p>
+			}
 		}
 	</div>
 
 </section>
-<a id="allTransactionsButton" href="#"><i class="fa fa-plus" aria-hidden="true"></i> <span id="allTransactionsText">Se alla överföringar</span></a>
+<a id="allTransactionsButton" href="#"><i class="fa fa-plus" aria-hidden="true"></i> <span id="allTransactionsText">Se allas överföringar</span></a>
 <a class="button" asp-controller="Split" asp-action="Details" asp-route-id="@Model.EventId">Se alla utlägg</a>
 @if (Model.EventIsActive)
 {
@@ -63,10 +66,14 @@
 		<input type="hidden" asp-for="FriendIds" />
 
 		<div class="friend-box" id="friend-box"></div>
-		<input type="submit" value="Lägg till vänner" />
+		<input type="submit" value="Lägg till deltagare" />
 	</form>
-	<a class="button" id="addFriendsButton" href="#">Lägg till vänner</a>
+	<a class="button" id="addFriendsButton" href="#">Se/lägg till deltagare</a>
 	<a class="delete" id="deleteEventButton" href=""><i class="fa fa-times" aria-hidden="true"></i> Stäng event</a>
+}
+else
+{
+	<a class="button" asp-controller="Split" asp-action="ReActivateEvent" asp-route-id="@Model.EventId">Återaktivera event</a>
 }
 @section addExpenseFooter {
 	<footer>

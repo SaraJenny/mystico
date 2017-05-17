@@ -381,6 +381,10 @@ a {
 		text-decoration: underline;
 	}
 
+p+p {
+	margin-top: 1em;
+}
+
 .field-validation-error {
 	color: #710114;
 	display: block;
@@ -414,6 +418,7 @@ label + .participant {
 	max-width: 500px;
 	margin: 0 auto;
 }
+
 
 
 

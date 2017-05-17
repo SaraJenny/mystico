@@ -8,7 +8,10 @@
 {
 	<p class="message">Du har inga avslutade event</p>
 }
-@foreach (ListOfEventsVM item in Model)
+else
 {
-    <a class="button" asp-controller="Split" asp-action="Overview" asp-route-id="@item.Id">@item.EventName</a>
+	@foreach (ListOfEventsVM item in Model)
+	{
+		<a class="button" asp-controller="Split" asp-action="Overview" asp-route-id="@item.Id">@item.EventName</a>
+	}
 }
