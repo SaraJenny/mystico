@@ -75,7 +75,6 @@ header {
 }
 
 #innerHeader {
-	position: relative;
 	max-width: 570px;
 	margin: 0 auto;
 }
@@ -137,7 +136,7 @@ img {
 	font-size: 4em;
 	position: absolute;
 	top: .1em;
-	right: 0;
+	right: .5em;
 	text-decoration: none;
 	color: #F5F7DC;
 	line-height: 1em;
