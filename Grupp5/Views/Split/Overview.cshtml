@@ -59,7 +59,7 @@
 		<label for="friendsTextBox">Deltagare</label>
 		@foreach (var item in Model.AlreadyParticipants)
 		{
-			<p class="friend participant">@item.FirstName @item.LastName</p>
+			<p class="friend participant" userid="@item.Id">@item.FirstName @item.LastName</p>
 		}
 		<div class="friend-box" id="choosenFriends"></div>
 		<input type="text" id="friendsTextBox" placeholder="Sök efter vänner" />

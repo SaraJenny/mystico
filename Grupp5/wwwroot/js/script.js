@@ -19,11 +19,12 @@
 	var string = "";
 	var idString = ""; // SPLIT/EVENT
 	var userIdString = ""; // SPLIT/EXPENSE
-
 	/*
 	SPLIT/EVENT
 	*/
 	$('#friendsTextBox').on('input', function (e) {
+		// ta bort ev. felmeddelande
+		$('.field-validation-error').remove();
 		// töm vänboxen
 		$('#friend-box').html('');
 		string = $('#friendsTextBox').val();
@@ -93,11 +94,6 @@
 	$('body').on('click', '.choosen', function (e) {
 		var id = $(this).attr('userid');
 		removeChoosenFriend(id, this);
-	});
-	$('body').on('click', '.deleteX', function (e) {
-		//var id = $(this).parent().attr('userid');
-		//console.log(this)
-		//removeChoosenFriend(id);
 	});
 
 	function removeChoosenFriend(id, element) {
@@ -296,20 +292,27 @@
 		e.preventDefault();
 		var event = $('#addFriendsBox').attr('eventid');
 		var users = $('#FriendIds').val();
-		console.log(users)
 		$.ajax({
-			url: "/Split/Overview", // TODO anropa rätt action!
+			url: "/Json/AddUsersToEvent",
 			type: "GET",
 			data: {
-				id: event,
-				friends: users
+				eventId: event,
+				userIds: users
 			},
 			success: function (result) {
-				if (result) {
-					console.log(result)
+				if (result === true) {
+					//ändra färg och klickbarhet på deltagare
+					$('.choosen').each(function () {
+						$(this).children('.deleteX').remove();
+						var name = $(this).text();
+						var userId = $(this).attr('userid');
+						$('<p class="friend participant" userid="' + userId + '">' + name + '</p>').insertBefore('#choosenFriends');
+						$(this).remove();
+					});
+					// TODO skriv ut meddelande?
 				}
 				else {
-					console.log("Gick inte")
+					$('#friend-box').append('<p class="message field-validation-error">Något gick fel och deltagaren kunde inte läggas till.</p>');
 				}
 			}
 		});
