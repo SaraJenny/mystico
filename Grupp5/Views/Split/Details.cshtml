@@ -4,33 +4,40 @@
 <h2>@ViewBag.EventName</h2>
 
 <section id="details">
-	@foreach (var item in Model)
+	@if (Model.Count() > 0)
 	{
-		<div class="expenseBox">
-			@if (item.ExpenseInfo.PurchaserId == ViewBag.CurrentUserId && ViewBag.IsActive == true)
-			{
-				<a asp-controller="Split" asp-action="UpdateExpense" asp-route-id="@item.ExpenseId">
-					<i class="updateExpense fa fa-pencil-square-o" aria-hidden="true"></i>
-				</a>
-				<a href="#" class="deleteExpenseButton" expenseId="@item.ExpenseId">
-					<i id="deleteExpense" class="fa fa-trash" aria-hidden="true"></i>
-				</a>
-			}
-			<h3>@item.ExpenseInfo.ExpenseDescription</h3>
-			<h4>Belopp</h4>
-			<p>@item.ExpenseInfo.Amount @item.ExpenseInfo.CurrencyCode</p>
-			<h4>Köpare</h4>
-			<p>@item.ExpenseInfo.PurchaserFirstName</p>
-			<h4>Deltagare</h4>
-			<ul>
-				@foreach (var payer in item.ExpenseInfo.payers)
+		@foreach (var item in Model)
+		{
+			<div class="expenseBox">
+				@if (item.ExpenseInfo.PurchaserId == ViewBag.CurrentUserId && ViewBag.IsActive == true)
 				{
-					<li>@payer.FirstName</li>
+					<a asp-controller="Split" asp-action="UpdateExpense" asp-route-id="@item.ExpenseId">
+						<i class="updateExpense fa fa-pencil-square-o" aria-hidden="true"></i>
+					</a>
+					<a href="#" class="deleteExpenseButton" expenseId="@item.ExpenseId">
+						<i id="deleteExpense" class="fa fa-trash" aria-hidden="true"></i>
+					</a>
 				}
-			</ul>
-			<h4>Inköpsdatum</h4>
-			<p>@item.ExpenseInfo.Date</p>
-		</div>
+				<h3>@item.ExpenseInfo.ExpenseDescription</h3>
+				<h4>Belopp</h4>
+				<p>@item.ExpenseInfo.Amount @item.ExpenseInfo.CurrencyCode</p>
+				<h4>Köpare</h4>
+				<p>@item.ExpenseInfo.PurchaserFirstName</p>
+				<h4>Deltagare</h4>
+				<ul>
+					@foreach (var payer in item.ExpenseInfo.payers)
+					{
+						<li>@payer.FirstName</li>
+					}
+				</ul>
+				<h4>Inköpsdatum</h4>
+				<p>@item.ExpenseInfo.Date</p>
+			</div>
+		}
+	}
+	else
+	{
+		<p class="message">Detta event har inte några utlägg ännu.</p>
 	}
 </section>
 
