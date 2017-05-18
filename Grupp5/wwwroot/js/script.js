@@ -150,10 +150,10 @@
 	/*
 	SPLIT/UPDATEEVENT
 	*/
-	if ($('#updateEventForm').length > 0) {
-		var eventId = $('#updateEventForm').attr('eventid');
-		setStandardCurrency(eventId);
-	}
+	//if ($('#updateEventForm').length > 0) {
+	//	var eventId = $('#updateEventForm').attr('eventid');
+	//	setStandardCurrency(eventId);
+	//}
 	/*
 	SPLIT/EXPENSE & SPLIT/UPDATEEXPENSE
 	*/
