@@ -368,7 +368,7 @@ namespace Grupp5.Models.SplitModels
             return new SplitExpenseVM
             {        
                 Amount = Math.Round(myExpense.Amount,2).ToString(System.Globalization.CultureInfo.InvariantCulture),
-                Date = myExpense.Date.ToString().Replace(" 00:00:00", ""),
+                Date = myExpense.Date.ToString().Replace(" 12:00:00 AM", ""),
                 Description = myExpense.Description,
                 SelectedCurrency = myExpense.CurrencyId,
                 SelectedEvent = myExpense.EventId,

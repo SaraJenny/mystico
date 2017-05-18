@@ -112,7 +112,7 @@ namespace Grupp5.Controllers
 			var viewModel = new SplitExpenseVM();
 			viewModel.CurrencyItem = Library.ConvertCurrencyToSelectListItem(allCurrencies);
 			viewModel.EventItem = Library.ConvertEventToSelectListItem(myEvents);
-			viewModel.Date = DateTime.Today.ToString().Replace(" 00:00:00", "");
+			viewModel.Date = DateTime.Today.ToString().Replace(" 12:00:00 AM", "");
 
             if (id != 0)
                 viewModel.SelectedEvent = id;
