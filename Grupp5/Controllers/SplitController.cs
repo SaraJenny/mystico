@@ -286,8 +286,8 @@ namespace Grupp5.Controllers
 			//Hämta specifikt event som ska ändras
 			var myExpense = mysticoContext.GetExpenseById(id);
 
-			//OM jag inte är inköpare ==> skickas till overview
-			if (myExpense == null || myExpense.PurchaserId != currentUser.Id)
+			//OM expense inte finns eller (jag inte är inköpare eller det är en fakeperson)  ==> skickas till overview
+			if (myExpense == null || (myExpense.PurchaserId != currentUser.Id && (myExpense.PurchaserId > 47 && myExpense.PurchaserId < 32)))
 				return RedirectToAction(nameof(SplitController.Overview), nameof(SplitController).Replace("Controller", ""));
 
 			//Hämta event från databasen som currentUser är med i...
