@@ -347,7 +347,7 @@ namespace Grupp5.Models.Entities
                 Date = Convert.ToDateTime(viewModel.Date),
                 PurchaserId = viewModel.PurchaserID,
                 EventId = myEvent.Id,
-                AmountInStandardCurrency = await CalculateStandardCurrencyAmount(Convert.ToDecimal(viewModel.Amount, CultureInfo.InvariantCulture), viewModel.SelectedCurrency, myEvent.StandardCurrencyId, Convert.ToDateTime(viewModel.Date)) //TODO valutaomvandling
+                AmountInStandardCurrency = await CalculateStandardCurrencyAmount(Convert.ToDecimal(viewModel.Amount, CultureInfo.InvariantCulture), viewModel.SelectedCurrency, myEvent.StandardCurrencyId, Convert.ToDateTime(viewModel.Date))
 
             };
 

@@ -191,22 +191,6 @@ namespace Grupp5.Controllers
 			return View(viewModel);
 		}
 
-		[HttpPost]
-		public IActionResult Overview(SplitOverviewVM viewModel, int id) // TODO lägg till int id som parameter
-		{
-			if (!ModelState.IsValid)
-			{
-				viewModel.Message = "Modelstate is not valid...";
-				return View(viewModel);
-			}
-
-			mysticoContext.AddParticipantsToEvent(viewModel.FriendIds, id);
-			viewModel.FriendIds = "";
-			viewModel.Message = "Vänner tillagda! :)";
-			//TODO viewModel.Message försvinner ju... kanske inte redirecta...
-			return RedirectToAction(nameof(SplitController.Overview), nameof(SplitController).Replace("Controller", ""), new { id = id });
-
-		}
 		#endregion
 
 		#region Search
@@ -248,9 +232,6 @@ namespace Grupp5.Controllers
 
 			await mysticoContext.UpdateEvent(myEvent, viewModel);
 			mysticoContext.AddParticipantsToEvent(viewModel.FriendIds, id);
-
-			//TODO Update standard amount in every expanse that is connected to this event!
-
 
 			return RedirectToAction(nameof(SplitController.Overview), nameof(SplitController).Replace("Controller", ""), new { id = myEvent.Id });
 		}
