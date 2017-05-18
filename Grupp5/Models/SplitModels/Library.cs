@@ -101,7 +101,7 @@ namespace Grupp5.Models.SplitModels
                     Amount = Convert.ToInt32(exp.Amount),
                     CurrencyCode = exp.Currency.CurrencyCode,
                     ExpenseDescription = exp.Description,
-                    Date = exp.Date.ToString().Replace(" 00:00:00", "")
+                    Date = exp.Date.ToString("u").Replace(" 00:00:00Z","")
 
                 };
 
