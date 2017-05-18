@@ -148,13 +148,6 @@
 	}
 
 	/*
-	SPLIT/UPDATEEVENT
-	*/
-	//if ($('#updateEventForm').length > 0) {
-	//	var eventId = $('#updateEventForm').attr('eventid');
-	//	setStandardCurrency(eventId);
-	//}
-	/*
 	SPLIT/EXPENSE & SPLIT/UPDATEEXPENSE
 	*/
 	if ($('#splitExpense').length > 0 || $('#updateExpenseForm').length > 0) {
@@ -409,5 +402,36 @@
 		var email = $(this).attr('email');
 		console.log(firstname + ' ' + lastname + ' ' + email);
 		// TODO visa denna info
+	});
+
+	/*****************************
+	ACCOUNT/FORGOTPASSWORD
+	*****************************/
+	$('#sendResetPasswordEmailButton').click(function (e) {
+		e.preventDefault();
+		$('.message').remove('');
+		$('.field-validation-error').html('');
+		var email = $('#Email').val();
+		if (email.length === 0) {
+			$('#emailError').addClass('field-validation-error');
+			$('#emailError').text('E-post saknas');
+		}
+		else {
+			$.ajax({
+				url: "/Json/ForgotPassword",
+				type: "GET",
+				data: {
+					email: email
+				},
+				success: function (result) {
+					if (result === true) {
+						$('<p class="message">En återställningslänk har skickats till din e-post</p>').insertBefore('#sendResetPasswordEmailButton');
+					}
+					else {
+						$('<p class="field-validation-error">Något gick snett, försök gärna igen.</p>').insertBefore('#sendResetPasswordEmailButton');
+					}
+				}
+			});
+		}
 	});
 });
