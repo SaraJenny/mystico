@@ -8,19 +8,22 @@ namespace Grupp5.Models.Entities
 {
     public class ResetPasswordVM
     {
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; }
+		[Required(ErrorMessage = "E-post saknas")]
+		[Display(Name = "E-post")]
+		[DataType(DataType.EmailAddress)]
+		public string Email { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
-        [DataType(DataType.Password)]
+        [Display(Name = "Lösenord")]
+		[Required(ErrorMessage = "Lösenord saknas")]
+		[DataType(DataType.Password)]
+		[StringLength(100, ErrorMessage = "Lösenordet måste bestå av minst {2} tecken", MinimumLength = 6)]
         public string Password { get; set; }
 
-        [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
-        public string ConfirmPassword { get; set; }
+		[Required(ErrorMessage = "Lösenord saknas")]
+		[DataType(DataType.Password)]
+        [Display(Name = "Bekräfta lösenord")]
+		[Compare("Password", ErrorMessage = "Lösenorden överensstämmer inte")]
+		public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }
     }
