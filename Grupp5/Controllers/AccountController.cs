@@ -12,6 +12,7 @@ using MimeKit;
 using MailKit.Net.Smtp;
 using MailKit.Security;
 using Grupp5.Models.SplitModels;
+using System.Threading;
 
 namespace Grupp5.Controllers
 {
@@ -261,9 +262,6 @@ namespace Grupp5.Controllers
 
         #region ForgottenPassword
 
-
-
-
         // GET: /Account/ForgotPassword
         [HttpGet]
         [AllowAnonymous]
@@ -284,23 +282,14 @@ namespace Grupp5.Controllers
                 var user = await userManager.FindByEmailAsync(model.Email);
                 if (user == null)
                 {
+                    Thread.Sleep(400);
                     // Don't reveal that the user does not exist or is not confirmed
-                    return Content("Ett email har skickats ut till användaren om den är registrerad. Du fanns inte!");
-
-                    //return View("ForgotPasswordConfirmation");
+                    return Content("Ett email har skickats ut till användaren om den är registrerad.");
                 }
+               
+               SendEmailAsync(model.Email, user);
 
-
-                // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=532713
-                // Send an email with this link
-                var code = await userManager.GeneratePasswordResetTokenAsync(user);
-                var callbackUrl = Url.Action(nameof(ResetPassword), "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
-
-
-                Library.SendEmail(model.Email, "Reset Password",
-                   $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
-
-               return Content("Ett email har skickats ut till användaren om den är registrerad. Du fanns!");
+               return Content("Ett email har skickats ut till användaren om den är registrerad.");
             }
 
             // If we got this far, something failed, redisplay form
@@ -331,24 +320,44 @@ namespace Grupp5.Controllers
             if (user == null)
             {
                 // Don't reveal that the user does not exist
-                return RedirectToAction(nameof(AccountController.ResetPasswordConfirmation), "Account");
+                return RedirectToAction(nameof(HomeController.Index), "Home");
             }
             var result = await userManager.ResetPasswordAsync(user, model.Code, model.Password);
             if (result.Succeeded)
             {
-                return RedirectToAction(nameof(AccountController.ResetPasswordConfirmation), "Account");
+                return RedirectToAction(nameof(HomeController.Index), "Home");
             }
             //AddErrors(result);
-            return Content("Fuuuck.. inget nytt lösenord...");
+            return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
-        //
-        // GET: /Account/ResetPasswordConfirmation
-        [HttpGet]
-        [AllowAnonymous]
-        public IActionResult ResetPasswordConfirmation()
+        public async void SendEmailAsync(string email, IdentityUser user)
         {
-            return Content("YEYE! NYTT LÖSENORD!");
+            var code = await userManager.GeneratePasswordResetTokenAsync(user);
+            var callbackUrl = Url.Action(nameof(ResetPassword), "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
+
+
+            var messages = new MimeMessage();
+            messages.From.Add(new MailboxAddress("Payme", "Payme_Academy@outlook.com"));
+            messages.To.Add(new MailboxAddress("", email));
+            messages.Subject = "Reset Password";
+            messages.Body = new TextPart("plain")
+            {
+                Text = $"Please reset your password by clicking here: {callbackUrl}"
+            };
+
+            using (var client = new SmtpClient())
+            {
+                client.Connect("smtp-mail.outlook.com", 587, false);
+                client.AuthenticationMechanisms.Remove("XOAUTH2");
+                //TODO lägg password as secret
+                client.Authenticate("Payme_Academy@outlook.com", "Pillow123");
+
+                // Note: since we don't have an OAuth2 token, disable     // the XOAUTH2 authentication mechanism.    
+                await client.SendAsync(messages);
+                client.Disconnect(true);
+            }
+
         }
 
         #endregion

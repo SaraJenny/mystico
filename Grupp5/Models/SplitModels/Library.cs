@@ -373,29 +373,7 @@ namespace Grupp5.Models.SplitModels
 
             };
         }
-        public static void SendEmail(string email = "johanna.kallin@hotmail.se", string subject = "PayMe Or DIE", string message = "Hejhej, härmed vill jag ha 15 000 000 kr. Tack!")
-        {
-            var messages = new MimeMessage();
-            messages.From.Add(new MailboxAddress("Payme", "Payme_Academy@outlook.com"));
-            messages.To.Add(new MailboxAddress("", email));
-            messages.Subject = subject;
-            messages.Body = new TextPart("plain")
-            {
-                Text = message
-            };
 
-            using (var client = new SmtpClient())
-            {
-                client.Connect("smtp-mail.outlook.com", 587, false);
-                client.AuthenticationMechanisms.Remove("XOAUTH2");
-                //TODO lägg password as secret
-                client.Authenticate("Payme_Academy@outlook.com", "Pillow123");
 
-                // Note: since we don't have an OAuth2 token, disable     // the XOAUTH2 authentication mechanism.    
-                client.Send(messages);
-                client.Disconnect(true);
-            }
-
-        }
     }
 }
