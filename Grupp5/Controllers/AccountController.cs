@@ -300,9 +300,14 @@ namespace Grupp5.Controllers
         // GET: /Account/ResetPassword
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult ResetPassword(string code = null)
+        public async Task<ActionResult> ResetPassword(string user, string code = null)
         {
-            return code == null ? View("Error") : View();
+            var myUser = await userManager.FindByIdAsync(user);
+            var viewModel = new ResetPasswordVM();
+            viewModel.Email = myUser.Email;
+            viewModel.Code = code;
+
+            return code == null ? View("Error") : View(viewModel);
         }
 
         //
