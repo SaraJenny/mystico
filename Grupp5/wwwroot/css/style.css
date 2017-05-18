@@ -723,6 +723,12 @@ HOME/INDEX
 	}
 }
 
+@media (min-width: 1300px) {
+	.startText {
+		margin-left: 50%;
+	}
+}
+
 .startParas {
 	background-color: rgba(12,12,12,.4);
 	padding: .5em 1em;
