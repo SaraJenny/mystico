@@ -15,75 +15,70 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Grupp5
 {
-	public class Startup
-	{
-		public Startup(IHostingEnvironment env)
-		{
-			var builder = new ConfigurationBuilder()
-				.SetBasePath(env.ContentRootPath)
-				.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-				.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-				.AddEnvironmentVariables();
+    public class Startup
+    {
+        public Startup(IHostingEnvironment env)
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddEnvironmentVariables();
 
-			if (env.IsDevelopment())
-				builder.AddUserSecrets<Startup>();
-			Configuration = builder.Build();
-			Environment = env;
-		}
+            if (env.IsDevelopment())
+                builder.AddUserSecrets<Startup>();
+            Configuration = builder.Build();
+            Environment = env;
+        }
 
-		public IConfigurationRoot Configuration { get; }
-		public IHostingEnvironment Environment { get; }
+        public IConfigurationRoot Configuration { get; }
+        public IHostingEnvironment Environment { get; }
 
-		public void ConfigureServices(IServiceCollection services)
-		{
-			var conString = Configuration["MysticoConnection"];
-			services.AddDbContext<MysticoContext>(o => o.UseSqlServer(conString));
-			services.AddDbContext<IdentityDbContext>(o => o.UseSqlServer(conString));
-			services.AddSingleton<IConfiguration>(Configuration);
+        public void ConfigureServices(IServiceCollection services)
+        {
+            var conString = Configuration["MysticoConnection"];
+            services.AddDbContext<MysticoContext>(o => o.UseSqlServer(conString, op => op.EnableRetryOnFailure()));
+            services.AddDbContext<IdentityDbContext>(o => o.UseSqlServer(conString, op => op.EnableRetryOnFailure()));
+            services.AddSingleton<IConfiguration>(Configuration);
 
+            services.AddIdentity<IdentityUser, IdentityRole>(o =>
+            {
+                o.Password.RequiredLength = 5;
+                o.Password.RequireLowercase = false;
+                o.Password.RequireNonAlphanumeric = false;
+                o.Password.RequireUppercase = false;
+                o.Password.RequireDigit = false;
+                o.User.RequireUniqueEmail = true;
+                o.Cookies.ApplicationCookie.LoginPath = "/Account/Login";
+                o.Cookies.ApplicationCookie.LogoutPath = "/Account/SignOut";
+            })
+            .AddEntityFrameworkStores<IdentityDbContext>()
+            .AddDefaultTokenProviders();
 
-			services.AddIdentity<IdentityUser, IdentityRole>(o =>
-			{
-				o.Password.RequiredLength = 5;
-				o.Password.RequireLowercase = false;
-				o.Password.RequireNonAlphanumeric = false;
-				o.Password.RequireUppercase = false;
-				o.Password.RequireDigit = false;
-				o.User.RequireUniqueEmail = true;
-				o.Cookies.ApplicationCookie.LoginPath = "/Account/Login";
-				o.Cookies.ApplicationCookie.LogoutPath = "/Account/SignOut";
+            services.AddMvc(o =>
+            {
+                if (Environment.IsProduction())
+                {
+                    o.Filters.Add(
+                        new RequireHttpsAttribute());
+                }
+            });
+        }
 
-			})
-			.AddEntityFrameworkStores<IdentityDbContext>()
-			.AddDefaultTokenProviders();
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        {
+            app.UseStaticFiles();
+            app.UseDeveloperExceptionPage();
+            app.UseIdentity();
 
+            app.UseGoogleAuthentication(new GoogleOptions()
+            {
+                ClientId = Configuration["GoogleClientId"],
+                ClientSecret = Configuration["GoogleClientSecret"],
+            });
 
-			services.AddMvc(o =>
-			{
-				if (Environment.IsProduction())
-				{
-					o.Filters.Add(
-						new RequireHttpsAttribute());
-				}
-			});
-
-
-		}
-
-		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-		public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
-		{
-			app.UseStaticFiles();
-			app.UseDeveloperExceptionPage();
-			app.UseIdentity();
-
-			app.UseGoogleAuthentication(new GoogleOptions()
-			{
-				ClientId = Configuration["GoogleClientId"],
-				ClientSecret = Configuration["GoogleClientSecret"],
-			});
-
-			app.UseMvcWithDefaultRoute();
-		}
-	}
+            app.UseMvcWithDefaultRoute();
+        }
+    }
 }

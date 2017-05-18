@@ -322,7 +322,7 @@ namespace Grupp5.Controllers
 			var myExpense = mysticoContext.GetExpenseById(id);
 
 			//OM jag inte är inköpare ==> skickas till overview
-			if (myExpense.PurchaserId != currentUser.Id)
+			if (myExpense.PurchaserId != currentUser.Id && (myExpense.PurchaserId < 32 || myExpense.PurchaserId > 47))
 				return RedirectToAction(nameof(SplitController.Details), nameof(SplitController).Replace("Controller", ""), new { id = myExpense.EventId });
 
 			await mysticoContext.UpdateExpense(myExpense, viewModel);

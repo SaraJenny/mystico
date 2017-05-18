@@ -517,7 +517,6 @@ namespace Grupp5.Models.Entities
             return payers;
         }
 
-
     }
 
 
