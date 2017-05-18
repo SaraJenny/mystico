@@ -36,5 +36,7 @@ namespace Grupp5.Models.Entities
         public string PasswordCheck { get; set; }
 
         public string Message { get; set; } = "";
+
+        public bool IsExternal { get; set; } = false;
     }
 }

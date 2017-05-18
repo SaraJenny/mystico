@@ -166,7 +166,8 @@ namespace Grupp5.Controllers
                 var user = await userManager.FindByEmailAsync(email);
                 if (user == null)
                 {
-                    Thread.Sleep(400);
+                    Random random = new Random();
+                    Thread.Sleep(random.Next(500, 1000));
                     // Don't reveal that the user does not exist or is not confirmed
                     return true;
                 }
@@ -184,10 +185,6 @@ namespace Grupp5.Controllers
         {
             var code = await userManager.GeneratePasswordResetTokenAsync(user);
             var callbackUrl = Url.Action(nameof(AccountController.ResetPassword), "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
-
-
-
-
 
             var messages = new MimeMessage();
             messages.From.Add(new MailboxAddress("Payme", "Payme_Academy@outlook.com"));

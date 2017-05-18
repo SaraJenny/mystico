@@ -83,6 +83,11 @@ namespace Grupp5
                 ClientSecret = Configuration["GoogleClientSecret"],
             });
 
+            if (env.IsDevelopment())
+                app.UseDeveloperExceptionPage();
+            else
+                app.UseExceptionHandler("/Error/ServerError");
+
             app.UseMvcWithDefaultRoute();
         }
     }
