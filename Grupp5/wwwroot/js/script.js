@@ -152,10 +152,13 @@
 	*/
 	if ($('#splitExpense').length > 0 || $('#updateExpenseForm').length > 0) {
 		eventId = $('#SelectedEvent').val();
-		getPossiblePurchasers(eventId);
-		setStandardCurrency(eventId);
+		console.log(eventId)
+		if (eventId) {
+			getPossiblePurchasers(eventId);
+			setStandardCurrency(eventId);
+		}
 
-		if ($('#splitExpense').length > 0) {
+		if ($('#splitExpense').length > 0 && eventId !== '') {
 			// Hämta vänner
 			$.ajax({
 				url: "/Json/GetUsersByEventId",
