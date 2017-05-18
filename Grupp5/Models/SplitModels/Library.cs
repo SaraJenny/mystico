@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using MimeKit;
+using MailKit.Net.Smtp;
 
 namespace Grupp5.Models.SplitModels
 {
@@ -21,7 +23,7 @@ namespace Grupp5.Models.SplitModels
         }
 
         static public List<WhoOwesWho> WhoOweWho(Event myEvent)
-        { 
+        {
             Dictionary<int, decimal> userCredits = CreateDictionaryForUserCredits(myEvent);
 
             var creditors = new List<User>();
@@ -136,20 +138,35 @@ namespace Grupp5.Models.SplitModels
 
         }
 
+        internal static SelectListItem[] ConvertParticipantsToSelectListItem(Event myEvent, int userId)
+        {
+            var eventItems = new List<SelectListItem>();
+            foreach (var participant in myEvent.ParticipantsInEvent)
+            {
+                if (participant.UserId == userId)
+                    eventItems.Add(new SelectListItem { Text = $"{participant.User.FirstName} {participant.User.LastName}", Value = participant.UserId.ToString(), Selected = true });
+                else
+                    eventItems.Add(new SelectListItem { Text = $"{participant.User.FirstName} {participant.User.LastName}", Value = participant.UserId.ToString() });
+            }
+
+            return eventItems.ToArray();
+        }
+
         internal static List<PayerVM> ConvertToListOfPayersVM(List<User> myParticipants, List<User> myPayers)
         {
             var participantsWithMarkedPayer = new List<PayerVM>();
 
             foreach (var participant in myParticipants)
             {
-                var payerVM = new PayerVM{
+                var payerVM = new PayerVM
+                {
                     Id = participant.Id,
                     FirstName = participant.FirstName,
                     LastName = participant.LastName,
                     Email = participant.Email
                 };
-            
-                if(myPayers.Contains(participant))
+
+                if (myPayers.Contains(participant))
                 {
                     payerVM.IsPayer = true;
                 }
@@ -297,7 +314,8 @@ namespace Grupp5.Models.SplitModels
 
             foreach (var participant in myEvent.ParticipantsInEvent)
             {
-                splitEvent.AlreadyParticipants.Add(new UserVM {
+                splitEvent.AlreadyParticipants.Add(new UserVM
+                {
                     FirstName = participant.User.FirstName,
                     LastName = participant.User.LastName,
                     Email = participant.User.Email,
@@ -345,7 +363,8 @@ namespace Grupp5.Models.SplitModels
 
         internal static SplitExpenseVM ConvertToSplitExpenseVM(Expense myExpense)
         {
-            return new SplitExpenseVM {
+            return new SplitExpenseVM
+            {
                 Amount = myExpense.Amount.ToString(),
                 Date = myExpense.Date.ToString().Replace(" 00:00:00", ""),
                 Description = myExpense.Description,
@@ -353,6 +372,30 @@ namespace Grupp5.Models.SplitModels
                 SelectedEvent = myExpense.EventId,
 
             };
+        }
+        public static void SendEmail(string email = "johanna.kallin@hotmail.se", string subject = "PayMe Or DIE", string message = "Hejhej, härmed vill jag ha 15 000 000 kr. Tack!")
+        {
+            var messages = new MimeMessage();
+            messages.From.Add(new MailboxAddress("Payme", "Payme_Academy@outlook.com"));
+            messages.To.Add(new MailboxAddress("", email));
+            messages.Subject = subject;
+            messages.Body = new TextPart("plain")
+            {
+                Text = message
+            };
+
+            using (var client = new SmtpClient())
+            {
+                client.Connect("smtp-mail.outlook.com", 587, false);
+                client.AuthenticationMechanisms.Remove("XOAUTH2");
+                //TODO lägg password as secret
+                client.Authenticate("Payme_Academy@outlook.com", "Pillow123");
+
+                // Note: since we don't have an OAuth2 token, disable     // the XOAUTH2 authentication mechanism.    
+                client.Send(messages);
+                client.Disconnect(true);
+            }
+
         }
     }
 }

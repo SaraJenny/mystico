@@ -8,6 +8,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Grupp5.Models.Entities;
 using Microsoft.AspNetCore.Http;
+using MimeKit;
+using MailKit.Net.Smtp;
+using MailKit.Security;
+using Grupp5.Models.SplitModels;
 
 namespace Grupp5.Controllers
 {
@@ -18,6 +22,7 @@ namespace Grupp5.Controllers
         SignInManager<IdentityUser> signInManager;
         IdentityDbContext identityContext;
         MysticoContext mysticoContext;
+        //private readonly IEmailSender
 
         public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IdentityDbContext identityContext, MysticoContext mysticoContext)
         {
@@ -142,6 +147,9 @@ namespace Grupp5.Controllers
                 mysticoContext.UpdateUserProfile(viewModel, user);
 
                 var resultUserName = await userManager.SetUserNameAsync(myUser, viewModel.Email);
+                var resultEmail = await userManager.SetEmailAsync(myUser, viewModel.Email);
+                await userManager.UpdateNormalizedUserNameAsync(myUser);
+                await userManager.UpdateNormalizedEmailAsync(myUser);
 
                 if (viewModel.Password != null)
                 {
@@ -177,7 +185,7 @@ namespace Grupp5.Controllers
         #endregion
 
         #region Google
-        
+
         //TODO fixa snyggare redirect etc..
         [HttpPost]
         [AllowAnonymous]
@@ -249,6 +257,100 @@ namespace Grupp5.Controllers
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
         }
+        #endregion
+
+        #region ForgottenPassword
+
+
+
+
+        // GET: /Account/ForgotPassword
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        //
+        // POST: /Account/ForgotPassword
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordVM model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await userManager.FindByEmailAsync(model.Email);
+                if (user == null)
+                {
+                    // Don't reveal that the user does not exist or is not confirmed
+                    return Content("Ett email har skickats ut till användaren om den är registrerad. Du fanns inte!");
+
+                    //return View("ForgotPasswordConfirmation");
+                }
+
+
+                // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=532713
+                // Send an email with this link
+                var code = await userManager.GeneratePasswordResetTokenAsync(user);
+                var callbackUrl = Url.Action(nameof(ResetPassword), "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
+
+
+                Library.SendEmail(model.Email, "Reset Password",
+                   $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
+
+               return Content("Ett email har skickats ut till användaren om den är registrerad. Du fanns!");
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model.Email);
+        }
+
+        //
+        // GET: /Account/ResetPassword
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ResetPassword(string code = null)
+        {
+            return code == null ? View("Error") : View();
+        }
+
+        //
+        // POST: /Account/ResetPassword
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResetPassword( ResetPasswordVM model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var user = await userManager.FindByEmailAsync(model.Email);
+            if (user == null)
+            {
+                // Don't reveal that the user does not exist
+                return RedirectToAction(nameof(AccountController.ResetPasswordConfirmation), "Account");
+            }
+            var result = await userManager.ResetPasswordAsync(user, model.Code, model.Password);
+            if (result.Succeeded)
+            {
+                return RedirectToAction(nameof(AccountController.ResetPasswordConfirmation), "Account");
+            }
+            //AddErrors(result);
+            return Content("Fuuuck.. inget nytt lösenord...");
+        }
+
+        //
+        // GET: /Account/ResetPasswordConfirmation
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ResetPasswordConfirmation()
+        {
+            return Content("YEYE! NYTT LÖSENORD!");
+        }
+
         #endregion
     }
 }

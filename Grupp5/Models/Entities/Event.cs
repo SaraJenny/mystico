@@ -16,9 +16,11 @@ namespace Grupp5.Models.Entities
         public string Description { get; set; }
         public bool IsActive { get; set; }
         public int StandardCurrencyId { get; set; }
+        public int ExpenseCurrencyId { get; set; }
 
         public virtual ICollection<Expense> Expense { get; set; }
         public virtual ICollection<ParticipantsInEvent> ParticipantsInEvent { get; set; }
+        public virtual Currency ExpenseCurrency { get; set; }
         public virtual Currency StandardCurrency { get; set; }
     }
 }

@@ -186,6 +186,7 @@ namespace Grupp5.Models.Entities
             newEvent.Description = viewModel.Description;
             newEvent.IsActive = true;
             newEvent.StandardCurrencyId = Convert.ToInt32(viewModel.SelectedCurrency);
+            newEvent.ExpenseCurrencyId = Convert.ToInt32(viewModel.ExpenseCurrencyId);
 
             Event.Add(newEvent);
             SaveChanges();
@@ -269,17 +270,21 @@ namespace Grupp5.Models.Entities
 
         public void AddParticipantsToEvent(string friends, int eventId)
         {
+            var myEvent = GetEventById(eventId);
 
             try
             {
                 var FriendIds = friends.Split(',');
                 foreach (var userId in FriendIds)
                 {
-                    ParticipantsInEvent.Add(new ParticipantsInEvent
+                    if (myEvent.ParticipantsInEvent.Where(p => p.UserId == Convert.ToInt32(userId)).Count() == 0)
                     {
-                        EventId = eventId,
-                        UserId = Convert.ToInt32(userId)
-                    });
+                        ParticipantsInEvent.Add(new ParticipantsInEvent
+                        {
+                            EventId = eventId,
+                            UserId = Convert.ToInt32(userId)
+                        });
+                    }
 
                 };
 
@@ -329,7 +334,7 @@ namespace Grupp5.Models.Entities
             return User.Where(u => u.AspId == id).First();
         }
 
-        internal async Task<int> CreateExpense(SplitExpenseVM viewModel, int currentUserId)
+        internal async Task<int> CreateExpense(SplitExpenseVM viewModel)
         {
             var myEvent = GetEventById(Convert.ToInt32(viewModel.SelectedEvent));
 
@@ -338,9 +343,9 @@ namespace Grupp5.Models.Entities
 
                 Amount = Convert.ToDecimal(viewModel.Amount),
                 Description = viewModel.Description,
-                CurrencyId = Convert.ToInt32(viewModel.SelectedCurrency),
+                CurrencyId = viewModel.SelectedCurrency,
                 Date = Convert.ToDateTime(viewModel.Date),
-                PurchaserId = currentUserId,
+                PurchaserId = viewModel.PurchaserID,
                 EventId = myEvent.Id,
                 AmountInStandardCurrency = await CalculateStandardCurrencyAmount(Convert.ToDecimal(viewModel.Amount), viewModel.SelectedCurrency, myEvent.StandardCurrencyId, Convert.ToDateTime(viewModel.Date)) //TODO valutaomvandling
 
@@ -387,6 +392,7 @@ namespace Grupp5.Models.Entities
         {
             myEvent.EventName = viewModel.Name;
             myEvent.Description = viewModel.Description;
+            myEvent.ExpenseCurrencyId = Convert.ToInt32(viewModel.ExpenseCurrencyId);
             if (myEvent.StandardCurrencyId != Convert.ToInt32(viewModel.SelectedCurrency))
             {
                 myEvent.StandardCurrencyId = Convert.ToInt32(viewModel.SelectedCurrency);
@@ -494,6 +500,7 @@ namespace Grupp5.Models.Entities
             myExpense.CurrencyId = Convert.ToInt32(viewModel.SelectedCurrency);
             myExpense.Date = Convert.ToDateTime(viewModel.Date);
             myExpense.EventId = myEvent.Id;
+            myExpense.PurchaserId = viewModel.PurchaserID;
             myExpense.AmountInStandardCurrency = await CalculateStandardCurrencyAmount(Convert.ToDecimal(viewModel.Amount), viewModel.SelectedCurrency, myEvent.StandardCurrencyId, Convert.ToDateTime(viewModel.Date));
             SaveChanges();
         }

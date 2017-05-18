@@ -68,8 +68,12 @@ namespace Grupp5.Controllers
         [HttpPost]
         public async Task<IActionResult> Event(SplitEventVM viewModel)
         {
-            if (!ModelState.IsValid)
-                return View(viewModel);
+            //TODO radera nedan 1 rad och avkommentera if:en
+
+            viewModel.ExpenseCurrencyId = "1";
+
+            //if (!ModelState.IsValid)
+            //    return View(viewModel);
 
             Event newEvent = mysticoContext.CreateEvent(viewModel);
             var myUser = await userManager.GetUserAsync(HttpContext.User);
@@ -113,21 +117,23 @@ namespace Grupp5.Controllers
             viewModel.CurrencyItem = Library.ConvertCurrencyToSelectListItem(allCurrencies);
             viewModel.EventItem = Library.ConvertEventToSelectListItem(myEvents);
             viewModel.Date = DateTime.Today.ToString().Replace(" 00:00:00", "");
-
-
+ 
             return View(viewModel);
         }
 
         [HttpPost]
         public async Task<IActionResult> Expense(SplitExpenseVM viewModel)
         {
-            if (!ModelState.IsValid)
-                return View(viewModel);
-
+            //TODO radera nedan 3 rader och avkommentera if:en
             var myUser = await userManager.GetUserAsync(HttpContext.User);
-            User user = mysticoContext.GetUserByAspUserId(myUser.Id);
+            User currentUser = mysticoContext.GetUserByAspUserId(myUser.Id);
 
-            var expenseId = await mysticoContext.CreateExpense(viewModel, user.Id);
+            viewModel.PurchaserID = currentUser.Id;
+
+            //if (!ModelState.IsValid)
+            //    return View(viewModel);
+
+            var expenseId = await mysticoContext.CreateExpense(viewModel);
 
             mysticoContext.CreatePayerForExpense(viewModel.FriendIds, expenseId);
 
@@ -240,6 +246,9 @@ namespace Grupp5.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateEvent(int id, SplitEventVM viewModel)
         {
+            //TODO radera nedan 1 rad
+            viewModel.ExpenseCurrencyId = "1";
+
             var myUser = await userManager.GetUserAsync(HttpContext.User);
             User user = mysticoContext.GetUserByAspUserId(myUser.Id);
 
@@ -312,11 +321,15 @@ namespace Grupp5.Controllers
         public async Task<IActionResult> UpdateExpense(SplitExpenseVM viewModel, int id)
         {
 
-            if (!ModelState.IsValid)
-                return View(viewModel);
+            //if (!ModelState.IsValid)
+            //    return View(viewModel);
+
             //Hämta currentUser
             var myUser = await userManager.GetUserAsync(HttpContext.User);
             User currentUser = mysticoContext.GetUserByAspUserId(myUser.Id);
+
+            //TODO radera nedan 1 rad och avkommentera if:en
+            viewModel.PurchaserID = currentUser.Id;
 
             //Hämta specifikt expense som ska ändras
             var myExpense = mysticoContext.GetExpenseById(id);

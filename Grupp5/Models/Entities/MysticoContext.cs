@@ -13,8 +13,6 @@ namespace Grupp5.Models.Entities
         public virtual DbSet<PayersForExpense> PayersForExpense { get; set; }
         public virtual DbSet<User> User { get; set; }
 
-   
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Currency>(entity =>
@@ -36,8 +34,14 @@ namespace Grupp5.Models.Entities
                     .IsRequired()
                     .HasColumnType("varchar(50)");
 
+                entity.HasOne(d => d.ExpenseCurrency)
+                    .WithMany(p => p.EventExpenseCurrency)
+                    .HasForeignKey(d => d.ExpenseCurrencyId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .HasConstraintName("FK_Event_Expense_ToCurrency");
+
                 entity.HasOne(d => d.StandardCurrency)
-                    .WithMany(p => p.Event)
+                    .WithMany(p => p.EventStandardCurrency)
                     .HasForeignKey(d => d.StandardCurrencyId)
                     .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_EventToCurrency");
