@@ -114,6 +114,9 @@ namespace Grupp5.Controllers
 			viewModel.EventItem = Library.ConvertEventToSelectListItem(myEvents);
             viewModel.Date = DateTime.Today.ToString("u").Replace(" 00:00:00Z", "");
 
+            if (myEvents.Count() == 0)
+                viewModel.HasOpenEvent = false;
+
             if (id != 0)
                 viewModel.SelectedEvent = id;
 
@@ -123,8 +126,16 @@ namespace Grupp5.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Expense(SplitExpenseVM viewModel)
 		{
-			if (!ModelState.IsValid)
-				return View(viewModel);
+            if (!ModelState.IsValid)
+            {
+                var myUser = await userManager.GetUserAsync(HttpContext.User);
+                User currentUser = mysticoContext.GetUserByAspUserId(myUser.Id);
+
+                viewModel.CurrencyItem = Library.ConvertCurrencyToSelectListItem(mysticoContext.GetAllCurrencies());
+                viewModel.EventItem = Library.ConvertEventToSelectListItem(mysticoContext.GetActiveEventsByUserId(currentUser.Id));
+                viewModel.Date = DateTime.Today.ToString("u").Replace(" 00:00:00Z", "");
+                return View(viewModel);
+            }
 
 			var expenseId = await mysticoContext.CreateExpense(viewModel);
 

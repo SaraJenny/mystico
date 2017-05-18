@@ -28,7 +28,7 @@ namespace Grupp5.Models.Entities
 		[Required(ErrorMessage = "Belopp saknas")]
 		[Display(Name = "Belopp")]
         [DataType(DataType.Currency)]
-        [Range(0.0, double.MaxValue, ErrorMessage = "Ogiltigt belopp")]
+        [Range(0.0, 900000, ErrorMessage = "Ogiltigt belopp")]
         public string Amount { get; set; }
 
 		[Required(ErrorMessage = "Betalningsdatum saknas")]
@@ -49,6 +49,8 @@ namespace Grupp5.Models.Entities
 		public int PurchaserID { get; set; }
 
         public SelectListItem[] PossiblePurchaser { get; set; }
+
+        public bool HasOpenEvent { get; set; } = true;
 
     }
 }

@@ -3,7 +3,7 @@
 
 <h2>Logga in</h2>
 
-<form asp-controller="Account" asp-action="Login">
+<form asp-controller="Account" asp-action="Login" asp-route-returnurl ="@ViewData["ReturnUrl"]">
 
 	<label asp-for="Email"></label>
 	<input asp-for="Email" placeholder="E-post" />

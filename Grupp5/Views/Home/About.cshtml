@@ -2,24 +2,32 @@
 
 <h2>Om PayMe</h2>
 <div class="aboutSection">
-	<img src="~/img/jump.jpg" alt="" />
-	<h3>Skapa ett event</h3>
-	<p>Johan skapar ett event för den gemensamma Ibizaresan med kompisgänget. Eftersom alla är svenskar och vill ha tillbaka cash i kronor väljer Johan SEK som återbetalningsvaluta. På Ibiza där köpen kommer ske är det dock EUR som gäller, så det blir eventets utgiftsvaluta.</p>
-	<img src="~/img/wing.jpg" alt="" />
-	<h3>Bjud in vänner</h3>
-	<p>Johan bjuder in vännerna Lisa och Zebbe till eventet. Några dagar senare köper Kajsa en sista minuten till Ibiza så Johan går in på PayMe och lägger till Kajsa till eventet också.</p>
-	<img src="~/img/card.jpg" alt="" />
-	<h3>Lägg in utgifter</h3>
-	<p>Varje person lägger till sina utgifter. Lisa har till exempel betalat 350 euro för pizza, men Zebbe var inte med och åt pizza så bara Johan, Lisa och Kajsa bockas i som betalare för utlägget.</p>
-	<img src="~/img/bank-note.jpg" alt="" />
-	<h3>Automatisk valutaomvandling och avrundning</h3>
-	<p>PayMe omvandlar automatiskt kompisarnas utlägg i euro till värdet i standardvalutan, svenska kronor. Omvandlingen sker med ECB’s valutakurs och en smärre avrundning görs - beräkningen blir inte exakt på öret men så länge du inte är en girigpetter fungerar det!</p>
-	<img src="~/img/coffee-to-go.jpg" alt="" />
-	<h3>Se vem som är skyldig vem</h3>
-	<p>PayMe har hela tiden koll på utläggen för resan. På översikten för eventet kan varje person se totalbeloppet för resan, hur mycket resan har kostat just dem samt hur man ligger till med utgifterna. Längst ned sammanställs vilka transaktioner som ska ske för att alla ska bli kvitt.</p>
-	<img src="~/img/telephone.jpg" alt="" />
-	<h3>Stäng event</h3>
-	<p>När Ibizaresan är över och alla har swishat rätt belopp stänger Johan eventet. Alla är kvitt och det blir inget tjafs över pengar!</p>
-	<a asp-controller="Account" asp-action="Register" class="button">Skapa konto</a>
-	<a asp-controller="Account" asp-action="Login" class="button">Logga in</a>
+    <img src="~/img/jump.jpg" alt="" />
+    <h3>Skapa ett event</h3>
+    <p>Johan skapar ett event för den gemensamma Ibizaresan med kompisgänget. Eftersom alla är svenskar och vill ha tillbaka cash i kronor väljer Johan SEK som återbetalningsvaluta. På Ibiza där köpen kommer ske är det dock EUR som gäller, så det blir eventets utgiftsvaluta.</p>
+    <img src="~/img/wing.jpg" alt="" />
+    <h3>Bjud in vänner</h3>
+    <p>Johan bjuder in vännerna Lisa och Zebbe till eventet. Några dagar senare köper Kajsa en sista minuten till Ibiza så Johan går in på PayMe och lägger till Kajsa till eventet också.</p>
+    <img src="~/img/card.jpg" alt="" />
+    <h3>Lägg in utgifter</h3>
+    <p>Varje person lägger till sina utgifter. Lisa har till exempel betalat 350 euro för pizza, men Zebbe var inte med och åt pizza så bara Johan, Lisa och Kajsa bockas i som betalare för utlägget.</p>
+    <img src="~/img/bank-note.jpg" alt="" />
+    <h3>Automatisk valutaomvandling och avrundning</h3>
+    <p>PayMe omvandlar automatiskt kompisarnas utlägg i euro till värdet i standardvalutan, svenska kronor. Omvandlingen sker med ECB’s valutakurs och en smärre avrundning görs - beräkningen blir inte exakt på öret men så länge du inte är en girigpetter fungerar det!</p>
+    <img src="~/img/coffee-to-go.jpg" alt="" />
+    <h3>Se vem som är skyldig vem</h3>
+    <p>PayMe har hela tiden koll på utläggen för resan. På översikten för eventet kan varje person se totalbeloppet för resan, hur mycket resan har kostat just dem samt hur man ligger till med utgifterna. Längst ned sammanställs vilka transaktioner som ska ske för att alla ska bli kvitt.</p>
+    <img src="~/img/telephone.jpg" alt="" />
+    <h3>Stäng event</h3>
+    <p>När Ibizaresan är över och alla har swishat rätt belopp stänger Johan eventet. Alla är kvitt och det blir inget tjafs över pengar!</p>
+
+    @if (ViewBag.LoggedIn)
+    { 
+        <a asp-controller="Split" asp-action="Event" class="button">Kom igång och skapa ett event</a>
+    }
+    else
+    {
+    <a asp-controller="Account" asp-action="Register" class="button">Skapa konto</a>
+    <a asp-controller="Account" asp-action="Login" class="button">Logga in</a>
+    }
 </div>

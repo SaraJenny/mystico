@@ -23,7 +23,6 @@ namespace Grupp5.Controllers
     [Authorize]
     public class JsonController : Controller
     {
-
         #region General
         UserManager<IdentityUser> userManager;
         IdentityDbContext identityContext;
@@ -128,7 +127,7 @@ namespace Grupp5.Controllers
 
         #region GetPossiblePurchaserById
 
-        public async Task<SelectListItem[]>GetPossiblePurchaserById(int id)
+        public async Task<SelectListItem[]> GetPossiblePurchaserById(int id)
         {
             var myUser = await userManager.GetUserAsync(HttpContext.User);
             User user = mysticoContext.GetUserByAspUserId(myUser.Id);
@@ -138,7 +137,6 @@ namespace Grupp5.Controllers
 
             return possiblePurchasers;
         }
-
 
         #endregion
 
@@ -158,6 +156,9 @@ namespace Grupp5.Controllers
         }
 
         #endregion
+
+        #region ForgotPassword
+
         [AllowAnonymous]
         public async Task<bool> ForgotPassword(string email = null)
         {
@@ -181,6 +182,9 @@ namespace Grupp5.Controllers
             return false;
         }
 
+        #endregion
+
+        #region SendEmail
         private async void SendEmailAsync(string email, IdentityUser user)
         {
             var code = await userManager.GeneratePasswordResetTokenAsync(user);
@@ -204,7 +208,7 @@ namespace Grupp5.Controllers
             {
                 client.Connect("smtp-mail.outlook.com", 587, false);
                 client.AuthenticationMechanisms.Remove("XOAUTH2");
-              
+
                 client.Authenticate("Payme_Academy@outlook.com", iConfiguration["EmailPassWord"]);
 
                 // Note: since we don't have an OAuth2 token, disable     // the XOAUTH2 authentication mechanism.    
@@ -213,6 +217,22 @@ namespace Grupp5.Controllers
             }
 
         }
+
+        #endregion
+
+        #region GetPossiblePurchaserByIdEditVersion
+
+        public SelectListItem[] GetPossiblePurchaserByIdEditVersion(int eventId, int expenseId)
+        {
+            var myEvent = mysticoContext.GetEventById(eventId);
+            var myExpense = mysticoContext.GetExpenseById(expenseId);
+
+            var possiblePurchasers = Library.ConvertParticipantsToSelectListItemEditVersion(myEvent, myExpense);
+
+            return possiblePurchasers;
+        }
+
+        #endregion
 
     }
 }

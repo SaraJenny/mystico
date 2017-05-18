@@ -86,7 +86,10 @@ namespace Grupp5
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
             else
-                app.UseExceptionHandler("/Error/ServerError");
+            {
+                app.UseExceptionHandler("/Home/ServerError");
+                app.UseStatusCodePagesWithRedirects("/Home/HttpError/{0}");
+            }
 
             app.UseMvcWithDefaultRoute();
         }

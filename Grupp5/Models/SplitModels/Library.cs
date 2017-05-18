@@ -241,6 +241,20 @@ namespace Grupp5.Models.SplitModels
             return userCredits;
         }
 
+        internal static SelectListItem[] ConvertParticipantsToSelectListItemEditVersion(Event myEvent, Expense myExpense)
+        {
+            var eventItems = new List<SelectListItem>();
+            foreach (var participant in myEvent.ParticipantsInEvent)
+            {
+                if (participant.UserId == myExpense.PurchaserId)
+                    eventItems.Add(new SelectListItem { Text = $"{participant.User.FirstName} {participant.User.LastName}", Value = participant.UserId.ToString(), Selected = true });
+                else
+                    eventItems.Add(new SelectListItem { Text = $"{participant.User.FirstName} {participant.User.LastName}", Value = participant.UserId.ToString() });
+            }
+
+            return eventItems.ToArray();
+        }
+
         private static Dictionary<int, decimal> CreateDictionaryForUserTotals(Event myEvent)
         {
             var userTotals = new Dictionary<int, Decimal>();
