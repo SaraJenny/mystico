@@ -709,12 +709,6 @@ HOME/INDEX
 	text-shadow: 2px 2px #aea4af;
 }
 
-@media (min-width: 500px) {
-	.startText {
-		
-	}
-}
-
 @media (min-width: 600px) {
 	.startText {
 		font-size: 3.5em;
@@ -724,31 +718,45 @@ HOME/INDEX
 	}
 }
 
-@media (min-width: 700px) {
+@media (min-width: 900px) {
 	.startText {
-		
+		position:absolute;
+		right: 0;
+		top: 1em;
 	}
 }
 
 @media (min-width: 1300px) {
 	.startText {
-		position: absolute;
-		
+		right: 5%;
+		font-size: 5em;
+	}
+
+	.startSection {
+		height: 30em;
 	}
 }
 
 .startParas {
-	background-color: rgba(12,12,12,.4);
-	padding: .5em 1em;
+	background-color: rgba(12,12,12,.7);
+	padding: .5em 2%;
 	font-size: 1.4em;
 	position: absolute;
 	bottom: 0;
-	width: 100%;
+	width: 96%;
+	text-shadow: 2px 2px #191919;
 }
 
 @media (min-width: 600px) {
 	.startParas {
 		font-size: 1.6em;
+		line-height: 1.1em;
+	}
+}
+
+@media (min-width: 1300px) {
+	.startParas {
+		font-size: 3em;
 		line-height: 1.1em;
 	}
 }
@@ -761,6 +769,12 @@ HOME/INDEX
 @media (min-width: 600px) {
 	.startParas p {
 		max-width: 450px;
+	}
+}
+
+@media (min-width: 1300px) {
+	.startParas p {
+		max-width: none;
 	}
 }
 
