@@ -78,7 +78,7 @@ else
 @section addExpenseFooter {
 	<footer>
 		<div id="addExpenseFooter">
-			<a asp-controller="Split" asp-action="Expense">
+			<a asp-controller="Split" asp-action="Expense" asp-route-id="@Model.EventId">
 				<img id="plusSign" src="~/img/plus_75.png" />
 			</a>
 		</div>

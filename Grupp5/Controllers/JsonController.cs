@@ -186,23 +186,20 @@ namespace Grupp5.Controllers
             var callbackUrl = Url.Action(nameof(AccountController.ResetPassword), "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
 
 
+
+
+
             var messages = new MimeMessage();
             messages.From.Add(new MailboxAddress("Payme", "Payme_Academy@outlook.com"));
             messages.To.Add(new MailboxAddress("", email));
             messages.Subject = "Återställ lösenord";
             messages.Body = new TextPart(TextFormat.Html)
             {
-                Text = $"Hej din guldfisk! \n" +
-                $"\n" +
-                $"Någon har anmält att du har glömt bort ditt lösenord hos oss på PayMe. Det kan väl inte stämma?? \n" +
-                $"\n" +
-                $"Klicka på länken nedan om du vill återställa ditt lösenord. \n" +
-                $"\n" +
-                $"<a title='Hej' href={callbackUrl}>Länk</a> \n" +
-                $"\n" +
-                $"Vi saknar dig! \n" +
-                $"\n" +
-                $"/PayMe-teamet"
+                Text = $"<h2>Hej din guldfisk!</h2>" +
+                $"<p>Någon har anmält att du har glömt bort ditt lösenord hos oss på PayMe. Det kan väl inte stämma?</p>" +
+                $"<a href='{callbackUrl}'>Klicka här om du vill återställa ditt lösenord.</a>" +
+                $"<p>Vi saknar dig!</p>" +
+                $"<p>/PayMe-teamet</p>"
 
             };
 
