@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Grupp5.Models.Entities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
 
 namespace Grupp5
 {
@@ -68,6 +69,10 @@ namespace Grupp5
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            var cultureInfo = new CultureInfo("en-US");
+            CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+            CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
+
             app.UseStaticFiles();
             app.UseDeveloperExceptionPage();
             app.UseIdentity();
