@@ -128,6 +128,24 @@
 		});
 	}
 
+	// Hämta möjliga betalare
+	function getPossiblePurchasers(eventId) {
+		$.ajax({
+			url: "/Json/GetPossiblePurchaserById",
+			type: "GET",
+			data: {
+				id: eventId
+			},
+			success: function (result) {
+				console.log(result)
+				$(result).each(function () {
+					$('#PurchaserID').append($("<option />").val(this.value).text(this.text));
+					//$('#PurchaserID').val(result);
+				});
+			}
+		});
+	}
+
 	/*
 	SPLIT/UPDATEEVENT
 	*/
@@ -140,6 +158,7 @@
 	*/
 	if ($('#splitExpense').length > 0 || $('#updateExpenseForm').length > 0) {
 		eventId = $('#SelectedEvent').val();
+		getPossiblePurchasers(eventId);
 		setStandardCurrency(eventId);
 
 		if ($('#splitExpense').length > 0) {
@@ -201,6 +220,10 @@
 	/* Sker då användaren ändrar valt event */
 	$('#SelectedEvent').change(function () {
 		var eventId = $('#SelectedEvent').val();
+		// töm selecten med betalare
+		$('#PurchaserID').empty();
+		// hämta möjliga betalare för utlägget
+		getPossiblePurchasers(eventId);
 		// sätt valuta till standardvaluta för eventet
 		setStandardCurrency(eventId);
 

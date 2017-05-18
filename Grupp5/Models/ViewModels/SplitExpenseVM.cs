@@ -43,7 +43,9 @@ namespace Grupp5.Models.Entities
 
         public int ExpenseId { get; set; }
 
-        public int PurchaserID { get; set; }
+		[Required(ErrorMessage = "Betalare saknas")]
+		[Display(Name = "Betalare")]
+		public int PurchaserID { get; set; }
 
         public SelectListItem[] PossiblePurchaser { get; set; }
 
