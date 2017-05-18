@@ -13,6 +13,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Threading;
 using MimeKit;
 using MailKit.Net.Smtp;
+using MimeKit.Text;
+using Microsoft.Extensions.Configuration;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -26,12 +28,14 @@ namespace Grupp5.Controllers
         UserManager<IdentityUser> userManager;
         IdentityDbContext identityContext;
         MysticoContext mysticoContext;
+        IConfiguration iConfiguration;
 
-        public JsonController(UserManager<IdentityUser> userManager, IdentityDbContext identityContext, MysticoContext mysticoContext)
+        public JsonController(UserManager<IdentityUser> userManager, IdentityDbContext identityContext, MysticoContext mysticoContext, IConfiguration iConfiguration)
         {
             this.userManager = userManager;
             this.identityContext = identityContext;
             this.mysticoContext = mysticoContext;
+            this.iConfiguration = iConfiguration;
         }
         #endregion
 
@@ -186,7 +190,7 @@ namespace Grupp5.Controllers
             messages.From.Add(new MailboxAddress("Payme", "Payme_Academy@outlook.com"));
             messages.To.Add(new MailboxAddress("", email));
             messages.Subject = "Återställ lösenord";
-            messages.Body = new TextPart("plain")
+            messages.Body = new TextPart(TextFormat.Html)
             {
                 Text = $"Hej din guldfisk! \n" +
                 $"\n" +
@@ -207,7 +211,7 @@ namespace Grupp5.Controllers
                 client.Connect("smtp-mail.outlook.com", 587, false);
                 client.AuthenticationMechanisms.Remove("XOAUTH2");
                 //TODO lägg password as secret
-                client.Authenticate("Payme_Academy@outlook.com", "Pillow123");
+                client.Authenticate("Payme_Academy@outlook.com", iConfiguration["EmailPassWord"]);
 
                 // Note: since we don't have an OAuth2 token, disable     // the XOAUTH2 authentication mechanism.    
                 await client.SendAsync(messages);

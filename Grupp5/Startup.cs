@@ -39,6 +39,7 @@ namespace Grupp5
             var conString = Configuration["MysticoConnection"];
             services.AddDbContext<MysticoContext>(o => o.UseSqlServer(conString));
             services.AddDbContext<IdentityDbContext>(o => o.UseSqlServer(conString));
+            services.AddSingleton<IConfiguration>(Configuration);
             
 
             services.AddIdentity<IdentityUser, IdentityRole>(o =>
