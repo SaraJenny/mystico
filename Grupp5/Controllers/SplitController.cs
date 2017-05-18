@@ -68,12 +68,8 @@ namespace Grupp5.Controllers
         [HttpPost]
         public async Task<IActionResult> Event(SplitEventVM viewModel)
         {
-            //TODO radera nedan 1 rad och avkommentera if:en
-
-            viewModel.ExpenseCurrencyId = "1";
-
-            //if (!ModelState.IsValid)
-            //    return View(viewModel);
+            if (!ModelState.IsValid)
+                return View(viewModel);
 
             Event newEvent = mysticoContext.CreateEvent(viewModel);
             var myUser = await userManager.GetUserAsync(HttpContext.User);
@@ -246,9 +242,6 @@ namespace Grupp5.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateEvent(int id, SplitEventVM viewModel)
         {
-            //TODO radera nedan 1 rad
-            viewModel.ExpenseCurrencyId = "1";
-
             var myUser = await userManager.GetUserAsync(HttpContext.User);
             User user = mysticoContext.GetUserByAspUserId(myUser.Id);
 

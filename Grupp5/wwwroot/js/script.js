@@ -117,7 +117,7 @@
 	// Hämta standardcurrency och sätt till selected
 	function setStandardCurrency(eventId) {
 		$.ajax({
-			url: "/Json/GetStandardCurrencyByEvent",
+			url: "/Json/GetExpenseCurrencyByEvent",
 			type: "GET",
 			data: {
 				id: eventId
