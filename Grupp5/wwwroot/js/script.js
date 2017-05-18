@@ -289,16 +289,16 @@
 	});
 	// Ändra cirkelns storlek dynamiskt
 	if ($('#circleSection').length > 0) {
-		//$('#circle').text('6 SEK');
+		//$('#circle').text('600000000000 SEK');
 		var circleLength = $('#circle').text().length;
-		var circleSize = 20 + circleLength * 25;
+		var circleSize = 20 + circleLength * 20;
 
-		if (circleLength > 9) {
+		if (circleLength > 10) {
 			var fontSize = parseInt($("#circle").css("font-size"));
 			fontSize = fontSize * .8 + "px";
 			$('#circle').css({ 'font-size': fontSize });
 
-			circleSize = circleLength * 20;
+			circleSize = -20 + circleLength * 20;
 		}
 		$('.circle').css('width', circleSize);
 		$('.circle').css('height', circleSize);
