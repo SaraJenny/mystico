@@ -137,10 +137,11 @@
 				id: eventId
 			},
 			success: function (result) {
-				console.log(result)
 				$(result).each(function () {
 					$('#PurchaserID').append($("<option />").val(this.value).text(this.text));
-					//$('#PurchaserID').val(result);
+					if (this.selected) {
+						$('#PurchaserID').val(this.value);
+					}
 				});
 			}
 		});
