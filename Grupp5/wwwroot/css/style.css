@@ -189,6 +189,13 @@ img {
 		padding: 2.5% 5%;
 	}
 
+@media (min-width: 1200px) {
+	#mainmenu ul a {
+		font-size: 1.5em;
+		padding: 1.5% 5%;
+	}
+}
+
 /* Aktuell sida */
 .current a {
 	background-color: #4d4d4d;
@@ -433,9 +440,9 @@ label + .participant {
 	margin: 0 auto;
 }
 
-.link+.link {
-	margin-top: 1em;
-}
+	.link + .link {
+		margin-top: 1em;
+	}
 
 
 
@@ -687,7 +694,7 @@ HOME/INDEX
 	opacity: 1;
 	margin-bottom: 1em;
 	position: relative;
-	height:15em;
+	height: 15em;
 }
 
 .startTextBox {
@@ -713,6 +720,7 @@ HOME/INDEX
 	.startText {
 		font-size: 3.5em;
 	}
+
 	.startSection {
 		height: 20em;
 	}
@@ -720,7 +728,7 @@ HOME/INDEX
 
 @media (min-width: 900px) {
 	.startText {
-		position:absolute;
+		position: absolute;
 		right: 0;
 		top: 1em;
 	}
@@ -738,6 +746,7 @@ HOME/INDEX
 }
 
 .startParas {
+	background-color: #191919;
 	background-color: rgba(12,12,12,.7);
 	padding: .5em 2%;
 	font-size: 1.4em;
