@@ -309,7 +309,9 @@ namespace Grupp5.Models.SplitModels
                 Name = myEvent.EventName,
                 Description = myEvent.Description,
                 AlreadyParticipants = new List<UserVM>(),
-                EventId = myEvent.Id
+                EventId = myEvent.Id,
+                SelectedCurrency = myEvent.StandardCurrencyId.ToString(),
+                ExpenseCurrencyId = myEvent.ExpenseCurrencyId.ToString()
             };
 
             foreach (var participant in myEvent.ParticipantsInEvent)
@@ -364,8 +366,8 @@ namespace Grupp5.Models.SplitModels
         internal static SplitExpenseVM ConvertToSplitExpenseVM(Expense myExpense)
         {
             return new SplitExpenseVM
-            {
-                Amount = myExpense.Amount.ToString(),
+            {        
+                Amount = Math.Round(myExpense.Amount,2).ToString(System.Globalization.CultureInfo.InvariantCulture),
                 Date = myExpense.Date.ToString().Replace(" 00:00:00", ""),
                 Description = myExpense.Description,
                 SelectedCurrency = myExpense.CurrencyId,

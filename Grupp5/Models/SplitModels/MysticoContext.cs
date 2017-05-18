@@ -341,13 +341,13 @@ namespace Grupp5.Models.Entities
             var newExpense = new Expense()
             {
 
-                Amount = Convert.ToDecimal(viewModel.Amount),
+                Amount = Convert.ToDecimal(viewModel.Amount,CultureInfo.InvariantCulture),
                 Description = viewModel.Description,
                 CurrencyId = viewModel.SelectedCurrency,
                 Date = Convert.ToDateTime(viewModel.Date),
                 PurchaserId = viewModel.PurchaserID,
                 EventId = myEvent.Id,
-                AmountInStandardCurrency = await CalculateStandardCurrencyAmount(Convert.ToDecimal(viewModel.Amount), viewModel.SelectedCurrency, myEvent.StandardCurrencyId, Convert.ToDateTime(viewModel.Date)) //TODO valutaomvandling
+                AmountInStandardCurrency = await CalculateStandardCurrencyAmount(Convert.ToDecimal(viewModel.Amount, CultureInfo.InvariantCulture), viewModel.SelectedCurrency, myEvent.StandardCurrencyId, Convert.ToDateTime(viewModel.Date)) //TODO valutaomvandling
 
             };
 
@@ -495,13 +495,13 @@ namespace Grupp5.Models.Entities
             }
 
             var myEvent = GetEventById(Convert.ToInt32(viewModel.SelectedEvent));
-            myExpense.Amount = Convert.ToDecimal(viewModel.Amount);
+            myExpense.Amount = Convert.ToDecimal(viewModel.Amount, CultureInfo.InvariantCulture);
             myExpense.Description = viewModel.Description;
             myExpense.CurrencyId = Convert.ToInt32(viewModel.SelectedCurrency);
             myExpense.Date = Convert.ToDateTime(viewModel.Date);
             myExpense.EventId = myEvent.Id;
             myExpense.PurchaserId = viewModel.PurchaserID;
-            myExpense.AmountInStandardCurrency = await CalculateStandardCurrencyAmount(Convert.ToDecimal(viewModel.Amount), viewModel.SelectedCurrency, myEvent.StandardCurrencyId, Convert.ToDateTime(viewModel.Date));
+            myExpense.AmountInStandardCurrency = await CalculateStandardCurrencyAmount(Convert.ToDecimal(viewModel.Amount, CultureInfo.InvariantCulture), viewModel.SelectedCurrency, myEvent.StandardCurrencyId, Convert.ToDateTime(viewModel.Date));
             SaveChanges();
         }
 
