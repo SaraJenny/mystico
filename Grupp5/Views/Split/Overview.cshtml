@@ -54,7 +54,7 @@
 <a class="button" asp-controller="Split" asp-action="Details" asp-route-id="@Model.EventId">Se alla utlägg</a>
 @if (Model.EventIsActive)
 {
-	<form id="addFriendsBox" class="addFriendsBox" eventid="@Model.EventId" asp-controller="Split" asp-action="Overview">
+	<form id="addFriendsBox" class="addFriendsBox" eventid="@Model.EventId" @*asp-controller="Split" asp-action="Overview"*@>
 		<a id="closeFriends" href=""><i class="fa fa-times" aria-hidden="true"></i></a>
 		<label for="friendsTextBox">Deltagare</label>
 		@foreach (var item in Model.AlreadyParticipants)
@@ -66,7 +66,7 @@
 		<input type="hidden" asp-for="FriendIds" />
 
 		<div class="friend-box" id="friend-box"></div>
-		<input type="submit" value="Lägg till deltagare" />
+		<input id="addFriendsFromOverview" type="submit" value="Lägg till deltagare" />
 	</form>
 	<a class="button" id="addFriendsButton" href="#">Se/lägg till deltagare</a>
 	<a class="delete" id="deleteEventButton" href=""><i class="fa fa-times" aria-hidden="true"></i> Stäng event</a>
