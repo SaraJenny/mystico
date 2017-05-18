@@ -10,6 +10,9 @@ using Grupp5.Models.SplitModels;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Threading;
+using MimeKit;
+using MailKit.Net.Smtp;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -151,6 +154,67 @@ namespace Grupp5.Controllers
         }
 
         #endregion
+        [AllowAnonymous]
+        public async Task<bool> ForgotPassword(string email = null)
+        {
+            if (email != null)
+            {
+                var user = await userManager.FindByEmailAsync(email);
+                if (user == null)
+                {
+                    Thread.Sleep(400);
+                    // Don't reveal that the user does not exist or is not confirmed
+                    return true;
+                }
+
+                SendEmailAsync(email, user);
+
+                return true;
+            }
+
+            // If we got this far, something failed, redisplay form
+            return false;
+        }
+
+        private async void SendEmailAsync(string email, IdentityUser user)
+        {
+            var code = await userManager.GeneratePasswordResetTokenAsync(user);
+            var callbackUrl = Url.Action(nameof(AccountController.ResetPassword), "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
+
+
+            var messages = new MimeMessage();
+            messages.From.Add(new MailboxAddress("Payme", "Payme_Academy@outlook.com"));
+            messages.To.Add(new MailboxAddress("", email));
+            messages.Subject = "Återställ lösenord";
+            messages.Body = new TextPart("plain")
+            {
+                Text = $"Hej din guldfisk!" +
+                $"" +
+                $"Någon har anmält att du har glömt bort ditt lösenord hos oss på PayMe. Det kan väl inte stämma??" +
+                $"" +
+                $"Klicka på länken nedan om du vill återställa ditt lösenord." +
+                $"" +
+                $"{callbackUrl}" +
+                $"" +
+                $"Vi saknar dig!" +
+                $"" +
+                $"/PayMe-teamet"
+
+            };
+
+            using (var client = new SmtpClient())
+            {
+                client.Connect("smtp-mail.outlook.com", 587, false);
+                client.AuthenticationMechanisms.Remove("XOAUTH2");
+                //TODO lägg password as secret
+                client.Authenticate("Payme_Academy@outlook.com", "Pillow123");
+
+                // Note: since we don't have an OAuth2 token, disable     // the XOAUTH2 authentication mechanism.    
+                await client.SendAsync(messages);
+                client.Disconnect(true);
+            }
+
+        }
 
     }
 }
