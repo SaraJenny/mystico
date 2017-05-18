@@ -207,7 +207,7 @@ namespace Grupp5.Controllers
             {
                 client.Connect("smtp-mail.outlook.com", 587, false);
                 client.AuthenticationMechanisms.Remove("XOAUTH2");
-                //TODO lägg password as secret
+              
                 client.Authenticate("Payme_Academy@outlook.com", iConfiguration["EmailPassWord"]);
 
                 // Note: since we don't have an OAuth2 token, disable     // the XOAUTH2 authentication mechanism.    

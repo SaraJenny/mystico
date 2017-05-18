@@ -39,7 +39,7 @@ namespace Grupp5.Controllers
         public async Task<IActionResult> Login()
         {
             //identityContext.Database.EnsureCreated();
-            //TODO check if user is logged in already
+           
 
             var myUser = await userManager.GetUserAsync(HttpContext.User);
             if (myUser != null)
