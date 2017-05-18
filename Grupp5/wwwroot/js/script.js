@@ -330,7 +330,6 @@
 							$('<p class="friend participant" userid="' + userId + '">' + name + '</p>').insertBefore('#choosenFriends');
 							$(this).remove();
 						});
-						// TODO skriv ut meddelande?
 					}
 					else {
 						$('#friend-box').append('<p class="message field-validation-error">Något gick fel och deltagaren kunde inte läggas till.</p>');
