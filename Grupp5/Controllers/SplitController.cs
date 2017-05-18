@@ -97,7 +97,7 @@ namespace Grupp5.Controllers
 
 		#region Expense
 		[HttpGet]
-		public async Task<IActionResult> Expense()
+		public async Task<IActionResult> Expense(int id)
 		{
 			//Hämta currentUser
 			var myUser = await userManager.GetUserAsync(HttpContext.User);
@@ -113,6 +113,9 @@ namespace Grupp5.Controllers
 			viewModel.CurrencyItem = Library.ConvertCurrencyToSelectListItem(allCurrencies);
 			viewModel.EventItem = Library.ConvertEventToSelectListItem(myEvents);
 			viewModel.Date = DateTime.Today.ToString().Replace(" 00:00:00", "");
+
+            if (id != 0)
+                viewModel.SelectedEvent = id;
 
 			return View(viewModel);
 		}
