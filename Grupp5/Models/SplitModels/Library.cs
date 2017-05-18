@@ -101,7 +101,7 @@ namespace Grupp5.Models.SplitModels
                     Amount = Convert.ToInt32(exp.Amount),
                     CurrencyCode = exp.Currency.CurrencyCode,
                     ExpenseDescription = exp.Description,
-                    Date = exp.Date.ToString("u").Replace(" 00:00:00Z","")
+                    Date = exp.Date.ToString("u").Replace(" 00:00:00Z", "")
 
                 };
 
@@ -366,9 +366,9 @@ namespace Grupp5.Models.SplitModels
         internal static SplitExpenseVM ConvertToSplitExpenseVM(Expense myExpense)
         {
             return new SplitExpenseVM
-            {        
-                Amount = Math.Round(myExpense.Amount,2).ToString(System.Globalization.CultureInfo.InvariantCulture),
-                Date = myExpense.Date.ToString().Replace(" 12:00:00 AM", ""),
+            {
+                Amount = Math.Round(myExpense.Amount, 2).ToString(System.Globalization.CultureInfo.InvariantCulture),
+                Date = myExpense.Date.ToString("u").Replace(" 00:00:00Z", ""),
                 Description = myExpense.Description,
                 SelectedCurrency = myExpense.CurrencyId,
                 SelectedEvent = myExpense.EventId,
