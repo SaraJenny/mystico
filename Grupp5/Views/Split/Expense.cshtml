@@ -18,6 +18,10 @@
 	<select asp-for="SelectedCurrency" asp-items="Model.CurrencyItem"></select>
 	<span asp-validation-for="SelectedCurrency"></span>
 
+	<label asp-for="PurchaserID"></label>
+	<select asp-for="PurchaserID" asp-items="Model.PossiblePurchaser"></select>
+	<span asp-validation-for="PurchaserID"></span>
+
 	<label asp-for="Amount"></label>
 	<input asp-for="Amount" placeholder="ex. 950 kr" />
 	<span asp-validation-for="Amount" id="amountError"></span>

@@ -21,11 +21,15 @@ namespace Grupp5.Models.Entities
 
         public SelectListItem[] CurrencyItem { get; set; }
 
-        [Required(ErrorMessage = "Standardvaluta saknas")]
-        [Display(Name = "Standardvaluta")]
-        public string SelectedCurrency { get; set; }
+		[Required(ErrorMessage = "Återbetalningsvaluta saknas")]
+		[Display(Name = "Återbetalningsvaluta")]
+		public string SelectedCurrency { get; set; }
 
-        public List<UserVM> AlreadyParticipants { get; set; }
+		[Required(ErrorMessage = "Utgiftsvaluta saknas")]
+		[Display(Name = "Utgiftsvaluta")]
+		public string ExpenseCurrencyId { get; set; }
+
+		public List<UserVM> AlreadyParticipants { get; set; }
 
         public string FriendIds { get; set; }
     }

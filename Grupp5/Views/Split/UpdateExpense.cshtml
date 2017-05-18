@@ -13,6 +13,10 @@
 	<input asp-for="Description" placeholder="ex. Middag på kvarterskrogen" />
 	<span asp-validation-for="Description"></span>
 
+	<label asp-for="PurchaserID"></label>
+	<select asp-for="PurchaserID" asp-items="Model.PossiblePurchaser"></select>
+	<span asp-validation-for="PurchaserID"></span>
+
 	<label asp-for="SelectedCurrency"></label>
 	<select asp-for="SelectedCurrency" asp-items="Model.CurrencyItem"></select>
 	<span asp-validation-for="SelectedCurrency"></span>

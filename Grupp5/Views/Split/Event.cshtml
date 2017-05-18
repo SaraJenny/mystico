@@ -16,6 +16,10 @@
 	<select asp-for="SelectedCurrency" asp-items="Model.CurrencyItem"></select>
 	<span asp-validation-for="SelectedCurrency"></span>
 
+	<label asp-for="ExpenseCurrencyId"></label>
+	<select asp-for="ExpenseCurrencyId" asp-items="Model.CurrencyItem"></select>
+	<span asp-validation-for="ExpenseCurrencyId"></span>
+
 	<label for="friendsTextBox">Vänner</label>
 	<div class="friend-box" id="choosenFriends"></div>
 	<input type="text" id="friendsTextBox" placeholder="Sök efter vänner" />

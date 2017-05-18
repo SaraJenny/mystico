@@ -19,11 +19,12 @@
 	var string = "";
 	var idString = ""; // SPLIT/EVENT
 	var userIdString = ""; // SPLIT/EXPENSE
-
 	/*
 	SPLIT/EVENT
 	*/
 	$('#friendsTextBox').on('input', function (e) {
+		// ta bort ev. felmeddelande
+		$('.field-validation-error').remove();
 		// töm vänboxen
 		$('#friend-box').html('');
 		string = $('#friendsTextBox').val();
@@ -42,7 +43,7 @@
 				},
 				success: function (result) {
 					for (var i = 0; i < result.length; i++) {
-						$('#friend-box').append('<a href="#" class="friend not-choosen" id="' + result[i].id + '">' + result[i].firstName + ' ' + result[i].lastName + '</a>');
+						$('#friend-box').append('<a href="#" class="friend not-choosen" userid="' + result[i].id + '">' + result[i].firstName + ' ' + result[i].lastName + '</a>');
 					}
 				}
 			});
@@ -58,7 +59,7 @@
 				},
 				success: function (result) {
 					for (var i = 0; i < result.length; i++) {
-						$('#friend-box').append('<a href="#" class="friend not-choosen" id="' + result[i].id + '">' + result[i].firstName + ' ' + result[i].lastName + '</a>');
+						$('#friend-box').append('<a href="#" class="friend not-choosen" userid="' + result[i].id + '">' + result[i].firstName + ' ' + result[i].lastName + '</a>');
 					}
 				}
 			});
@@ -67,7 +68,7 @@
 	});
 	/* Klick på en väns namn bland de sökta */
 	$('body').on('click', '.not-choosen', function (e) {
-		var id = e.target.id; // TODO byt till userId istället för id i html
+		var id = $(this).attr('userid');
 		// Lägg till userId i hiddenfältet
 		if (idString === "") {
 			idString = id;
@@ -76,10 +77,10 @@
 			idString += ',' + id;
 		}
 		$('#FriendIds').val(idString);
-		//Flytta vännen från sökrutan till valda vänner + lägg till kryss till namnet
-		$('#' + id).detach().appendTo('#choosenFriends').append('<span class="deleteX">x</span>');
 		// ta bort klass och lägg till en annan
-		$('#' + id).removeClass('not-choosen').addClass('choosen');
+		$(this).removeClass('not-choosen').addClass('choosen');
+		//Flytta vännen från sökrutan till valda vänner + lägg till kryss till namnet
+		$(this).detach().appendTo('#choosenFriends').append('<span class="deleteX">x</span>');
 		// töm textboxen
 		$('#friendsTextBox').val('');
 		// töm vänboxen
@@ -91,14 +92,11 @@
 	Ta bort en väns namn bland de utvalda
 	*/
 	$('body').on('click', '.choosen', function (e) {
-		var id = e.target.id; // TODO byt till userId istället för id i html
-		removeChoosenFriend(id);
+		var id = $(this).attr('userid');
+		removeChoosenFriend(id, this);
 	});
-	$('body').on('click', '.deleteX', function (e) {
-		var id = $(this).parent().attr('id');
-		removeChoosenFriend(id);
-	});
-	function removeChoosenFriend(id) {
+
+	function removeChoosenFriend(id, element) {
 		idString = $('#FriendIds').val();
 		// Ta bort id i hiddenfältet
 		if (idString.includes(',' + id)) {
@@ -111,23 +109,40 @@
 			idString = idString.replace(id, '');
 		}
 		$('#FriendIds').val(idString);
-		//Ta bort vännen från valda vänner till sökrutan
-		$('#' + id).remove();
-		// ta bort klass och lägg till en annan
-		$('#' + id).removeClass('choosen').addClass('not-choosen');
+		//Ta bort vännen från valda vänner
+		$(element).remove();
 		$('html, body').animate({ scrollTop: $(document).height() }, 'fast');
 	}
 
 	// Hämta standardcurrency och sätt till selected
 	function setStandardCurrency(eventId) {
 		$.ajax({
-			url: "/Json/GetStandardCurrencyByEvent",
+			url: "/Json/GetExpenseCurrencyByEvent",
 			type: "GET",
 			data: {
 				id: eventId
 			},
 			success: function (result) {
 				$('#SelectedCurrency').val(result);
+			}
+		});
+	}
+
+	// Hämta möjliga betalare
+	function getPossiblePurchasers(eventId) {
+		$.ajax({
+			url: "/Json/GetPossiblePurchaserById",
+			type: "GET",
+			data: {
+				id: eventId
+			},
+			success: function (result) {
+				$(result).each(function () {
+					$('#PurchaserID').append($("<option />").val(this.value).text(this.text));
+					if (this.selected) {
+						$('#PurchaserID').val(this.value);
+					}
+				});
 			}
 		});
 	}
@@ -144,6 +159,7 @@
 	*/
 	if ($('#splitExpense').length > 0 || $('#updateExpenseForm').length > 0) {
 		eventId = $('#SelectedEvent').val();
+		getPossiblePurchasers(eventId);
 		setStandardCurrency(eventId);
 
 		if ($('#splitExpense').length > 0) {
@@ -205,6 +221,10 @@
 	/* Sker då användaren ändrar valt event */
 	$('#SelectedEvent').change(function () {
 		var eventId = $('#SelectedEvent').val();
+		// töm selecten med betalare
+		$('#PurchaserID').empty();
+		// hämta möjliga betalare för utlägget
+		getPossiblePurchasers(eventId);
 		// sätt valuta till standardvaluta för eventet
 		setStandardCurrency(eventId);
 
@@ -291,6 +311,36 @@
 		$('.circle').css('height', circleSize);
 		$('.circle .focus').css('line-height', circleSize + 'px');
 	}
+	// Lägg till vänner
+	$('#addFriendsFromOverview').click(function (e) {
+		e.preventDefault();
+		var event = $('#addFriendsBox').attr('eventid');
+		var users = $('#FriendIds').val();
+		$.ajax({
+			url: "/Json/AddUsersToEvent",
+			type: "GET",
+			data: {
+				eventId: event,
+				userIds: users
+			},
+			success: function (result) {
+				if (result === true) {
+					//ändra färg och klickbarhet på deltagare
+					$('.choosen').each(function () {
+						$(this).children('.deleteX').remove();
+						var name = $(this).text();
+						var userId = $(this).attr('userid');
+						$('<p class="friend participant" userid="' + userId + '">' + name + '</p>').insertBefore('#choosenFriends');
+						$(this).remove();
+					});
+					// TODO skriv ut meddelande?
+				}
+				else {
+					$('#friend-box').append('<p class="message field-validation-error">Något gick fel och deltagaren kunde inte läggas till.</p>');
+				}
+			}
+		});
+	});
 	/*
 	PROFILE
 	*/

@@ -16,6 +16,10 @@
 	<select asp-for="SelectedCurrency" asp-items="Model.CurrencyItem"></select>
 	<span asp-validation-for="SelectedCurrency"></span>
 
+	<label asp-for="ExpenseCurrencyId"></label>
+	<select asp-for="ExpenseCurrencyId" asp-items="Model.CurrencyItem"></select>
+	<span asp-validation-for="ExpenseCurrencyId"></span>
+
 	<label for="friendsTextBox">Deltagare</label>
 	@foreach (var item in Model.AlreadyParticipants)
 	{
