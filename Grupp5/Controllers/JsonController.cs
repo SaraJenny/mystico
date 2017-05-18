@@ -188,16 +188,16 @@ namespace Grupp5.Controllers
             messages.Subject = "Återställ lösenord";
             messages.Body = new TextPart("plain")
             {
-                Text = $"Hej din guldfisk!" +
-                $"" +
-                $"Någon har anmält att du har glömt bort ditt lösenord hos oss på PayMe. Det kan väl inte stämma??" +
-                $"" +
-                $"Klicka på länken nedan om du vill återställa ditt lösenord." +
-                $"" +
-                $"{callbackUrl}" +
-                $"" +
-                $"Vi saknar dig!" +
-                $"" +
+                Text = $"Hej din guldfisk! \n" +
+                $"\n" +
+                $"Någon har anmält att du har glömt bort ditt lösenord hos oss på PayMe. Det kan väl inte stämma?? \n" +
+                $"\n" +
+                $"Klicka på länken nedan om du vill återställa ditt lösenord. \n" +
+                $"\n" +
+                $"<a title='Hej' href={callbackUrl}>Länk</a> \n" +
+                $"\n" +
+                $"Vi saknar dig! \n" +
+                $"\n" +
                 $"/PayMe-teamet"
 
             };
