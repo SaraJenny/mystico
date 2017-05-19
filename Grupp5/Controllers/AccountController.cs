@@ -13,6 +13,7 @@ using MailKit.Net.Smtp;
 using MailKit.Security;
 using Grupp5.Models.SplitModels;
 using System.Threading;
+using Microsoft.Extensions.Options;
 
 namespace Grupp5.Controllers
 {
@@ -23,34 +24,45 @@ namespace Grupp5.Controllers
         SignInManager<IdentityUser> signInManager;
         IdentityDbContext identityContext;
         MysticoContext mysticoContext;
-        //private readonly IEmailSender
+        IOptions<IdentityCookieOptions> identityCookieOptions;
+        private readonly string _externalCookieScheme;
 
-        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IdentityDbContext identityContext, MysticoContext mysticoContext)
+
+        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IdentityDbContext identityContext, MysticoContext mysticoContext, IOptions<IdentityCookieOptions> identityCookieOptions)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.identityContext = identityContext;
             this.mysticoContext = mysticoContext;
+            _externalCookieScheme = identityCookieOptions.Value.ExternalCookieAuthenticationScheme;
+
         }
         #endregion
 
         #region Login
         [HttpGet]
-        public async Task<IActionResult> Login()
+        public async Task<IActionResult> Login(string returnUrl = null)
         {
             //identityContext.Database.EnsureCreated();
-           
+
+            ViewData["ReturnUrl"] = returnUrl;
 
             var myUser = await userManager.GetUserAsync(HttpContext.User);
             if (myUser != null)
+            {
                 return RedirectToAction(nameof(SplitController.Index), nameof(SplitController).Replace("Controller", ""));
+                
+            }
 
+            await HttpContext.Authentication.SignOutAsync(_externalCookieScheme);
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(AccountLoginVM viewModel)
+        public async Task<IActionResult> Login(AccountLoginVM viewModel, string returnUrl = null)
         {
+
+            ViewData["ReturnUrl"] = returnUrl;
             if (!ModelState.IsValid)
                 return View(viewModel);
 
@@ -63,8 +75,8 @@ namespace Grupp5.Controllers
                 return View(viewModel);
             }
 
-            return RedirectToAction(nameof(SplitController.Index), nameof(SplitController).Replace("Controller", ""));
-
+            //return RedirectToAction(nameof(SplitController.Index), nameof(SplitController).Replace("Controller", ""));
+            return RedirectToLocal(returnUrl);
         }
         #endregion
 

@@ -13,10 +13,10 @@ namespace Grupp5.Models.Entities
 		[DataType(DataType.EmailAddress)]
 		public string Email { get; set; }
 
+        [Required(ErrorMessage = "Lösenord saknas")]
         [Display(Name = "Lösenord")]
-		[Required(ErrorMessage = "Lösenord saknas")]
-		[DataType(DataType.Password)]
-		[StringLength(100, ErrorMessage = "Lösenordet måste bestå av minst {2} tecken", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [MinLength(5, ErrorMessage = "Minst 5 tecken krävs")]
         public string Password { get; set; }
 
 		[Required(ErrorMessage = "Lösenord saknas")]

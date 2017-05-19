@@ -4,6 +4,11 @@
 <div id="splitExpense"></div>
 <h2>Lägg till utlägg</h2>
 
+@if (!Model.HasOpenEvent)
+{
+    <a href="/split/event">Du har inga öppna event! Klicka här för att skapa ett!</a> @*TODO Sara,kan du centrerar denna?*@
+}
+
 <form asp-controller="Split" asp-action="Expense">
 
 	<label asp-for="SelectedEvent"></label>
