@@ -444,15 +444,16 @@ label + .participant {
 		margin-top: 1em;
 	}
 
-
-
-
+.center {
+    display: block;
+    text-align: center;
+}
 /******************
 SPLIT/INDEX
 ******************/
 .no-events-section {
-	max-width: 600px;
-	margin: 0 auto;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 

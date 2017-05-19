@@ -152,11 +152,10 @@
 	*/
 	if ($('#splitExpense').length > 0 || $('#updateExpenseForm').length > 0) {
 		eventId = $('#SelectedEvent').val();
-		console.log(eventId)
-		if (eventId) {
+        if (eventId && $('#splitExpense').length > 0) {
 			getPossiblePurchasers(eventId);
 			setStandardCurrency(eventId);
-		}
+        }
 
 		if ($('#splitExpense').length > 0 && eventId !== '') {
 			// Hämta vänner
@@ -182,8 +181,26 @@
 			});
 		}
 		else {
-
-			var expenseId = $('#updateExpenseForm').attr('expenseid');
+            var expenseId = $('#updateExpenseForm').attr('expenseid');
+            if (eventId && $('#updateExpenseForm').length > 0) {
+                $.ajax({
+                    url: "/Json/GetPossiblePurchaserByIdEditVersion",
+                    type: "GET",
+                    data: {
+                        eventId: eventId,
+                        expenseId: expenseId
+                    },
+                    success: function (result) {
+                        $(result).each(function () {
+                            $('#PurchaserID').append($("<option />").val(this.value).text(this.text));
+                            if (this.selected) {
+                                $('#PurchaserID').val(this.value);
+                            }
+                        });
+                    }
+                });
+                setStandardCurrency(eventId);
+            }
 			var output = '';
 			// Hämta vänner
 			$.ajax({

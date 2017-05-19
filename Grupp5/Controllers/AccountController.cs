@@ -267,7 +267,7 @@ namespace Grupp5.Controllers
             }
             else
             {
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return RedirectToAction(nameof(SplitController.Index), "Split");
             }
         }
         #endregion
