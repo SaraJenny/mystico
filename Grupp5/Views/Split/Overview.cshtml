@@ -33,7 +33,7 @@
 
 	@foreach (var item in Model.TransactionsCommittedToMe)
 	{
-		<p class="listItem">@*<a href="#" class="person" userId="@item.DebitorId" email="@item.DebitorEmail" lastname="@item.DebitorLastName"*@>@item.DebitorFirstName@*</a>*@ ska överföra @item.Amount @Model.StandardCurrency till @item.CreditorFirstName</p>
+		<p class="listItem">@*<a href="#" class="person" userId="@item.DebitorId" email="@item.DebitorEmail" lastname="@item.DebitorLastName">*@@item.DebitorFirstName@*</a>*@ ska överföra @item.Amount @Model.StandardCurrency till @item.CreditorFirstName</p>
 	}
 	<div id="transactionsWithoutMe">
 		@if (Model.TransactionsWithoutMe.Count() == 0)
